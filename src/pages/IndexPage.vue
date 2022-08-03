@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg" style="min-height: 0" v-if="settingsStore">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12" v-if="!showMore">
         <p>
           The goal of this simulator is to be able to plan and layout cost and
@@ -114,15 +114,126 @@
       <a class="col-12" @click="showResults = false" href="javascript:void(0)"
         >&lt;&lt; hide results</a
       >
+    </div> -->
+
+    <div class="row q-mt-md">
+      <div class="col-3">
+        <q-btn
+          label="start simulation"
+          @click="start"
+          color="primary"
+          :disable="started"
+        />
+      </div>
+      <div class="col-3">
+        <q-btn label="reset simulation" @click="reset" color="primary" />
+      </div>
     </div>
 
     <div class="row">
-      <q-btn
-        label="run simulation"
-        @click="run"
-        color="primary"
-        class="q-mt-md"
-      />
+      <div class="col-3">
+        <h6>Wilderness</h6>
+        <div class="row q-mt-md">
+          <q-btn
+            class="q-mr-md"
+            label="forage at wilderness"
+            @click="forageAtWilderness"
+            color="primary"
+            :disable="!started"
+          />
+          <q-input
+            v-model.number="forageAtWildernessDuration"
+            label="Duration"
+            type="number"
+            outlined
+            dense
+          />
+        </div>
+
+        <div class="row q-mt-md">
+          <q-btn
+            label="craft stone dagger"
+            @click="craft('stoneDagger')"
+            color="primary"
+            :disable="!started"
+          />
+        </div>
+        <div class="row q-mt-md">
+          <q-btn
+            label="craft leather sack"
+            @click="craft('leatherSack')"
+            color="primary"
+            :disable="!started"
+          />
+        </div>
+        <div class="row q-mt-md">
+          <q-btn
+            label="craft stone axe"
+            @click="craft('stoneAxe')"
+            color="primary"
+            :disable="!started"
+          />
+        </div>
+        <div class="row q-mt-md">
+          <q-btn
+            label="craft stone pickaxe"
+            @click="craft('stonePickaxe')"
+            color="primary"
+            :disable="!started"
+          />
+        </div>
+      </div>
+      <div class="col-3">
+        <h6>Cedar Forest</h6>
+        <div class="row q-mt-md">
+          <q-btn
+            class="q-mr-md"
+            label="chop wood"
+            @click="chopAtCedarForest"
+            color="primary"
+            :disable="!started"
+          />
+          <q-input
+            v-model.number="chopAtCedarForestDuration"
+            label="Duration"
+            type="number"
+            outlined
+            dense
+          />
+        </div>
+      </div>
+    </div>
+
+    <h6>Inventory</h6>
+    <div class="row">
+      <div class="col-2">
+        <ul>
+          <li>total actions: {{ simulationStore.totalActions }}</li>
+          <li>carrying capacity: {{ getCarryingCapacity() }}</li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <ul>
+          <li>stone: {{ Math.trunc(inventoryStore.stone * 100) / 100 }}</li>
+          <li>stick: {{ Math.trunc(inventoryStore.stick * 100) / 100 }}</li>
+          <li>
+            plant fiber: {{ Math.trunc(inventoryStore.plantFiber * 100) / 100 }}
+          </li>
+          <li>apple: {{ Math.trunc(inventoryStore.apple * 100) / 100 }}</li>
+          <li>wolf pelt: {{ inventoryStore.wolfPelt }}</li>
+        </ul>
+        <ul>
+          <li>stone dagger: {{ inventoryStore.stoneDagger }}</li>
+          <li>leather sack: {{ inventoryStore.leatherSack }}</li>
+          <li>stone axe: {{ inventoryStore.stoneAxe }}</li>
+          <li>stone pickaxe: {{ inventoryStore.stonePickaxe }}</li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <ul>
+          <li>x: 0</li>
+        </ul>
+      </div>
     </div>
   </q-page>
 </template>
@@ -131,32 +242,69 @@
 import { defineComponent, ref } from 'vue';
 import simulator from '../services/simulator.service';
 import { SettingsStore, useSettingsStore } from 'src/stores/settings.store';
-import SNumberInput from '../components/s-number-input.vue';
+// import SNumberInput from '../components/s-number-input.vue';
 import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { Notify } from 'quasar';
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { SNumberInput },
+  // components: { SNumberInput },
   setup() {
     return {
       settingsStore: ref<SettingsStore>(null as unknown as SettingsStore),
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
-      showMore: ref<boolean>(false),
-      showSettings: ref<boolean>(false),
-      showResults: ref<boolean>(true),
+      inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
+      // showMore: ref<boolean>(false),
+      // showSettings: ref<boolean>(false),
+      // showResults: ref<boolean>(true),
+      started: ref<boolean>(false),
+      forageAtWildernessDuration: ref<number>(10),
+      chopAtCedarForestDuration: ref<number>(10),
     };
   },
   created: async function () {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
-    simulator;
+    this.inventoryStore = useInventoryStore();
   },
   methods: {
-    run: function () {
-      simulator.run();
+    // TODO convert all the returns to try/catch and Notify on err with the message
+    start: function () {
+      simulator.prerun();
+      this.started = true;
+    },
+    reset: function () {
+      simulator.prerun();
+      this.started = false;
+    },
+    getCarryingCapacity: function () {
+      return simulator.calculateCarryingCapacity();
+    },
+    forageAtWilderness: function () {
+      const resp = simulator.forageAtWilderness(
+        this.forageAtWildernessDuration
+      );
+      console.log('forageAtWilderness:', resp);
+    },
+    craft: function (itemKey: string) {
+      try {
+        simulator.craft(itemKey);
+        Notify.create(`${itemKey} crafted`);
+      } catch (err) {
+        Notify.create(err as string);
+      }
+    },
+    chopAtCedarForest: function () {
+      // this.inventoryStore.copperCedarAxes;
+      // const resp = simulator.chopAtCedarForest(this.chopAtCedarForestDuration);
+      // console.log('chopAtCedarForest:', resp);
+      // TODO give back axe in the resp, and push back to front of array
+      // TODO handle durability/repair, auto-repair? list out for user? (li for each below full dur, then just x37 for rest)
+      // TODO, or just do a repair all?
     },
   },
 });
