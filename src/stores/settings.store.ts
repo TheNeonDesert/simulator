@@ -2,27 +2,25 @@ import { defineStore } from 'pinia';
 
 export const useSettingsStore = defineStore('settings', {
   state: (): SettingsStore => ({
-    carryingCapacity: 0,
-
-    // Wilderness
+    // General
+    carryingCapacity: 50,
+    // Wilderness Resources
     startingStone: 0,
     startingStick: 0,
     startingPlantFiber: 0,
     startingApple: 0,
-
-    stickGainedPerAction: 0,
-    stoneGainedPerAction: 0,
-    plantFiberGainedPerAction: 0,
-    appleGainedPerAction: 0,
-
-    chanceWolfAttackPerAction: 0,
-
-    craftStoneDaggerRequiredStone: 0,
-
-    additionalCapacityFromLeatherSack: 50, // TODO move these numbers
+    // Wilderness Actions
+    stickGainedPerAction: 0.8,
+    stoneGainedPerAction: 0.65,
+    plantFiberGainedPerAction: 0.25,
+    appleGainedPerAction: 0.08,
+    chanceWolfAttackPerAction: 0.015,
+    // Wilderness Item Bonuses
+    additionalCapacityFromLeatherSack: 50,
+    // Wilderness Item Requirements
+    craftStoneDaggerRequiredStone: 10,
     craftLeatherSackRequiredPlantFiber: 5,
     craftLeatherSackRequiredWolfPelts: 2,
-
     craftStoneAxeRequiredPlantFiber: 4,
     craftStoneAxeRequiredStone: 10,
     craftStoneAxeRequiredSticks: 12,
@@ -33,41 +31,30 @@ export const useSettingsStore = defineStore('settings', {
     // Cedar Forest
     chanceEagleAttackPerAction: 0,
     cedarGainedPerChop: 0,
-
-    // actionsPerMinute: 0,
-    // woodProducedPerAction: 0,
-    // durabilityUsedPerAction: 0,
-    // minutesPerEnounter: 0,
-    // numberEncounters: 0,
-    // costOfWoodToCraftAxe: 0,
-    // durabilityPtsPerAxe: 0,
-    // startingCedar: 0,
-    // startingCedarCopperAxes: 0,
   }),
 });
 
 export interface SettingsStore {
+  [key: string]: number;
+  // General
   carryingCapacity: number;
-
-  // Wilderness
+  // Wilderness Resources
   startingStone: number;
   startingStick: number;
   startingPlantFiber: number;
   startingApple: number;
-
+  // Wilderness Actions
   stickGainedPerAction: number;
   stoneGainedPerAction: number;
   plantFiberGainedPerAction: number;
   appleGainedPerAction: number;
-
   chanceWolfAttackPerAction: number;
-
-  craftStoneDaggerRequiredStone: number;
-
+  // Wilderness Item Bonuses
   additionalCapacityFromLeatherSack: number;
+  // Wilderness Item Requirements
+  craftStoneDaggerRequiredStone: number;
   craftLeatherSackRequiredPlantFiber: number;
   craftLeatherSackRequiredWolfPelts: number;
-
   craftStoneAxeRequiredPlantFiber: number;
   craftStoneAxeRequiredStone: number;
   craftStoneAxeRequiredSticks: number;
@@ -78,15 +65,4 @@ export interface SettingsStore {
   // Cedar Forest
   chanceEagleAttackPerAction: number;
   cedarGainedPerChop: number;
-
-  // [key: string]: number;
-  // actionsPerMinute: number;
-  // woodProducedPerAction: number;
-  // durabilityUsedPerAction: number;
-  // minutesPerEnounter: number;
-  // numberEncounters: number;
-  // costOfWoodToCraftAxe: number;
-  // durabilityPtsPerAxe: number;
-  // startingCedar: number;
-  // startingCedarCopperAxes: number;
 }

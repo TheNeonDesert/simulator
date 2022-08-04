@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
-import { Item } from 'src/services/simulator.service';
+// import { Item } from 'src/services/simulator.service';
 
 export const useInventoryStore = defineStore('inventory', {
   state: (): InventoryStore => ({
-    // carrying: 0,
-
     stone: 0,
     stick: 0,
     plantFiber: 0,
@@ -24,8 +22,6 @@ export const useInventoryStore = defineStore('inventory', {
 });
 
 export interface InventoryStore {
-  // carrying: number;
-
   stone: number;
   stick: number;
   plantFiber: number;

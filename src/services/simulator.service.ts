@@ -14,34 +14,6 @@ class Simulator {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
     this.inventoryStore = useInventoryStore();
-
-    // init
-    this.simulationStore.results = '';
-
-    // set defaults
-    this.settingsStore.carryingCapacity = 50;
-
-    // Wilderness
-    this.settingsStore.stickGainedPerAction = 0.8;
-    this.settingsStore.stoneGainedPerAction = 0.65;
-    this.settingsStore.plantFiberGainedPerAction = 0.25;
-    this.settingsStore.appleGainedPerAction = 0.08;
-    this.settingsStore.chanceWolfAttackPerAction = 0.015;
-
-    this.settingsStore.craftStoneDaggerRequiredStone = 10;
-
-    // this.settingsStore.actionsPerMinute = 1;
-
-    // this.settingsStore.startingCedar = 1000;
-    // this.settingsStore.startingCedarCopperAxes = 90;
-
-    // in theory, if the ratio between these two is consistent then growth curve will stay flat
-    // but it doesn't quite work out that way
-    // this.settingsStore.woodProducedPerAction = 10;
-    // this.settingsStore.costOfWoodToCraftAxe = 100;
-
-    // this.settingsStore.durabilityUsedPerAction = 5;
-    // this.settingsStore.durabilityPtsPerAxe = 50;
   }
 
   prerun() {
@@ -59,22 +31,6 @@ class Simulator {
 
     this.simulationStore.totalActions = 0;
   }
-  //   // snapshot of settingsStore so we don't change model values
-  //   for (const key in this.settingsStore) {
-  //     if (this.settingsStore[key]) {
-  //       this.settings[key] = this.settingsStore[key];
-  //     }
-  //   }
-  // }
-
-  // cleanUp() {
-  //   this.settings = {} as SettingsStore;
-  // }
-
-  // philosophy here is each available action is its own function
-  // you'd set settings from main dashboard page, "lock em in",
-  // and then there's be a bunch of buttons that just equate to each function below
-  // allow for starting resources and items
 
   private skills: { [skill: string]: number } = {
     woodcutting: 1,
@@ -209,8 +165,8 @@ class Simulator {
     // check for attack
 
     // same as forage, plus
-    // rare chance for Pine Sap
-    // eagle instead of wolf, they steal Pine Sap if you don't have bow/arrow
+    // rare chance for Pine Tar
+    // eagle instead of wolf, they steal Pine Tar if you don't have bow/arrow
     // each chop uses item's durability, when no durability excursion is over
     // gain woddcutting skill points 0.01 per minute
     // your gain is increased by 10% of your skill point
