@@ -4,13 +4,9 @@
     <ul>
       <li>leather sack: {{ inventoryStore.leatherSack }}</li>
       <li>stone dagger: {{ inventoryStore.stoneDagger }}</li>
-      <li>stone axe: {{ inventoryStore.stoneAxe }}</li>
-      <li>stone pickaxe: {{ inventoryStore.stonePickaxe }}</li>
-    </ul>
-    <ul>
-      <li>cedar copper axe: 0</li>
-      <li>cedar copper pickaxe: 0</li>
-      <li>cedar copper sword: 0</li>
+      <li v-for="item in inventoryStore.items" v-bind:key="item.name">
+        {{ item }}
+      </li>
     </ul>
   </div>
 </template>

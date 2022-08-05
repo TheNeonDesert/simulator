@@ -89,7 +89,7 @@ export default defineComponent({
       }
     },
     repairAllItems: function () {
-      null;
+      simulator.repairAllItems();
     },
   },
 });

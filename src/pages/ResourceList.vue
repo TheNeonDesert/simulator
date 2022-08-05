@@ -12,7 +12,7 @@
       <li>wolf pelt: {{ inventoryStore.wolfPelt }}</li>
     </ul>
     <ul>
-      <li>cedar: 0</li>
+      <li>cedar log: {{ inventoryStore.cedarLog }}</li>
       <li>copper: 0</li>
       <li>pine tar: 0</li>
       <li>gems: 0</li>

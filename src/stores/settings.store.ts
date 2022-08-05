@@ -37,6 +37,7 @@ export const useSettingsStore = defineStore('settings', {
     copperOreGainedPerAction: 0.8,
     pineTarGainedPerAction: 0.8,
     gemsGainedPerAction: 0.8,
+    chanceEagleAttackPerAction: 0.015,
     // Cedar Forest Item Requirements
     craftCedarCopperAxeRequiredCopper: 0,
     craftCedarCopperAxeRequiredCedar: 0,
@@ -74,4 +75,19 @@ export interface SettingsStore {
   craftStonePickAxeRequiredPlantFiber: number;
   craftStonePickAxeRequiredStone: number;
   craftStonePickAxeRequiredSticks: number;
+
+  // Cedar Forest Resources
+  startingCopperOre: number;
+  startingCedarLog: number;
+  // Cedar Forest Actions
+  cedarLogsGainedPerAction: number;
+  copperOreGainedPerAction: number;
+  pineTarGainedPerAction: number;
+  gemsGainedPerAction: number;
+  chanceEagleAttackPerAction: number;
+  // Cedar Forest Item Requirements
+  craftCedarCopperAxeRequiredCopper: number;
+  craftCedarCopperAxeRequiredCedar: number;
+  craftCedarCopperPickxeRequiredCopper: number;
+  craftCedarCopperPickxeRequiredCedar: number;
 }

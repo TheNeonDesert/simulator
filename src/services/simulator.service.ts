@@ -1,3 +1,4 @@
+import { Item } from 'src/models/Item';
 import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
 import { SettingsStore, useSettingsStore } from 'src/stores/settings.store';
 import {
@@ -5,6 +6,7 @@ import {
   useSimulationStore,
 } from 'src/stores/simulation.store';
 import _ from 'underscore';
+import { StoneAxe, StonePickaxe } from '../stores/craftable-items';
 
 // TODO really split up and abstract out this puppy it's so unwieldly
 // especially the models at the bottom
@@ -30,8 +32,10 @@ class Simulator {
     this.inventoryStore.wolfPelt = 0;
     this.inventoryStore.stoneDagger = 0;
     this.inventoryStore.leatherSack = 0;
-    this.inventoryStore.cedarBow = 0;
+    // this.inventoryStore.cedarBow = 0;
     this.inventoryStore.cedarCopperArrow = 0;
+
+    this.inventoryStore.items = [];
 
     this.simulationStore.totalActions = 0;
   }
@@ -82,7 +86,6 @@ class Simulator {
           carrying + this.settingsStore.stickGainedPerAction >=
           this.calculateCarryingCapacity()
         ) {
-          this.simulationStore.totalActions += i;
           results.push('Carrying Capacity Reached');
           break;
         } else {
@@ -94,7 +97,6 @@ class Simulator {
           carrying + this.settingsStore.plantFiberGainedPerAction >=
           this.calculateCarryingCapacity()
         ) {
-          this.simulationStore.totalActions += i;
           results.push('Carrying Capacity Reached');
           break;
         } else {
@@ -106,7 +108,6 @@ class Simulator {
           carrying + this.settingsStore.appleGainedPerAction >=
           this.calculateCarryingCapacity()
         ) {
-          this.simulationStore.totalActions += i;
           results.push('Carrying Capacity Reached');
           break;
         } else {
@@ -126,59 +127,70 @@ class Simulator {
     return results;
   }
 
-  chopAtCedarForest(minutes: number) {
-    // _.find(this.inventoryStore.items, item => {
-
-    // }
-    minutes;
-    // axe;
+  chopAtCedarForest(minutes: number): string[] {
+    const axe = _.find(this.inventoryStore.items, (item) =>
+      item.type.includes('axe')
+    );
+    if (!axe) {
+      throw 'Missing item, axe';
+    }
+    const results = [] as string[];
 
     const rewards = {
-      cedarLogs: 0,
+      cedarLog: 0,
       pineTar: 0,
     };
     let carrying = 0;
     let i;
 
     for (i = 0; i < minutes; i++) {
+      // durability
+      if (axe.durability < axe.actions.chop.durabilityUsed) {
+        results.push('Axe out of durability');
+        break;
+      }
+      axe.durability--;
       // eagle attack
       if (this.settingsStore.chanceEagleAttackPerAction > Math.random()) {
         console.log('eagle attack');
-        if (
-          this.inventoryStore.cedarBow > 0 &&
-          this.inventoryStore.cedarCopperArrow > 0
-        ) {
+        // TODO add sling ability...
+        if (this.avatarHas('bow') && this.inventoryStore.cedarCopperArrow > 0) {
           this.inventoryStore.cedarCopperArrow--;
+          this.inventoryStore.eagleFeather--;
+          results.push('Eagle Attack! You gained 1 Eagle Feather');
         } else {
           rewards.pineTar = 0;
-          rewards.cedarLogs = rewards.cedarLogs * 0.9;
+          rewards.cedarLog = rewards.cedarLog * 0.9;
+          results.push(
+            'Eagle Attack! You lost all carried Pine Tar and 10% of your carried Cedar Logs'
+          );
         }
       } else {
-        // add cedarLogs
+        // add cedarLog
         if (
-          carrying + this.settingsStore.cedarGainedPerChop >=
+          carrying + this.settingsStore.cedarLogsGainedPerAction >=
           this.calculateCarryingCapacity()
         ) {
+          results.push('Carrying Capacity Reached');
           break;
         } else {
-          rewards.cedarLogs += this.settingsStore.cedarGainedPerChop;
-          carrying += this.settingsStore.cedarGainedPerChop;
+          rewards.cedarLog += this.settingsStore.cedarLogsGainedPerAction;
+          carrying += this.settingsStore.cedarLogsGainedPerAction;
         }
       }
     }
-    // lay out rewards
-    // for loop
-    //
-    // check for attack
 
-    // same as forage, plus
-    // rare chance for Pine Tar
-    // eagle instead of wolf, they steal Pine Tar if you don't have bow/arrow
-    // each chop uses item's durability, when no durability excursion is over
-    // gain woddcutting skill points 0.01 per minute
+    this.inventoryStore.cedarLog += rewards.cedarLog;
+    this.inventoryStore.pineTar += rewards.pineTar;
+    this.simulationStore.totalActions += i;
+
+    results.push('Chopping complete, resources gained');
+    return results;
+
+    // TODO gain woddcutting skill points 0.01 per minute
     // your gain is increased by 10% of your skill point
     // at 50, you don't gain sp here
-    this.skills;
+    // TODO skills
   }
 
   digAtCopperMine(minutes: number, pickaxe: Item) {
@@ -250,7 +262,8 @@ class Simulator {
             this.settingsStore.craftStoneAxeRequiredStone;
           this.inventoryStore.stick -=
             this.settingsStore.craftStoneAxeRequiredSticks;
-          this.inventoryStore.stoneAxe++;
+
+          this.inventoryStore.items.push(new StoneAxe());
         }
         break;
       case 'stonePickaxe':
@@ -276,16 +289,17 @@ class Simulator {
             this.settingsStore.craftStonePickAxeRequiredStone;
           this.inventoryStore.stick -=
             this.settingsStore.craftStonePickAxeRequiredSticks;
-          this.inventoryStore.stonePickaxe++;
+
+          this.inventoryStore.items.push(new StonePickaxe());
         }
         break;
-      case 'copperCedarAxe':
-        // craftCopperCedarAxeRequiredCopper
-        // craftCopperCedarAxeRequiredCedar
+      case 'cedarCopperAxe':
+        // craftCedarCopperAxeRequiredCopper
+        // craftCedarCopperAxeRequiredCedar
         break;
-      case 'copperCedarPickaxe':
-        // craftCopperCedarPickaxeRequiredCopper
-        // craftCopperCedarPickaxeRequiredCedar
+      case 'cedarCopperPickaxe':
+        // craftCedarCopperPickaxeRequiredCopper
+        // craftCedarCopperPickaxeRequiredCedar
         break;
       case 'wheelBarrow':
         break;
@@ -308,66 +322,26 @@ class Simulator {
     }
     return carryingCapacity;
   }
+
+  repairAllItems() {
+    // TODO come up with cost
+    _.each(this.inventoryStore.items, (item) => {
+      item.durability = item.startingDurability;
+    });
+  }
+
+  avatarHas(itemKey: string): boolean {
+    itemKey;
+    return false;
+  }
 }
 
 export default new Simulator();
-
-const copperCedarAxe: Item = {
-  name: 'Copper Cedar Axe',
-  durability: 60,
-  actionKeys: ['chop'],
-  type: ['axe', 'resourceGatherer'],
-  actions: {
-    chop: {
-      type: 'gatherWood',
-      skill: 'woodcutting',
-      name: 'Chop',
-      actionPointDuration: 1,
-      durabilityUsed: 1,
-    },
-  },
-};
-copperCedarAxe;
-
-const copperSword: Item = {
-  name: 'Copper Sword',
-  durability: 80,
-  actionKeys: ['swing'],
-  type: ['axe', 'resourceGatherer'],
-  actions: {
-    swing: {
-      type: 'meleeAttack',
-      skill: 'swordsmanship',
-      name: 'Swing',
-      actionPointDuration: 2,
-      durabilityUsed: 2,
-    },
-  },
-  baseDamage: 8,
-};
-copperSword;
 
 const woodcutting: Skill = {
   name: 'Woodcutting',
 };
 woodcutting;
-
-export interface Item {
-  name: string;
-  durability: number;
-  actionKeys: string[];
-  type: string[];
-  actions: { [actionKey: string]: Action };
-  baseDamage?: number;
-}
-
-interface Action {
-  type: string;
-  skill: string;
-  name: string;
-  actionPointDuration: number;
-  durabilityUsed: number;
-}
 
 interface Skill {
   name: string;

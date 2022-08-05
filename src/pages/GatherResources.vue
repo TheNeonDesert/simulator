@@ -80,12 +80,14 @@ export default defineComponent({
       }
     },
     chopAtCedarForest: function () {
-      // this.inventoryStore.copperCedarAxes;
-      // const resp = simulator.chopAtCedarForest(this.chopAtCedarForestDuration);
-      // console.log('chopAtCedarForest:', resp);
-      // TODO give back axe in the resp, and push back to front of array
-      // TODO handle durability/repair, auto-repair? list out for user? (li for each below full dur, then just x37 for rest)
-      // TODO, or just do a repair all?
+      try {
+        const results = simulator.chopAtCedarForest(
+          this.durationModels.chopAtCedarForestDuration
+        );
+        _.each(results, (notification) => Utils.notify(notification));
+      } catch (err) {
+        Utils.error(err as string);
+      }
     },
     digAtCopperMine: function () {
       null;
