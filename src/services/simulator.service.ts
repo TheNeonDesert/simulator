@@ -4,6 +4,10 @@ import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import _ from 'underscore';
+
+// TODO really split up and abstract out this puppy it's so unwieldly
+// especially the models at the bottom
 
 class Simulator {
   private settingsStore: SettingsStore;
@@ -39,7 +43,7 @@ class Simulator {
     exploration: 1,
   };
 
-  forageAtWilderness(minutes: number): void | string {
+  forageAtWilderness(minutes: number): string[] {
     const rewards = {
       stone: 0,
       stick: 0,
@@ -48,25 +52,26 @@ class Simulator {
     };
     let carrying = 0;
     let i;
+    const results = [];
     for (i = 0; i < minutes; i++) {
-      // wolf attack
       if (this.settingsStore.chanceWolfAttackPerAction > Math.random()) {
-        console.log('wolf attack');
         if (this.inventoryStore.stoneDagger > 0) {
           this.inventoryStore.stoneDagger--;
           this.inventoryStore.wolfPelt += 1;
+          results.push('Wolf Attack! You gained 1 Wolf Pelt');
         } else {
           rewards.stone = rewards.stone / 2;
           rewards.stick = rewards.stick / 2;
           rewards.plantFiber = rewards.plantFiber / 2;
           rewards.apple = rewards.apple / 2;
+          results.push('Wolf Attack! You lost half of all carried resources');
         }
       } else {
-        // add stone
         if (
           carrying + this.settingsStore.stoneGainedPerAction >=
           this.calculateCarryingCapacity()
         ) {
+          results.push('Carrying Capacity Reached');
           break;
         } else {
           rewards.stone += this.settingsStore.stoneGainedPerAction;
@@ -78,7 +83,8 @@ class Simulator {
           this.calculateCarryingCapacity()
         ) {
           this.simulationStore.totalActions += i;
-          return 'Carrying Capacity Reached';
+          results.push('Carrying Capacity Reached');
+          break;
         } else {
           rewards.stick += this.settingsStore.stickGainedPerAction;
           carrying += this.settingsStore.stickGainedPerAction;
@@ -89,7 +95,8 @@ class Simulator {
           this.calculateCarryingCapacity()
         ) {
           this.simulationStore.totalActions += i;
-          return 'Carrying Capacity Reached';
+          results.push('Carrying Capacity Reached');
+          break;
         } else {
           rewards.plantFiber += this.settingsStore.plantFiberGainedPerAction;
           carrying += this.settingsStore.plantFiberGainedPerAction;
@@ -100,7 +107,8 @@ class Simulator {
           this.calculateCarryingCapacity()
         ) {
           this.simulationStore.totalActions += i;
-          return 'Carrying Capacity Reached';
+          results.push('Carrying Capacity Reached');
+          break;
         } else {
           rewards.apple += this.settingsStore.appleGainedPerAction;
           carrying += this.settingsStore.appleGainedPerAction;
@@ -113,18 +121,17 @@ class Simulator {
     this.inventoryStore.plantFiber += rewards.plantFiber;
     this.inventoryStore.apple += rewards.apple;
     this.simulationStore.totalActions += i;
-    // refactor to turn into a log/summary, maybe as a quick q-dialog
-    if (i + 1 < minutes) {
-      return ('Stopped early, carrying capacity reached' +
-        rewards) as unknown as string;
-    } else {
-      return rewards as unknown as string;
-    }
+
+    results.push('Foraging complete, resources gained');
+    return results;
   }
 
-  chopAtCedarForest(minutes: number, axe: Item) {
+  chopAtCedarForest(minutes: number) {
+    // _.find(this.inventoryStore.items, item => {
+
+    // }
     minutes;
-    axe;
+    // axe;
 
     const rewards = {
       cedarLogs: 0,
@@ -309,9 +316,10 @@ const copperCedarAxe: Item = {
   name: 'Copper Cedar Axe',
   durability: 60,
   actionKeys: ['chop'],
+  type: ['axe', 'resourceGatherer'],
   actions: {
     chop: {
-      type: 'meleeAttack',
+      type: 'gatherWood',
       skill: 'woodcutting',
       name: 'Chop',
       actionPointDuration: 1,
@@ -325,6 +333,7 @@ const copperSword: Item = {
   name: 'Copper Sword',
   durability: 80,
   actionKeys: ['swing'],
+  type: ['axe', 'resourceGatherer'],
   actions: {
     swing: {
       type: 'meleeAttack',
@@ -347,6 +356,7 @@ export interface Item {
   name: string;
   durability: number;
   actionKeys: string[];
+  type: string[];
   actions: { [actionKey: string]: Action };
   baseDamage?: number;
 }

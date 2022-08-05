@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-// import { Item } from 'src/services/simulator.service';
+import { Item } from 'src/services/simulator.service';
 
 export const useInventoryStore = defineStore('inventory', {
   state: (): InventoryStore => ({
@@ -17,7 +17,7 @@ export const useInventoryStore = defineStore('inventory', {
     cedarBow: 0,
     cedarCopperArrow: 0,
 
-    // copperCedarAxes: [],
+    items: [],
   }),
 });
 
@@ -36,5 +36,5 @@ export interface InventoryStore {
   cedarBow: number;
   cedarCopperArrow: number;
 
-  // copperCedarAxes: Item[];
+  items: Item[];
 }

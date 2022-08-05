@@ -1,1 +1,14 @@
 // app global css in SCSS form
+
+.simulator-q-notify .q-notification__icon {
+  color: $positive;
+}
+
+.negative,
+.simulator-q-notify-error .q-notification__icon {
+  color: $negative;
+}
+
+h6 {
+  margin: 20px auto;
+}

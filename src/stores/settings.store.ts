@@ -4,6 +4,7 @@ export const useSettingsStore = defineStore('settings', {
   state: (): SettingsStore => ({
     // General
     carryingCapacity: 50,
+
     // Wilderness Resources
     startingStone: 0,
     startingStick: 0,
@@ -28,9 +29,21 @@ export const useSettingsStore = defineStore('settings', {
     craftStonePickAxeRequiredStone: 20,
     craftStonePickAxeRequiredSticks: 8,
 
-    // Cedar Forest
-    chanceEagleAttackPerAction: 0,
-    cedarGainedPerChop: 0,
+    // Cedar Forest Resources
+    startingCopperOre: 0,
+    startingCedarLog: 0,
+    // Cedar Forest Actions
+    cedarLogsGainedPerAction: 0.8,
+    copperOreGainedPerAction: 0.8,
+    pineTarGainedPerAction: 0.8,
+    gemsGainedPerAction: 0.8,
+    // Cedar Forest Item Requirements
+    craftCedarCopperAxeRequiredCopper: 0,
+    craftCedarCopperAxeRequiredCedar: 0,
+    craftCedarCopperPickxeRequiredCopper: 0,
+    craftCedarCopperPickxeRequiredCedar: 0,
+
+    // Goblin Encampment
   }),
 });
 
@@ -61,8 +74,4 @@ export interface SettingsStore {
   craftStonePickAxeRequiredPlantFiber: number;
   craftStonePickAxeRequiredStone: number;
   craftStonePickAxeRequiredSticks: number;
-
-  // Cedar Forest
-  chanceEagleAttackPerAction: number;
-  cedarGainedPerChop: number;
 }
