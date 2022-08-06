@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import simulator from '../services/simulator.service';
+import simulatorService from '../services/simulator.service';
 import EditSettings from './EditSettings.vue';
 import ItemList from './ItemList.vue';
 import ResourceList from './ResourceList.vue';
@@ -84,7 +84,7 @@ export default defineComponent({
   },
   methods: {
     reset: function () {
-      simulator.prerun();
+      simulatorService.reset();
     },
     saveSettings: function () {
       this.reset();

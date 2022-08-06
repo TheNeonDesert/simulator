@@ -33,16 +33,19 @@ export const useSettingsStore = defineStore('settings', {
     startingCopperOre: 0,
     startingCedarLog: 0,
     // Cedar Forest Actions
-    cedarLogsGainedPerAction: 0.8,
-    copperOreGainedPerAction: 0.8,
-    pineTarGainedPerAction: 0.8,
-    gemsGainedPerAction: 0.8,
+    cedarLogGainedPerAction: 0.7,
+    copperOreGainedPerAction: 0.55,
+    pineTarGainedPerAction: 0.04,
     chanceEagleAttackPerAction: 0.015,
     // Cedar Forest Item Requirements
     craftCedarCopperAxeRequiredCopper: 0,
     craftCedarCopperAxeRequiredCedar: 0,
-    craftCedarCopperPickxeRequiredCopper: 0,
-    craftCedarCopperPickxeRequiredCedar: 0,
+    craftCedarCopperPickaxeRequiredCopper: 0,
+    craftCedarCopperPickaxeRequiredCedar: 0,
+
+    // Copper Mine Resources
+    chanceFindGemPerAction: 0.8,
+    chanceKoboldAttackPerAction: 0.075,
 
     // Goblin Encampment
   }),
@@ -52,7 +55,7 @@ export interface SettingsStore {
   [key: string]: number;
   // General
   carryingCapacity: number;
-  // Wilderness Resources
+  // Wilderness Starting Resources
   startingStone: number;
   startingStick: number;
   startingPlantFiber: number;
@@ -76,18 +79,22 @@ export interface SettingsStore {
   craftStonePickAxeRequiredStone: number;
   craftStonePickAxeRequiredSticks: number;
 
-  // Cedar Forest Resources
+  // Cedar Forest Starting Resources
   startingCopperOre: number;
   startingCedarLog: number;
   // Cedar Forest Actions
-  cedarLogsGainedPerAction: number;
+  cedarLogGainedPerAction: number;
   copperOreGainedPerAction: number;
   pineTarGainedPerAction: number;
-  gemsGainedPerAction: number;
   chanceEagleAttackPerAction: number;
   // Cedar Forest Item Requirements
   craftCedarCopperAxeRequiredCopper: number;
   craftCedarCopperAxeRequiredCedar: number;
-  craftCedarCopperPickxeRequiredCopper: number;
-  craftCedarCopperPickxeRequiredCedar: number;
+  craftCedarCopperPickaxeRequiredCopper: number;
+  craftCedarCopperPickaxeRequiredCedar: number;
+
+  // Copper
+  chanceFindGemPerAction: number;
+
+  chanceKoboldAttackPerAction: number;
 }

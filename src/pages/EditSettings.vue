@@ -65,6 +65,20 @@ export default defineComponent({
           field: 'startingApple',
           display: 'Starting Apple',
         },
+        {
+          field: 'startingCopperOre',
+          display: 'Starting Copper Ore',
+        },
+        {
+          field: 'startingCedarLog',
+          display: 'Starting Cedar Log',
+        },
+      ],
+      'Item Bonuses': [
+        {
+          field: 'additionalCapacityFromLeatherSack',
+          display: 'Addtl carry capacity from leather sack',
+        },
       ],
       'Wilderness Actions': [
         {
@@ -88,15 +102,35 @@ export default defineComponent({
           display: 'Chances per action of a wolf attack',
         },
       ],
-
-      'Wilderness Item Bonuses': [
+      'Cedar Forest Actions': [
         {
-          field: 'additionalCapacityFromLeatherSack',
-          display: 'Addtl carry capacity from leather sack',
+          field: 'cedarLogsGainedPerAction',
+          display: 'Cedar gained per action',
+        },
+        {
+          field: 'pineTarGainedPerAction',
+          display: 'Pine tar gained per action',
+        },
+        {
+          field: 'chanceEagleAttackPerAction',
+          display: 'Chances per action of an eagle attack',
         },
       ],
-
-      'Wilderness Item Requirements': [
+      'Copper Mine Actions': [
+        {
+          field: 'copperOreGainedPerAction',
+          display: 'Copper gained per action',
+        },
+        {
+          field: 'chanceFindGemPerAction',
+          display: 'Chance find gem per action',
+        },
+        {
+          field: 'chanceKoboldAttackPerAction',
+          display: 'Chances per action of a kobold attack',
+        },
+      ],
+      'Tier 0 Item Requirements': [
         {
           field: 'craftStoneDaggerRequiredStone',
           display: 'Stone dagger, required stone',
@@ -132,6 +166,24 @@ export default defineComponent({
         {
           field: 'craftStonePickAxeRequiredSticks',
           display: 'Stone pickaxe, required stick',
+        },
+      ],
+      'Tier 1 Item Requirements': [
+        {
+          field: 'craftCedarCopperAxeRequiredCopper',
+          display: 'Cedar Copper Axe, required copper',
+        },
+        {
+          field: 'craftCedarCopperAxeRequiredCedar',
+          display: 'Cedar Copper Axe, required cedar',
+        },
+        {
+          field: 'craftCedarCopperPickaxeRequiredCopper',
+          display: 'Cedar Copper Pickaxe, required copper',
+        },
+        {
+          field: 'craftCedarCopperPickaxeRequiredCedar',
+          display: 'Cedar Copper Pickaxe, required cedar',
         },
       ],
     };

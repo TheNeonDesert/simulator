@@ -5,7 +5,7 @@
       <li>leather sack: {{ inventoryStore.leatherSack }}</li>
       <li>stone dagger: {{ inventoryStore.stoneDagger }}</li>
       <li v-for="item in inventoryStore.items" v-bind:key="item.name">
-        {{ item }}
+        {{ item.name }} {{ (item.durability / item.startingDurability) * 100 }}%
       </li>
     </ul>
   </div>

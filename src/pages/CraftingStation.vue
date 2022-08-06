@@ -24,7 +24,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import simulator from '../services/simulator.service';
+import simulatorService from '../services/simulator.service';
+import craftingService from '../services/crafting.service';
 import Utils from 'src/services/utils';
 
 export default defineComponent({
@@ -82,14 +83,14 @@ export default defineComponent({
   methods: {
     craft: function (itemKey: string) {
       try {
-        simulator.craft(itemKey);
+        craftingService.craft(itemKey);
         Utils.notify(`${itemKey} crafted`);
       } catch (err) {
         Utils.error(err as string);
       }
     },
     repairAllItems: function () {
-      simulator.repairAllItems();
+      simulatorService.repairAllItems();
     },
   },
 });

@@ -12,10 +12,10 @@
       <li>wolf pelt: {{ inventoryStore.wolfPelt }}</li>
     </ul>
     <ul>
-      <li>cedar log: {{ inventoryStore.cedarLog }}</li>
-      <li>copper: 0</li>
-      <li>pine tar: 0</li>
-      <li>gems: 0</li>
+      <li>cedar log: {{ toTwoDecimal(inventoryStore.cedarLog) }}</li>
+      <li>pine tar: {{ toTwoDecimal(inventoryStore.pineTar) }}</li>
+      <li>copper ore: {{ toTwoDecimal(inventoryStore.copperOre) }}</li>
+      <li>gem: {{ inventoryStore.gem }}</li>
     </ul>
   </div>
 </template>

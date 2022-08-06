@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import simulator from '../services/simulator.service';
+import avatarService from '../services/avatar.service';
 import {
   SimulationStore,
   useSimulationStore,
@@ -41,7 +41,7 @@ export default defineComponent({
   },
   methods: {
     getCarryingCapacity: function () {
-      return simulator.calculateCarryingCapacity();
+      return avatarService.calculateCarryingCapacity();
     },
   },
 });

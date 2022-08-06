@@ -2,8 +2,8 @@ import { Item } from 'src/models/Item';
 
 export class StoneAxe implements Item {
   name = 'Stone Axe';
-  durability = 20;
-  startingDurability = 20;
+  durability = 100;
+  startingDurability = 100;
   actionKeys = ['chop'];
   type = ['axe', 'resourceGatherer'];
   actions = {
@@ -36,15 +36,15 @@ export class CedarCopperAxe implements Item {
 
 export class StonePickaxe implements Item {
   name = 'Stone Pickaxe';
-  durability = 20;
-  startingDurability = 20;
-  actionKeys = ['mine'];
+  durability = 100;
+  startingDurability = 100;
+  actionKeys = ['dig'];
   type = ['pickaxe', 'resourceGatherer'];
   actions = {
-    mine: {
+    dig: {
       type: 'mineOre',
       skill: 'mining',
-      name: 'Mine',
+      name: 'Dig',
       actionPointDuration: 1,
       durabilityUsed: 1,
     },
@@ -54,13 +54,13 @@ export class CedarCopperPickaxe implements Item {
   name = 'Copper Cedar Pickaxe';
   durability = 60;
   startingDurability = 60;
-  actionKeys = ['mine'];
+  actionKeys = ['dig'];
   type = ['pickaxe', 'resourceGatherer'];
   actions = {
-    mine: {
+    dig: {
       type: 'mineOre',
       skill: 'mining',
-      name: 'Mine',
+      name: 'Dig',
       actionPointDuration: 1,
       durabilityUsed: 1,
     },

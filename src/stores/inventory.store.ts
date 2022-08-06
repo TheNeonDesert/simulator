@@ -12,6 +12,7 @@ export const useInventoryStore = defineStore('inventory', {
     cedarLog: 0,
     eagleFeather: 0,
     pineTar: 0,
+    gem: 0,
 
     stoneDagger: 0,
     leatherSack: 0,
@@ -26,6 +27,8 @@ export const useInventoryStore = defineStore('inventory', {
 });
 
 export interface InventoryStore {
+  [key: string]: number | Item[];
+
   stone: number;
   stick: number;
   plantFiber: number;
@@ -35,6 +38,7 @@ export interface InventoryStore {
   cedarLog: number;
   eagleFeather: number;
   pineTar: number;
+  gem: number;
 
   stoneDagger: number;
   leatherSack: number;

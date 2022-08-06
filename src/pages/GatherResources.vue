@@ -27,9 +27,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import simulator from '../services/simulator.service';
 import _ from 'underscore';
 import Utils from 'src/services/utils';
+import resourceGatheringService from 'src/services/resource-gathering.service';
 
 export default defineComponent({
   name: 'GatherResources',
@@ -71,7 +71,7 @@ export default defineComponent({
   methods: {
     forageAtWilderness: function () {
       try {
-        const results = simulator.forageAtWilderness(
+        const results = resourceGatheringService.forageAtWilderness(
           this.durationModels.forageAtWildernessDuration
         );
         _.each(results, (notification) => Utils.notify(notification));
@@ -81,7 +81,7 @@ export default defineComponent({
     },
     chopAtCedarForest: function () {
       try {
-        const results = simulator.chopAtCedarForest(
+        const results = resourceGatheringService.chopAtCedarForest(
           this.durationModels.chopAtCedarForestDuration
         );
         _.each(results, (notification) => Utils.notify(notification));
@@ -90,7 +90,14 @@ export default defineComponent({
       }
     },
     digAtCopperMine: function () {
-      null;
+      try {
+        const results = resourceGatheringService.digAtCopperMine(
+          this.durationModels.digAtCopperMineDuration
+        );
+        _.each(results, (notification) => Utils.notify(notification));
+      } catch (err) {
+        Utils.error(err as string);
+      }
     },
   },
 });
