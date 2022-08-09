@@ -26,27 +26,27 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-6 col-md-3 col-12">
+        <div class="col-sm-6 col-md-4 col-12">
           <avatar-stats />
         </div>
-        <div class="col-sm-6 col-md-3 col-12">
+        <div class="col-sm-6 col-md-4 col-12">
           <resource-list />
         </div>
-        <div class="col-sm-6 col-md-3 col-12">
+        <div class="col-sm-6 col-md-4 col-12">
           <inventory-list />
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6 col-md-3 col-12">
+        <div class="col-sm-6 col-md-4 col-12">
           <crafting-station />
         </div>
 
-        <div class="col-sm-6 col-md-3 col-12">
+        <div class="col-sm-6 col-md-4 col-12">
           <gather-resources />
         </div>
 
-        <div class="col-sm-6 col-md-3 col-12">
+        <div class="col-sm-6 col-md-4 col-12">
           <combat-encounters />
         </div>
       </div>

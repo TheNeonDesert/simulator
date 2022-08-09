@@ -19,12 +19,20 @@
   </q-layout>
   <q-dialog v-model="showInfoDialog">
     <q-card>
-      <q-card-section>
-        <div class="text-h6">The Neon Desert Simulator</div>
-      </q-card-section>
-
       <q-card-section class="q-pt-none">
-        This simulator is awesome.
+        <h6>This simulator is awesome</h6>
+        <p>Current Limitations:</p>
+        <ul>
+          <li>
+            Only supports one avatar and all stats/items/etc are for that one
+            avatar
+          </li>
+          <li>
+            Only looks at first/top item for durability, move "active" item to
+            top to use
+          </li>
+          <li>Unlimited bags lead to unlimited carrying capacity</li>
+        </ul>
       </q-card-section>
 
       <q-card-actions align="right">

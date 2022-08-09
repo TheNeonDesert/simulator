@@ -1,12 +1,39 @@
 import { Item } from 'src/models/Item';
 
-interface ItemFactory {
-  create(attributes: { [attribute: string]: number }): Item;
+let itemIdIndex = 0;
+
+abstract class ItemFactory {
+  // itemIdIndex = 0;
+  // id;
+  // attributes;
+
+  // constructor(id: number, attributes: { [attribute: string]: number }) {
+  //   this.id = id;
+  //   this.attributes = attributes;
+  // }
+  abstract create(attributes: { [attribute: string]: number }): Item;
+}
+
+abstract class CItem implements Item {
+  id;
+  attributes;
+  abstract key: string;
+  abstract name: string;
+  abstract durability: number;
+  abstract startingDurability: number;
+  abstract actionKeys: string[];
+  abstract type: string[];
+  abstract actions: { [actionKey: string]: Action };
+
+  constructor(id: number, attributes: { [attribute: string]: number }) {
+    this.id = id;
+    this.attributes = attributes;
+  }
 }
 
 // Utilities
 
-class LeatherSack implements Item {
+class LeatherSack extends CItem {
   key = 'leatherSack';
   name = 'Leather Sack';
   durability = 1;
@@ -14,23 +41,21 @@ class LeatherSack implements Item {
   actionKeys = [];
   type = ['bag'];
   actions = {};
-  attributes;
 
-  constructor(additionalCarryingCapacity: number) {
-    this.attributes = {
-      additionalCarryingCapacity: additionalCarryingCapacity,
-    };
-  }
+  // constructor(id: number, attributes: { [attribute: string]: number }) {
+  //   this.id = id;
+  //   this.attributes = attributes;
+  // }
 }
-class LeatherSackFactory implements ItemFactory {
+class LeatherSackFactory extends ItemFactory {
   create(attributes: { [attribute: string]: number }) {
-    return new LeatherSack(attributes.additionalCarryingCapacity);
+    return new LeatherSack(itemIdIndex++, attributes);
   }
 }
 
 // Axes
 
-class StoneAxe implements Item {
+class StoneAxe extends CItem {
   key = 'stoneAxe';
   name = 'Stone Axe';
   durability = 20;
@@ -48,13 +73,13 @@ class StoneAxe implements Item {
   };
   // TODO production multiplier or stone vs cedarCopper?
 }
-class StoneAxeFactory implements ItemFactory {
-  create() {
-    return new StoneAxe();
+class StoneAxeFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new StoneAxe(itemIdIndex++, attributes);
   }
 }
 
-class CedarCopperAxe implements Item {
+class CedarCopperAxe extends CItem {
   key = 'cedarCopperAxe';
   name = 'Copper Cedar Axe';
   durability = 60;
@@ -71,15 +96,15 @@ class CedarCopperAxe implements Item {
     },
   };
 }
-class CedarCopperAxeFactory implements ItemFactory {
-  create() {
-    return new CedarCopperAxe();
+class CedarCopperAxeFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new CedarCopperAxe(itemIdIndex++, attributes);
   }
 }
 
 // Pickaxes
 
-class StonePickaxe implements Item {
+class StonePickaxe extends CItem {
   key = 'stonePickaxe';
   name = 'Stone Pickaxe';
   durability = 20;
@@ -96,13 +121,13 @@ class StonePickaxe implements Item {
     },
   };
 }
-class StonePickaxeFactory implements ItemFactory {
-  create() {
-    return new StonePickaxe();
+class StonePickaxeFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new StonePickaxe(itemIdIndex++, attributes);
   }
 }
 
-class CedarCopperPickaxe implements Item {
+class CedarCopperPickaxe extends CItem {
   key = 'cedarCopperPickaxe';
   name = 'Copper Cedar Pickaxe';
   durability = 60;
@@ -119,15 +144,15 @@ class CedarCopperPickaxe implements Item {
     },
   };
 }
-class CedarCopperPickaxeFactory implements ItemFactory {
-  create() {
-    return new CedarCopperPickaxe();
+class CedarCopperPickaxeFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new CedarCopperPickaxe(itemIdIndex++, attributes);
   }
 }
 
 // Melee Weapons
 
-class StoneDagger implements Item {
+class StoneDagger extends CItem {
   key = 'stoneDagger';
   name = 'Stone Dagger';
   durability = 1;
@@ -143,13 +168,13 @@ class StoneDagger implements Item {
     },
   };
 }
-class StoneDaggerFactory implements ItemFactory {
-  create() {
-    return new StoneDagger();
+class StoneDaggerFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new StoneDagger(itemIdIndex++, attributes);
   }
 }
 
-class CopperSword implements Item {
+class CopperSword extends CItem {
   key = 'copperSword';
   name = 'Copper Sword';
   durability = 80;
@@ -167,9 +192,9 @@ class CopperSword implements Item {
   };
   baseDamage = 8;
 }
-class CopperSwordFactory implements ItemFactory {
-  create() {
-    return new CopperSword();
+class CopperSwordFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new CopperSword(itemIdIndex++, attributes);
   }
 }
 
