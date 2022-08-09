@@ -1,5 +1,5 @@
 import { Item } from 'src/models/Item';
-import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { WalletStore, useWalletStore } from 'src/stores/wallet.store';
 import { SettingsStore, useSettingsStore } from 'src/stores/settings.store';
 import {
   SimulationStore,
@@ -9,12 +9,12 @@ import {
 class CombatService {
   private settingsStore: SettingsStore;
   private simulationStore: SimulationStore;
-  private inventoryStore: InventoryStore;
+  private walletStore: WalletStore;
 
   constructor() {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
-    this.inventoryStore = useInventoryStore();
+    this.walletStore = useWalletStore();
   }
 
   findAndRaidGoblinEncampment(weapon: Item) {

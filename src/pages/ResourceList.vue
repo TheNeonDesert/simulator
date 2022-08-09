@@ -2,38 +2,35 @@
   <div>
     <h6>Resources</h6>
     <ul>
-      <li>stone: {{ toTwoDecimal(inventoryStore.stone) }}</li>
-      <li>stick: {{ toTwoDecimal(inventoryStore.stick) }}</li>
-      <li>
-        plant fiber:
-        {{ toTwoDecimal(inventoryStore.plantFiber) }}
-      </li>
-      <li>apple: {{ toTwoDecimal(inventoryStore.apple) }}</li>
-      <li>wolf pelt: {{ inventoryStore.wolfPelt }}</li>
+      <li>stone: {{ toTwoDecimal(walletStore.stone) }}</li>
+      <li>stick: {{ toTwoDecimal(walletStore.stick) }}</li>
+      <li>plant fiber: {{ toTwoDecimal(walletStore.plantFiber) }}</li>
+      <li>apple: {{ toTwoDecimal(walletStore.apple) }}</li>
+      <li>wolf pelt: {{ walletStore.wolfPelt }}</li>
     </ul>
     <ul>
-      <li>cedar log: {{ toTwoDecimal(inventoryStore.cedarLog) }}</li>
-      <li>pine tar: {{ toTwoDecimal(inventoryStore.pineTar) }}</li>
-      <li>copper ore: {{ toTwoDecimal(inventoryStore.copperOre) }}</li>
-      <li>gem: {{ inventoryStore.gem }}</li>
+      <li>cedar log: {{ toTwoDecimal(walletStore.cedarLog) }}</li>
+      <li>pine tar: {{ toTwoDecimal(walletStore.pineTar) }}</li>
+      <li>copper ore: {{ toTwoDecimal(walletStore.copperOre) }}</li>
+      <li>gem: {{ walletStore.gem }}</li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { WalletStore, useWalletStore } from 'src/stores/wallet.store';
 import Utils from 'src/services/utils';
 
 export default defineComponent({
   name: 'ResourceList',
   setup() {
     return {
-      inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
+      walletStore: ref<WalletStore>(null as unknown as WalletStore),
     };
   },
   created: async function () {
-    this.inventoryStore = useInventoryStore();
+    this.walletStore = useWalletStore();
   },
   methods: {
     toTwoDecimal: function (number: number) {

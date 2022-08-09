@@ -1,13 +1,16 @@
-import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { WalletStore, useWalletStore } from 'src/stores/wallet.store';
 import { SettingsStore, useSettingsStore } from 'src/stores/settings.store';
 import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import _ from 'underscore';
 
 class AvatarService {
   private settingsStore: SettingsStore;
   private simulationStore: SimulationStore;
+  private walletStore: WalletStore;
   private inventoryStore: InventoryStore;
 
   private skills: { [skill: string]: number } = {
@@ -20,6 +23,7 @@ class AvatarService {
   constructor() {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
+    this.walletStore = useWalletStore();
     this.inventoryStore = useInventoryStore();
   }
 
@@ -28,14 +32,24 @@ class AvatarService {
     return false;
   }
 
+  // TODO somehow tie this to a specific avatar and restrict how much they can carry
   calculateCarryingCapacity(): number {
     let carryingCapacity = this.settingsStore.carryingCapacity;
-    if (this.inventoryStore.leatherSack > 0) {
-      carryingCapacity += this.settingsStore.additionalCapacityFromLeatherSack;
-    }
+
+    _.each(this.inventoryStore.items, (item) => {
+      if (
+        item.type.includes('bag') &&
+        item.attributes &&
+        item.attributes['additionalCarryingCapacity']
+      ) {
+        carryingCapacity += item.attributes['additionalCarryingCapacity'];
+      }
+    });
+
     return carryingCapacity;
   }
 
+  // TODO build recompile
   recompile(skillsToEnhance: string[]) {
     // reset stat points
     // pay 1 neon plus 1 each for skillsToEnhance.length

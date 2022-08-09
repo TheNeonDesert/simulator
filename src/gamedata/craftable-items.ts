@@ -1,9 +1,40 @@
 import { Item } from 'src/models/Item';
 
-export class StoneAxe implements Item {
+interface ItemFactory {
+  create(attributes: { [attribute: string]: number }): Item;
+}
+
+// Utilities
+
+class LeatherSack implements Item {
+  key = 'leatherSack';
+  name = 'Leather Sack';
+  durability = 1;
+  startingDurability = 1;
+  actionKeys = [];
+  type = ['bag'];
+  actions = {};
+  attributes;
+
+  constructor(additionalCarryingCapacity: number) {
+    this.attributes = {
+      additionalCarryingCapacity: additionalCarryingCapacity,
+    };
+  }
+}
+class LeatherSackFactory implements ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new LeatherSack(attributes.additionalCarryingCapacity);
+  }
+}
+
+// Axes
+
+class StoneAxe implements Item {
+  key = 'stoneAxe';
   name = 'Stone Axe';
-  durability = 100;
-  startingDurability = 100;
+  durability = 20;
+  startingDurability = 20;
   actionKeys = ['chop'];
   type = ['axe', 'resourceGatherer'];
   actions = {
@@ -17,7 +48,14 @@ export class StoneAxe implements Item {
   };
   // TODO production multiplier or stone vs cedarCopper?
 }
-export class CedarCopperAxe implements Item {
+class StoneAxeFactory implements ItemFactory {
+  create() {
+    return new StoneAxe();
+  }
+}
+
+class CedarCopperAxe implements Item {
+  key = 'cedarCopperAxe';
   name = 'Copper Cedar Axe';
   durability = 60;
   startingDurability = 60;
@@ -33,11 +71,19 @@ export class CedarCopperAxe implements Item {
     },
   };
 }
+class CedarCopperAxeFactory implements ItemFactory {
+  create() {
+    return new CedarCopperAxe();
+  }
+}
 
-export class StonePickaxe implements Item {
+// Pickaxes
+
+class StonePickaxe implements Item {
+  key = 'stonePickaxe';
   name = 'Stone Pickaxe';
-  durability = 100;
-  startingDurability = 100;
+  durability = 20;
+  startingDurability = 20;
   actionKeys = ['dig'];
   type = ['pickaxe', 'resourceGatherer'];
   actions = {
@@ -50,7 +96,14 @@ export class StonePickaxe implements Item {
     },
   };
 }
-export class CedarCopperPickaxe implements Item {
+class StonePickaxeFactory implements ItemFactory {
+  create() {
+    return new StonePickaxe();
+  }
+}
+
+class CedarCopperPickaxe implements Item {
+  key = 'cedarCopperPickaxe';
   name = 'Copper Cedar Pickaxe';
   durability = 60;
   startingDurability = 60;
@@ -66,8 +119,38 @@ export class CedarCopperPickaxe implements Item {
     },
   };
 }
+class CedarCopperPickaxeFactory implements ItemFactory {
+  create() {
+    return new CedarCopperPickaxe();
+  }
+}
 
-export class CopperSword implements Item {
+// Melee Weapons
+
+class StoneDagger implements Item {
+  key = 'stoneDagger';
+  name = 'Stone Dagger';
+  durability = 1;
+  startingDurability = 1;
+  actionKeys = ['stab'];
+  type = ['dagger', 'weapon'];
+  actions = {
+    stab: {
+      type: 'meleeAttack',
+      name: 'Chop',
+      actionPointDuration: 1,
+      durabilityUsed: 1,
+    },
+  };
+}
+class StoneDaggerFactory implements ItemFactory {
+  create() {
+    return new StoneDagger();
+  }
+}
+
+class CopperSword implements Item {
+  key = 'copperSword';
   name = 'Copper Sword';
   durability = 80;
   startingDurability = 80;
@@ -84,3 +167,20 @@ export class CopperSword implements Item {
   };
   baseDamage = 8;
 }
+class CopperSwordFactory implements ItemFactory {
+  create() {
+    return new CopperSword();
+  }
+}
+
+const craftableItems: { [itemKey: string]: ItemFactory } = {
+  leatherSack: new LeatherSackFactory(),
+  stoneDagger: new StoneDaggerFactory(),
+  stoneAxe: new StoneAxeFactory(),
+  stonePickaxe: new StonePickaxeFactory(),
+  cedarCopperAxe: new CedarCopperAxeFactory(),
+  cedarCopperPickaxe: new CedarCopperPickaxeFactory(),
+  copperSword: new CopperSwordFactory(),
+};
+
+export default craftableItems;

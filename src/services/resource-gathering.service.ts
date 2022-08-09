@@ -1,10 +1,11 @@
 import { Item } from 'src/models/Item';
-import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { WalletStore, useWalletStore } from 'src/stores/wallet.store';
 import { SettingsStore, useSettingsStore } from 'src/stores/settings.store';
 import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
 import avatarService from './avatar.service';
 import _ from 'underscore';
 import { Rewards } from 'src/models/Rewards';
@@ -13,11 +14,13 @@ import resourceGatheringLocations from 'src/gamedata/resource-gathering-location
 class ResourceGatheringService {
   private settingsStore: SettingsStore;
   private simulationStore: SimulationStore;
+  private walletStore: WalletStore;
   private inventoryStore: InventoryStore;
 
   constructor() {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
+    this.walletStore = useWalletStore();
     this.inventoryStore = useInventoryStore();
   }
 
@@ -94,8 +97,8 @@ class ResourceGatheringService {
     _.each(
       resourceGatheringLocations[options.locationKey].rewards,
       (reward) => {
-        this.inventoryStore[reward.resourceKey] =
-          (this.inventoryStore[reward.resourceKey] as number) +
+        this.walletStore[reward.resourceKey] =
+          (this.walletStore[reward.resourceKey] as number) +
           rewards[reward.resourceKey];
       }
     );
@@ -114,16 +117,24 @@ class ResourceGatheringService {
       rewards: Rewards,
       results: string[]
     ): [Rewards, string[]] => {
-      if (this.inventoryStore.stoneDagger > 0) {
-        this.inventoryStore.stoneDagger--;
-        this.inventoryStore.wolfPelt += 1;
+      const dagger = _.find(this.inventoryStore.items, (item) =>
+        item.type.includes('dagger')
+      );
+      if (
+        dagger &&
+        dagger.durability >= dagger.actions['stab'].durabilityUsed
+      ) {
+        dagger.durability -= dagger.actions['stab'].durabilityUsed;
+        this.walletStore.wolfPelt += 1;
         results.push('Wolf Attack! You gained 1 Wolf Pelt');
       } else {
         rewards.stone = rewards.stone / 2;
         rewards.stick = rewards.stick / 2;
         rewards.plantFiber = rewards.plantFiber / 2;
         rewards.apple = rewards.apple / 2;
-        results.push('Wolf Attack! You lost half of all carried resources');
+        results.push(
+          'Wolf Attack! You lost half of all carried resources... try crafting a dagger'
+        );
       }
       return [rewards, results];
     };
@@ -147,19 +158,15 @@ class ResourceGatheringService {
       rewards: Rewards,
       results: string[]
     ): [Rewards, string[]] => {
-      // TODO add sling ability...
-      if (
-        avatarService.hasItem('bow') &&
-        this.inventoryStore.cedarCopperArrow > 0
-      ) {
-        this.inventoryStore.cedarCopperArrow--;
-        this.inventoryStore.eagleFeather--;
+      if (avatarService.hasItem('sling') && this.walletStore.stone > 0) {
+        this.walletStore.stone--;
+        this.walletStore.eagleFeather++;
         results.push('Eagle Attack! You gained 1 Eagle Feather');
       } else {
         rewards.pineTar = 0;
         rewards.cedarLog = rewards.cedarLog * 0.9;
         results.push(
-          'Eagle Attack! You lost all carried Pine Tar and 10% of your carried Cedar Logs'
+          'Eagle Attack! You lost all carried Pine Tar and 10% of your carried Cedar Logs... try crafting a sling'
         );
       }
       return [rewards, results];
@@ -174,7 +181,7 @@ class ResourceGatheringService {
       randomEncounterCallback: randomEncounterCallback,
     });
 
-    // TODO gain woddcutting skill points 0.01 per minute
+    // gain woddcutting skill points 0.01 per minute
     // your gain is increased by 10% of your skill point
     // at 50, you don't gain sp here
     // TODO skills
@@ -193,9 +200,13 @@ class ResourceGatheringService {
       results: string[]
     ): [Rewards, string[]] => {
       if (this.settingsStore.chanceKoboldAttackPerAction > Math.random()) {
-        if (!avatarService.hasItem('sword')) {
+        if (avatarService.hasItem('sword')) {
+          results.push('Kobold Attack! You gained 1 <TBD>'); // TODO what gain
+        } else {
           rewards.gem = 0;
-          results.push('Kobold Attack! You lost all your carried gems');
+          results.push(
+            'Kobold Attack! You lost all your carried gems... try crafting a sword'
+          );
         }
       }
       return [rewards, results];
@@ -210,7 +221,7 @@ class ResourceGatheringService {
       randomEncounterCallback: randomEncounterCallback,
     });
 
-    // TODO gain mining skill points 0.01 per minute
+    // gain mining skill points 0.01 per minute
     // your gain is increased by 10% of your skill point
     // at 50, you don't gain sp here
     // TODO skills

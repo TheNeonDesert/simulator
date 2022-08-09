@@ -4,7 +4,7 @@
     <div
       v-for="(fieldGroup, groupName) in settingsFields"
       v-bind:key="groupName"
-      style="width: 400px"
+      style="max-width: 400px"
     >
       <h6>{{ groupName }}</h6>
       <div v-for="field in fieldGroup" v-bind:key="field.field">

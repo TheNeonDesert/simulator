@@ -8,6 +8,7 @@
         color="primary"
       />
     </div>
+    <!-- TODO split out by itemType -->
     <div
       v-for="item in craftableItems"
       v-bind:key="item.itemKey"

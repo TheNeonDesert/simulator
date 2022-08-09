@@ -1,6 +1,6 @@
 interface Action {
   type: string;
-  skill: string;
+  skill?: string;
   name: string;
   actionPointDuration: number;
   durabilityUsed: number;

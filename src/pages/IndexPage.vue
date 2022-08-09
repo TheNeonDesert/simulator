@@ -11,7 +11,7 @@
 
     <div v-if="!editSettings">
       <div class="row q-mt-md">
-        <div class="col-2">
+        <div class="col-12 col-sm-2 q-mr-sm q-mb-sm">
           <q-btn
             label="edit settings"
             @click="editSettings = true"
@@ -20,33 +20,33 @@
             <q-tooltip> This will also reset the simulation </q-tooltip></q-btn
           >
         </div>
-        <div class="col-2">
+        <div class="col-12 col-sm-2 q-mr-sm q-mb-sm">
           <q-btn label="reset simulation" @click="reset" color="primary" />
         </div>
       </div>
 
       <div class="row">
-        <div class="col-3">
+        <div class="col-sm-6 col-md-3 col-12">
           <avatar-stats />
         </div>
-        <div class="col-3">
+        <div class="col-sm-6 col-md-3 col-12">
           <resource-list />
         </div>
-        <div class="col-3">
-          <item-list />
+        <div class="col-sm-6 col-md-3 col-12">
+          <inventory-list />
         </div>
       </div>
 
       <div class="row">
-        <div class="col-3">
+        <div class="col-sm-6 col-md-3 col-12">
           <crafting-station />
         </div>
 
-        <div class="col-3">
+        <div class="col-sm-6 col-md-3 col-12">
           <gather-resources />
         </div>
 
-        <div class="col-3">
+        <div class="col-sm-6 col-md-3 col-12">
           <combat-encounters />
         </div>
       </div>
@@ -58,7 +58,7 @@
 import { defineComponent, ref } from 'vue';
 import simulatorService from '../services/simulator.service';
 import EditSettings from './EditSettings.vue';
-import ItemList from './ItemList.vue';
+import InventoryList from './InventoryList.vue';
 import ResourceList from './ResourceList.vue';
 import AvatarStats from './AvatarStats.vue';
 import CraftingStation from './CraftingStation.vue';
@@ -69,7 +69,7 @@ export default defineComponent({
   name: 'IndexPage',
   components: {
     EditSettings,
-    ItemList,
+    InventoryList,
     ResourceList,
     AvatarStats,
     CraftingStation,
