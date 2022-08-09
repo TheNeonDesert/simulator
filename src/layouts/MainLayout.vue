@@ -21,7 +21,14 @@
     <q-card>
       <q-card-section class="q-pt-none">
         <h6>This simulator is awesome</h6>
-        <p>Current Limitations:</p>
+        <p>To be built next</p>
+        <ul>
+          <li>Stats, str dex int</li>
+          <li>Skills, woodcutting mining etc</li>
+          <li>Avatar recompile</li>
+          <li>Neon cost</li>
+        </ul>
+        <p>Current limitations or issues</p>
         <ul>
           <li>
             Only supports one avatar and all stats/items/etc are for that one

@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import combatService from '../services/combat.service';
 
 export default defineComponent({
   name: 'CombatEncounters',
@@ -38,7 +39,7 @@ export default defineComponent({
   },
   methods: {
     raidGoblinEncampment: function () {
-      null;
+      combatService.findAndRaidGoblinEncampment();
     },
     raidCemetary: function () {
       null;

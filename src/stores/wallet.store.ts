@@ -11,7 +11,7 @@ export const useWalletStore = defineStore('wallet', {
     cedarLog: 0,
     eagleFeather: 0,
     pineTar: 0,
-    gem: 0,
+    ruby: 0,
 
     stoneDagger: 0,
     leatherSack: 0,
@@ -35,7 +35,7 @@ export interface WalletStore {
   cedarLog: number;
   eagleFeather: number;
   pineTar: number;
-  gem: number;
+  ruby: number;
 
   stoneDagger: number;
   leatherSack: number;

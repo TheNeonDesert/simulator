@@ -229,13 +229,26 @@ class ResourceGatheringService {
       results: string[]
     ): [Rewards, string[]] => {
       if (this.settingsStore.chanceKoboldAttackPerAction > Math.random()) {
-        if (avatarService.hasItem('sword')) {
-          results.push('Kobold Attack! You gained 1 <TBD>'); // TODO what gain
+        // if (avatarService.hasItem('sword')) {
+        //   results.push('Kobold Attack! You gained 1 <TBD>'); // TODO what gain
+        //   // TODO gain combat exp for killing kobold
+        // }
+
+        const sword = _.find(this.inventoryStore.items, (item) =>
+          item.type.includes('sword')
+        );
+        if (
+          sword &&
+          sword.durability >= sword.actions['swing'].durabilityUsed
+        ) {
+          sword.durability -= sword.actions['swing'].durabilityUsed;
           // TODO gain combat exp for killing kobold
+          this.walletStore.ruby++;
+          results.push('Kobold Attack! You gained 1 Ruby');
         } else {
-          rewards.gem = 0;
+          rewards.ruby = 0;
           results.push(
-            'ALERT::Kobold Attack! You lost all your carried gems... try crafting a sword'
+            'ALERT::Kobold Attack! You lost all your carried rubies... try crafting a sword'
           );
         }
       }

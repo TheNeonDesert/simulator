@@ -13,7 +13,7 @@
       <li>pine tar: {{ toTwoDecimal(walletStore.pineTar) }}</li>
       <li>eagle feather: {{ toTwoDecimal(walletStore.eagleFeather) }}</li>
       <li>copper ore: {{ toTwoDecimal(walletStore.copperOre) }}</li>
-      <li>gem: {{ walletStore.gem }}</li>
+      <li>ruby: {{ walletStore.ruby }}</li>
     </ul>
   </div>
 </template>

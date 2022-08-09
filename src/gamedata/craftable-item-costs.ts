@@ -55,6 +55,20 @@ const craftableItemCosts: {
       settingQuantityKey: 'craftSlingRequiredWolfPelt',
     },
   ],
+  copperSword: [
+    {
+      resourceKey: 'copperOre',
+      settingQuantityKey: 'craftCopperSwordRequiredCopper',
+    },
+    {
+      resourceKey: 'wolfPelt',
+      settingQuantityKey: 'craftCopperSwordRequiredWolfPelt',
+    },
+    {
+      resourceKey: 'plantFiber',
+      settingQuantityKey: 'craftCopperSwordRequiredPlantFiber',
+    },
+  ],
 };
 
 export default craftableItemCosts;
@@ -66,10 +80,6 @@ export default craftableItemCosts;
 // case 'cedarCopperPickaxe':
 //   // craftCedarCopperPickaxeRequiredCopper
 //   // craftCedarCopperPickaxeRequiredCedar
-//   break;
-// case 'cedarCopperSword':
-//   // craftCedarCopperSwordRequiredCopper
-//   // craftCedarCopperSwordRequiredCedar
 //   break;
 // case 'wheelBarrow':
 //   break;

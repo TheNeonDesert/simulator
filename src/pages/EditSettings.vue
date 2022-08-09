@@ -122,8 +122,8 @@ export default defineComponent({
           display: 'Copper gained per action',
         },
         {
-          field: 'chanceFindGemPerAction',
-          display: 'Chance find gem per action',
+          field: 'chanceFindRubyPerAction',
+          display: 'Chance find ruby per action',
         },
         {
           field: 'chanceKoboldAttackPerAction',

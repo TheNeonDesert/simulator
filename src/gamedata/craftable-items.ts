@@ -83,6 +83,7 @@ class CedarCopperAxe extends CItem {
       durabilityUsed: 1,
     },
   };
+  // TODO production multiplier or stone vs cedarCopper?
 }
 
 // Pickaxes
@@ -128,8 +129,8 @@ class CedarCopperPickaxe extends CItem {
 class StoneDagger extends CItem {
   key = 'stoneDagger';
   name = 'Stone Dagger';
-  durability = 1;
-  startingDurability = 1;
+  durability = 4;
+  startingDurability = 4;
   actionKeys = ['stab'];
   type = ['dagger', 'weapon', 'melee'];
   actions = {
@@ -154,7 +155,7 @@ class CopperSword extends CItem {
       type: 'meleeAttack',
       skill: 'swordsmanship',
       name: 'Swing',
-      actionPointDuration: 2,
+      actionPointDuration: 2, // TODO need to implement
       durabilityUsed: 2,
     },
   };

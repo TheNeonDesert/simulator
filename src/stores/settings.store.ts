@@ -17,7 +17,7 @@ export const useSettingsStore = defineStore('settings', {
     stoneGainedPerAction: 0.65,
     plantFiberGainedPerAction: 0.25,
     appleGainedPerAction: 0.08,
-    chanceWolfAttackPerAction: 0.015,
+    chanceWolfAttackPerAction: 0.035,
     // Wilderness Item Bonuses
     additionalCapacityFromLeatherSack: 50,
     // Wilderness Item Requirements
@@ -46,7 +46,7 @@ export const useSettingsStore = defineStore('settings', {
     craftCedarCopperPickaxeRequiredCedar: 0,
 
     // Copper Mine Resources
-    chanceFindGemPerAction: 0.8,
+    chanceFindRubyPerAction: 0.002,
     chanceKoboldAttackPerAction: 0.075,
 
     // Goblin Encampment
@@ -54,6 +54,11 @@ export const useSettingsStore = defineStore('settings', {
     // Tier 0
     craftSlingRequiredPlantFiber: 20,
     craftSlingRequiredWolfPelt: 12,
+
+    // Tier 1
+    craftCopperSwordRequiredCopper: 25,
+    craftCopperSwordRequiredWolfPelt: 8,
+    craftCopperSwordRequiredPlantFiber: 12,
   }),
 });
 
@@ -100,11 +105,16 @@ export interface SettingsStore {
   craftCedarCopperPickaxeRequiredCedar: number;
 
   // Copper
-  chanceFindGemPerAction: number;
+  chanceFindRubyPerAction: number;
 
   chanceKoboldAttackPerAction: number;
 
   // Tier 0
   craftSlingRequiredPlantFiber: number;
   craftSlingRequiredWolfPelt: number;
+
+  // Tier 1
+  craftCopperSwordRequiredCopper: number;
+  craftCopperSwordRequiredWolfPelt: number;
+  craftCopperSwordRequiredPlantFiber: number;
 }

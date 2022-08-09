@@ -6,10 +6,14 @@
       <li>total neon spent this game: -</li>
     </ul>
     <ul>
+      <li>health: !!</li>
+      <li>initiative: !!</li>
+      <li>carrying capacity: {{ getCarryingCapacity() }}</li>
+    </ul>
+    <ul>
       <li>strength: -</li>
       <li>dexterity: -</li>
       <li>intelligence: -</li>
-      <li>carrying capacity: {{ getCarryingCapacity() }}</li>
     </ul>
     <ul>
       <li>exploration: - / 100</li>

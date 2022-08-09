@@ -43,10 +43,9 @@ class CopperMine implements ResourceGatheringLocation {
   rewards = [
     { resourceKey: 'copperOre', quantityStoreKey: 'copperOreGainedPerAction' },
   ];
-  // kobold something
-  // randomResourceRewards = [
-  //   { resourceKey: 'pineTar', rewardChanceKey: 'chanceFindPineTarPerAction' },
-  // ];
+  randomResourceRewards = [
+    { resourceKey: 'ruby', rewardChanceKey: 'chanceFindRubyPerAction' },
+  ];
   randomEncounters = [
     {
       name: 'Kobold Attack',
