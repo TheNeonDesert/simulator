@@ -108,8 +108,8 @@ export default defineComponent({
           display: 'Cedar gained per action',
         },
         {
-          field: 'pineTarGainedPerAction',
-          display: 'Pine tar gained per action',
+          field: 'chanceFindPineTarPerAction',
+          display: 'Chance find pine tar per action',
         },
         {
           field: 'chanceEagleAttackPerAction',
@@ -140,7 +140,7 @@ export default defineComponent({
           display: 'Leather sack, required plant fiber',
         },
         {
-          field: 'craftLeatherSackRequiredWolfPelts',
+          field: 'craftLeatherSackRequiredWolfPelt',
           display: 'Leather sack, required wolf pelts',
         },
         {
@@ -152,7 +152,7 @@ export default defineComponent({
           display: 'Stone axe, required stone',
         },
         {
-          field: 'craftStoneAxeRequiredSticks',
+          field: 'craftStoneAxeRequiredStick',
           display: 'Stone axe, required stick',
         },
         {
@@ -164,8 +164,16 @@ export default defineComponent({
           display: 'Stone pickaxe, required stone',
         },
         {
-          field: 'craftStonePickAxeRequiredSticks',
+          field: 'craftStonePickAxeRequiredStick',
           display: 'Stone pickaxe, required stick',
+        },
+        {
+          field: 'craftSlingRequiredPlantFiber',
+          display: 'Sling, required plant fiber',
+        },
+        {
+          field: 'craftSlingRequiredWolfPelt',
+          display: 'Sling, required wolf pelts',
         },
       ],
       'Tier 1 Item Requirements': [

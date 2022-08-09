@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 
 export const useSettingsStore = defineStore('settings', {
   state: (): SettingsStore => ({
+    // TODO re-org how this is all setup
+
     // General
     carryingCapacity: 50,
 
@@ -21,13 +23,13 @@ export const useSettingsStore = defineStore('settings', {
     // Wilderness Item Requirements
     craftStoneDaggerRequiredStone: 10,
     craftLeatherSackRequiredPlantFiber: 5,
-    craftLeatherSackRequiredWolfPelts: 2,
+    craftLeatherSackRequiredWolfPelt: 2,
     craftStoneAxeRequiredPlantFiber: 4,
     craftStoneAxeRequiredStone: 10,
-    craftStoneAxeRequiredSticks: 12,
+    craftStoneAxeRequiredStick: 12,
     craftStonePickAxeRequiredPlantFiber: 4,
     craftStonePickAxeRequiredStone: 20,
-    craftStonePickAxeRequiredSticks: 8,
+    craftStonePickAxeRequiredStick: 8,
 
     // Cedar Forest Resources
     startingCopperOre: 0,
@@ -35,7 +37,7 @@ export const useSettingsStore = defineStore('settings', {
     // Cedar Forest Actions
     cedarLogGainedPerAction: 0.7,
     copperOreGainedPerAction: 0.55,
-    pineTarGainedPerAction: 0.04,
+    chanceFindPineTarPerAction: 0.02,
     chanceEagleAttackPerAction: 0.015,
     // Cedar Forest Item Requirements
     craftCedarCopperAxeRequiredCopper: 0,
@@ -48,6 +50,10 @@ export const useSettingsStore = defineStore('settings', {
     chanceKoboldAttackPerAction: 0.075,
 
     // Goblin Encampment
+
+    // Tier 0
+    craftSlingRequiredPlantFiber: 20,
+    craftSlingRequiredWolfPelt: 12,
   }),
 });
 
@@ -71,13 +77,13 @@ export interface SettingsStore {
   // Wilderness Item Requirements
   craftStoneDaggerRequiredStone: number;
   craftLeatherSackRequiredPlantFiber: number;
-  craftLeatherSackRequiredWolfPelts: number;
+  craftLeatherSackRequiredWolfPelt: number;
   craftStoneAxeRequiredPlantFiber: number;
   craftStoneAxeRequiredStone: number;
-  craftStoneAxeRequiredSticks: number;
+  craftStoneAxeRequiredStick: number;
   craftStonePickAxeRequiredPlantFiber: number;
   craftStonePickAxeRequiredStone: number;
-  craftStonePickAxeRequiredSticks: number;
+  craftStonePickAxeRequiredStick: number;
 
   // Cedar Forest Starting Resources
   startingCopperOre: number;
@@ -85,7 +91,7 @@ export interface SettingsStore {
   // Cedar Forest Actions
   cedarLogGainedPerAction: number;
   copperOreGainedPerAction: number;
-  pineTarGainedPerAction: number;
+  chanceFindPineTarPerAction: number;
   chanceEagleAttackPerAction: number;
   // Cedar Forest Item Requirements
   craftCedarCopperAxeRequiredCopper: number;
@@ -97,4 +103,8 @@ export interface SettingsStore {
   chanceFindGemPerAction: number;
 
   chanceKoboldAttackPerAction: number;
+
+  // Tier 0
+  craftSlingRequiredPlantFiber: number;
+  craftSlingRequiredWolfPelt: number;
 }

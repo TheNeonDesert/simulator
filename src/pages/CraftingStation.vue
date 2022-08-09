@@ -65,6 +65,11 @@ export default defineComponent({
         onclick: this.craft,
       },
       {
+        label: 'sling',
+        itemKey: 'sling',
+        onclick: this.craft,
+      },
+      {
         label: 'cedar copper axe',
         itemKey: 'cedarCopperAxe',
         onclick: this.craft,

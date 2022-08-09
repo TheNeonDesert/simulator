@@ -2,7 +2,7 @@ interface Action {
   type: string;
   skill?: string;
   name: string;
-  actionPointDuration: number;
+  actionPointDuration: number; // TODO actually implement... we don't use this anywhere, I just you just multiply a bit no biggy
   durabilityUsed: number;
 }
 

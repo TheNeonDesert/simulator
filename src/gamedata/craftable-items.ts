@@ -14,6 +14,9 @@ abstract class ItemFactory {
   abstract create(attributes: { [attribute: string]: number }): Item;
 }
 
+// TODO maybe maybe... create a master ItemFactory which adds all the settings
+//  resources costs info etc from a json object and generates all the file additions we need?
+
 abstract class CItem implements Item {
   id;
   attributes;
@@ -158,7 +161,7 @@ class StoneDagger extends CItem {
   durability = 1;
   startingDurability = 1;
   actionKeys = ['stab'];
-  type = ['dagger', 'weapon'];
+  type = ['dagger', 'weapon', 'melee'];
   actions = {
     stab: {
       type: 'meleeAttack',
@@ -180,7 +183,7 @@ class CopperSword extends CItem {
   durability = 80;
   startingDurability = 80;
   actionKeys = ['swing'];
-  type = ['sword', 'weapon'];
+  type = ['sword', 'weapon', 'melee'];
   actions = {
     swing: {
       type: 'meleeAttack',
@@ -198,11 +201,36 @@ class CopperSwordFactory extends ItemFactory {
   }
 }
 
+// Ranged Weapons
+
+class Sling extends CItem {
+  key = 'sling';
+  name = 'Sling';
+  durability = 200;
+  startingDurability = 200;
+  actionKeys = ['sling'];
+  type = ['sling', 'weapon', 'ranged'];
+  actions = {
+    sling: {
+      type: 'rangedAttack',
+      name: 'Sling',
+      actionPointDuration: 1,
+      durabilityUsed: 1,
+    },
+  };
+}
+class SlingFactory extends ItemFactory {
+  create(attributes: { [attribute: string]: number }) {
+    return new Sling(itemIdIndex++, attributes);
+  }
+}
+
 const craftableItems: { [itemKey: string]: ItemFactory } = {
   leatherSack: new LeatherSackFactory(),
   stoneDagger: new StoneDaggerFactory(),
   stoneAxe: new StoneAxeFactory(),
   stonePickaxe: new StonePickaxeFactory(),
+  sling: new SlingFactory(),
   cedarCopperAxe: new CedarCopperAxeFactory(),
   cedarCopperPickaxe: new CedarCopperPickaxeFactory(),
   copperSword: new CopperSwordFactory(),

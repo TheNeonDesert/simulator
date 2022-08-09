@@ -26,6 +26,9 @@ class CedarForest implements ResourceGatheringLocation {
   rewards = [
     { resourceKey: 'cedarLog', quantityStoreKey: 'cedarLogGainedPerAction' },
   ];
+  randomResourceRewards = [
+    { resourceKey: 'pineTar', rewardChanceKey: 'chanceFindPineTarPerAction' },
+  ];
   randomEncounters = [
     {
       name: 'Eagle Attack',
@@ -40,6 +43,10 @@ class CopperMine implements ResourceGatheringLocation {
   rewards = [
     { resourceKey: 'copperOre', quantityStoreKey: 'copperOreGainedPerAction' },
   ];
+  // kobold something
+  // randomResourceRewards = [
+  //   { resourceKey: 'pineTar', rewardChanceKey: 'chanceFindPineTarPerAction' },
+  // ];
   randomEncounters = [
     {
       name: 'Kobold Attack',

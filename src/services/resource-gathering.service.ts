@@ -50,26 +50,32 @@ class ResourceGatheringService {
     let i;
     let results = [] as string[];
     for (i = 0; i < options.minutes; i++) {
-      // random encouncters
-      _.each(
-        resourceGatheringLocations[options.locationKey].randomEncounters,
-        (encounter) => {
-          if (
-            this.settingsStore[encounter.encounterChanceKey] > Math.random()
-          ) {
-            [rewards, results] = options.randomEncounterCallback(
-              rewards,
-              results
-            );
+      // random encounters
+      if (resourceGatheringLocations[options.locationKey].randomEncounters) {
+        _.each(
+          resourceGatheringLocations[options.locationKey].randomEncounters as {
+            name: string;
+            encounterChanceKey: string;
+          }[],
+          (encounter) => {
+            if (
+              this.settingsStore[encounter.encounterChanceKey] > Math.random()
+            ) {
+              [rewards, results] = options.randomEncounterCallback(
+                rewards,
+                results
+              );
+            }
           }
-        }
-      );
-      // durability
+        );
+      }
+      // use durability
       if (options.useItemAction && options.item && options.actionKey) {
         if (
           options.item.durability <
           options.item.actions[options.actionKey].durabilityUsed
         ) {
+          // TODO Try to sub in next item of same type?
           results.push('Axe out of durability');
           break;
         }
@@ -92,6 +98,23 @@ class ResourceGatheringService {
           }
         }
       );
+      // special/random resources
+      if (
+        resourceGatheringLocations[options.locationKey].randomResourceRewards
+      ) {
+        _.each(
+          resourceGatheringLocations[options.locationKey]
+            .randomResourceRewards as {
+            resourceKey: string;
+            rewardChanceKey: string;
+          }[],
+          (reward) => {
+            if (this.settingsStore[reward.rewardChanceKey] > Math.random()) {
+              this.walletStore[reward.resourceKey]++; // TODO amount added should be setting, not hardcoded to 1
+            }
+          }
+        );
+      }
     }
     // collect
     _.each(
@@ -124,6 +147,7 @@ class ResourceGatheringService {
         dagger &&
         dagger.durability >= dagger.actions['stab'].durabilityUsed
       ) {
+        // TODO gain combat exp for killing wolf
         dagger.durability -= dagger.actions['stab'].durabilityUsed;
         this.walletStore.wolfPelt += 1;
         results.push('Wolf Attack! You gained 1 Wolf Pelt');
@@ -158,7 +182,12 @@ class ResourceGatheringService {
       rewards: Rewards,
       results: string[]
     ): [Rewards, string[]] => {
-      if (avatarService.hasItem('sling') && this.walletStore.stone > 0) {
+      const sling = _.find(this.inventoryStore.items, (item) =>
+        item.type.includes('sling')
+      );
+      if (sling && sling.durability >= sling.actions['sling'].durabilityUsed) {
+        sling.durability -= sling.actions['sling'].durabilityUsed;
+        // TODO gain combat exp for killing eagle
         this.walletStore.stone--;
         this.walletStore.eagleFeather++;
         results.push('Eagle Attack! You gained 1 Eagle Feather');
@@ -202,6 +231,7 @@ class ResourceGatheringService {
       if (this.settingsStore.chanceKoboldAttackPerAction > Math.random()) {
         if (avatarService.hasItem('sword')) {
           results.push('Kobold Attack! You gained 1 <TBD>'); // TODO what gain
+          // TODO gain combat exp for killing kobold
         } else {
           rewards.gem = 0;
           results.push(

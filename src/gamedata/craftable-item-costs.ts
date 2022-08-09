@@ -8,7 +8,7 @@ const craftableItemCosts: {
     },
     {
       resourceKey: 'wolfPelt',
-      settingQuantityKey: 'craftLeatherSackRequiredWolfPelts',
+      settingQuantityKey: 'craftLeatherSackRequiredWolfPelt',
     },
   ],
   stoneDagger: [
@@ -28,7 +28,7 @@ const craftableItemCosts: {
     },
     {
       resourceKey: 'stick',
-      settingQuantityKey: 'craftStoneAxeRequiredSticks',
+      settingQuantityKey: 'craftStoneAxeRequiredStick',
     },
   ],
   stonePickaxe: [
@@ -42,7 +42,17 @@ const craftableItemCosts: {
     },
     {
       resourceKey: 'stick',
-      settingQuantityKey: 'craftStonePickAxeRequiredSticks',
+      settingQuantityKey: 'craftStonePickAxeRequiredStick',
+    },
+  ],
+  sling: [
+    {
+      resourceKey: 'plantFiber',
+      settingQuantityKey: 'craftSlingRequiredPlantFiber',
+    },
+    {
+      resourceKey: 'wolfPelt',
+      settingQuantityKey: 'craftSlingRequiredWolfPelt',
     },
   ],
 };

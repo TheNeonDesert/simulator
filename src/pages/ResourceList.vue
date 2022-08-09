@@ -11,6 +11,7 @@
     <ul>
       <li>cedar log: {{ toTwoDecimal(walletStore.cedarLog) }}</li>
       <li>pine tar: {{ toTwoDecimal(walletStore.pineTar) }}</li>
+      <li>eagle feather: {{ toTwoDecimal(walletStore.eagleFeather) }}</li>
       <li>copper ore: {{ toTwoDecimal(walletStore.copperOre) }}</li>
       <li>gem: {{ walletStore.gem }}</li>
     </ul>

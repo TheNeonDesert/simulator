@@ -4,21 +4,21 @@
     <!-- TODO group by type -->
     <ul v-if="inventoryStore.items && inventoryStore.items.length > 0">
       <li v-for="(item, idx) in inventoryStore.items" v-bind:key="item.name">
-        {{ item.id }}: {{ item.name }}
+        {{ item.name }}
         <i v-if="item.durability - item.startingDurability"
-          >{{ (item.durability / item.startingDurability) * 100 }}%</i
+          >[{{ (item.durability / item.startingDurability) * 100 }}%]</i
         >
-        <q-icon
-          v-if="idx > 0"
-          class="cursor-pointer"
-          name="keyboard_double_arrow_up"
-          @click="moveItemUp(item)"
-        ></q-icon>
         <q-icon
           v-if="idx < inventoryStore.items.length - 1"
           class="cursor-pointer"
           name="keyboard_double_arrow_down"
           @click="moveItemDown(item)"
+        ></q-icon>
+        <q-icon
+          v-if="idx > 0"
+          class="cursor-pointer"
+          name="keyboard_double_arrow_up"
+          @click="moveItemUp(item)"
         ></q-icon>
         <q-icon
           class="cursor-pointer"
