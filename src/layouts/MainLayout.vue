@@ -28,8 +28,8 @@
             avatar
           </li>
           <li>
-            Only looks at first/top item for durability, move "active" item to
-            top to use
+            Only looks at first/top item for durability, move desired "active"
+            item to be first of type to use
           </li>
           <li>Unlimited bags lead to unlimited carrying capacity</li>
         </ul>

@@ -157,7 +157,7 @@ class ResourceGatheringService {
         rewards.plantFiber = rewards.plantFiber / 2;
         rewards.apple = rewards.apple / 2;
         results.push(
-          'Wolf Attack! You lost half of all carried resources... try crafting a dagger'
+          'ALERT::Wolf Attack! You lost half of all carried resources... try crafting a dagger'
         );
       }
       return [rewards, results];
@@ -195,7 +195,7 @@ class ResourceGatheringService {
         rewards.pineTar = 0;
         rewards.cedarLog = rewards.cedarLog * 0.9;
         results.push(
-          'Eagle Attack! You lost all carried Pine Tar and 10% of your carried Cedar Logs... try crafting a sling'
+          'ALERT::Eagle Attack! You lost all carried Pine Tar and 10% of your carried Cedar Logs... try crafting a sling'
         );
       }
       return [rewards, results];
@@ -235,7 +235,7 @@ class ResourceGatheringService {
         } else {
           rewards.gem = 0;
           results.push(
-            'Kobold Attack! You lost all your carried gems... try crafting a sword'
+            'ALERT::Kobold Attack! You lost all your carried gems... try crafting a sword'
           );
         }
       }

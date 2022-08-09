@@ -1,4 +1,4 @@
-import craftableItems from 'src/gamedata/craftable-items';
+import craftItem from 'src/gamedata/craftable-items';
 import craftableItemCosts from 'src/gamedata/craftable-item-costs';
 
 import { WalletStore, useWalletStore } from 'src/stores/wallet.store';
@@ -38,7 +38,7 @@ class CraftingService {
     });
     // craft
     let attributes = {};
-    // TODO pull this out to gamedata too
+    // TODO pull this out to gamedata too, instead of a switch here
     switch (itemKey) {
       case 'leatherSack':
         attributes = {
@@ -47,7 +47,7 @@ class CraftingService {
         };
         break;
     }
-    this.inventoryStore.items.push(craftableItems[itemKey].create(attributes));
+    this.inventoryStore.items.push(craftItem[itemKey](attributes)); // craft new item
   }
 }
 

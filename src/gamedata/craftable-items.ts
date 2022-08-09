@@ -2,16 +2,16 @@ import { Item } from 'src/models/Item';
 
 let itemIdIndex = 0;
 
+type ctor<T> = {
+  new (id: number, attributes: { [attribute: string]: number }): T;
+};
 abstract class ItemFactory {
-  // itemIdIndex = 0;
-  // id;
-  // attributes;
-
-  // constructor(id: number, attributes: { [attribute: string]: number }) {
-  //   this.id = id;
-  //   this.attributes = attributes;
-  // }
-  abstract create(attributes: { [attribute: string]: number }): Item;
+  static create<T>(
+    attributes: { [attribute: string]: number },
+    ctor: ctor<T>
+  ): T {
+    return new ctor(itemIdIndex++, attributes) as T;
+  }
 }
 
 // TODO maybe maybe... create a master ItemFactory which adds all the settings
@@ -44,16 +44,6 @@ class LeatherSack extends CItem {
   actionKeys = [];
   type = ['bag'];
   actions = {};
-
-  // constructor(id: number, attributes: { [attribute: string]: number }) {
-  //   this.id = id;
-  //   this.attributes = attributes;
-  // }
-}
-class LeatherSackFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new LeatherSack(itemIdIndex++, attributes);
-  }
 }
 
 // Axes
@@ -76,11 +66,6 @@ class StoneAxe extends CItem {
   };
   // TODO production multiplier or stone vs cedarCopper?
 }
-class StoneAxeFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new StoneAxe(itemIdIndex++, attributes);
-  }
-}
 
 class CedarCopperAxe extends CItem {
   key = 'cedarCopperAxe';
@@ -98,11 +83,6 @@ class CedarCopperAxe extends CItem {
       durabilityUsed: 1,
     },
   };
-}
-class CedarCopperAxeFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new CedarCopperAxe(itemIdIndex++, attributes);
-  }
 }
 
 // Pickaxes
@@ -124,11 +104,6 @@ class StonePickaxe extends CItem {
     },
   };
 }
-class StonePickaxeFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new StonePickaxe(itemIdIndex++, attributes);
-  }
-}
 
 class CedarCopperPickaxe extends CItem {
   key = 'cedarCopperPickaxe';
@@ -146,11 +121,6 @@ class CedarCopperPickaxe extends CItem {
       durabilityUsed: 1,
     },
   };
-}
-class CedarCopperPickaxeFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new CedarCopperPickaxe(itemIdIndex++, attributes);
-  }
 }
 
 // Melee Weapons
@@ -171,11 +141,6 @@ class StoneDagger extends CItem {
     },
   };
 }
-class StoneDaggerFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new StoneDagger(itemIdIndex++, attributes);
-  }
-}
 
 class CopperSword extends CItem {
   key = 'copperSword';
@@ -194,11 +159,6 @@ class CopperSword extends CItem {
     },
   };
   baseDamage = 8;
-}
-class CopperSwordFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new CopperSword(itemIdIndex++, attributes);
-  }
 }
 
 // Ranged Weapons
@@ -219,21 +179,34 @@ class Sling extends CItem {
     },
   };
 }
-class SlingFactory extends ItemFactory {
-  create(attributes: { [attribute: string]: number }) {
-    return new Sling(itemIdIndex++, attributes);
-  }
-}
 
-const craftableItems: { [itemKey: string]: ItemFactory } = {
-  leatherSack: new LeatherSackFactory(),
-  stoneDagger: new StoneDaggerFactory(),
-  stoneAxe: new StoneAxeFactory(),
-  stonePickaxe: new StonePickaxeFactory(),
-  sling: new SlingFactory(),
-  cedarCopperAxe: new CedarCopperAxeFactory(),
-  cedarCopperPickaxe: new CedarCopperPickaxeFactory(),
-  copperSword: new CopperSwordFactory(),
+const craftItem: {
+  [itemKey: string]: (attributes: { [attribute: string]: number }) => Item;
+} = {
+  leatherSack: (attributes) => {
+    return ItemFactory.create(attributes, LeatherSack);
+  },
+  stoneDagger: (attributes) => {
+    return ItemFactory.create(attributes, StoneDagger);
+  },
+  stoneAxe: (attributes) => {
+    return ItemFactory.create(attributes, StoneAxe);
+  },
+  stonePickaxe: (attributes) => {
+    return ItemFactory.create(attributes, StonePickaxe);
+  },
+  sling: (attributes) => {
+    return ItemFactory.create(attributes, Sling);
+  },
+  cedarCopperAxe: (attributes) => {
+    return ItemFactory.create(attributes, CedarCopperAxe);
+  },
+  cedarCopperPickaxe: (attributes) => {
+    return ItemFactory.create(attributes, CedarCopperPickaxe);
+  },
+  copperSword: (attributes) => {
+    return ItemFactory.create(attributes, CopperSword);
+  },
 };
 
-export default craftableItems;
+export default craftItem;

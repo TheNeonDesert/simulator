@@ -33,7 +33,7 @@ export default defineComponent({
   created: async function () {
     this.combatEncounters = [
       { label: 'goblin encampment', onclick: this.raidGoblinEncampment },
-      { label: 'cemetary', onclick: this.raidCemetary },
+      // { label: 'cemetary', onclick: this.raidCemetary },
     ];
   },
   methods: {

@@ -69,12 +69,21 @@ export default defineComponent({
     ];
   },
   methods: {
+    displayResults: function (results: string[]) {
+      _.each(results, (notification) => {
+        if (notification.startsWith('ALERT::')) {
+          Utils.error(notification.substring(7));
+        } else {
+          Utils.notify(notification);
+        }
+      });
+    },
     forageAtWilderness: function () {
       try {
         const results = resourceGatheringService.forageAtWilderness(
           this.durationModels.forageAtWildernessDuration
         );
-        _.each(results, (notification) => Utils.notify(notification));
+        this.displayResults(results);
       } catch (err) {
         Utils.error(err as string);
       }
@@ -84,7 +93,7 @@ export default defineComponent({
         const results = resourceGatheringService.chopAtCedarForest(
           this.durationModels.chopAtCedarForestDuration
         );
-        _.each(results, (notification) => Utils.notify(notification));
+        this.displayResults(results);
       } catch (err) {
         Utils.error(err as string);
       }
@@ -94,7 +103,7 @@ export default defineComponent({
         const results = resourceGatheringService.digAtCopperMine(
           this.durationModels.digAtCopperMineDuration
         );
-        _.each(results, (notification) => Utils.notify(notification));
+        this.displayResults(results);
       } catch (err) {
         Utils.error(err as string);
       }
