@@ -1,4 +1,4 @@
-import { CombatLocation } from 'src/models/CombatLocation';
+import { CombatLocation, CombatReward } from 'src/models/CombatLocation';
 
 class GoblinEncampment implements CombatLocation {
   name = 'Goblin Encampment';
@@ -7,11 +7,55 @@ class GoblinEncampment implements CombatLocation {
       order: 1,
       enemyKey: 'goblin',
       quantity: 7,
+      generateReward: (): CombatReward => {
+        const rand = Math.random() * 100;
+        if (rand >= 97) {
+          return {
+            resourceKey: 'ruby',
+            resourceQuantity: 1,
+          };
+        } else if (rand >= 90) {
+          return {
+            resourceKey: 'copperOre',
+            resourceQuantity: 20,
+          };
+        } else if (rand >= 50) {
+          return {
+            resourceKey: 'stone',
+            resourceQuantity: 10,
+          };
+        } else {
+          return {};
+        }
+      },
     },
     {
       order: 2,
       enemyKey: 'goblinChieftan',
       quantity: 1,
+      generateReward: (): CombatReward => {
+        const rand = Math.random() * 100;
+        if (rand >= 97) {
+          return {
+            craftableItemKey: 'goblinSpear',
+          };
+        } else if (rand >= 90) {
+          return {
+            resourceKey: 'ruby',
+            resourceQuantity: 1,
+          };
+        } else if (rand >= 50) {
+          return {
+            resourceKey: 'copperOre',
+            resourceQuantity: 20,
+          };
+        } else {
+          return {
+            resourceKey: 'stone',
+            resourceQuantity: 10,
+          };
+        }
+      },
     },
   ];
 }

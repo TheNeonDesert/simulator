@@ -69,16 +69,16 @@ export default defineComponent({
         itemKey: 'sling',
         onclick: this.craft,
       },
-      // {
-      //   label: 'cedar copper axe',
-      //   itemKey: 'cedarCopperAxe',
-      //   onclick: this.craft,
-      // },
-      // {
-      //   label: 'cedar copper pickaxe',
-      //   itemKey: 'cedarCopperPickaxe',
-      //   onclick: this.craft,
-      // },
+      {
+        label: 'cedar copper axe',
+        itemKey: 'cedarCopperAxe',
+        onclick: this.craft,
+      },
+      {
+        label: 'cedar copper pickaxe',
+        itemKey: 'cedarCopperPickaxe',
+        onclick: this.craft,
+      },
       {
         label: 'copper sword',
         itemKey: 'copperSword',

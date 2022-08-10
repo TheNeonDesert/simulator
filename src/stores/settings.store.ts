@@ -40,10 +40,10 @@ export const useSettingsStore = defineStore('settings', {
     chanceFindPineTarPerAction: 0.02,
     chanceEagleAttackPerAction: 0.015,
     // Cedar Forest Item Requirements
-    craftCedarCopperAxeRequiredCopper: 0,
-    craftCedarCopperAxeRequiredCedar: 0,
-    craftCedarCopperPickaxeRequiredCopper: 0,
-    craftCedarCopperPickaxeRequiredCedar: 0,
+    // craftCedarCopperAxeRequiredCopperOre: 0,
+    // craftCedarCopperAxeRequiredCedar: 0,
+    // craftCedarCopperPickaxeRequiredCopperOre: 0,
+    // craftCedarCopperPickaxeRequiredCedar: 0,
 
     // Copper Mine Resources
     chanceFindRubyPerAction: 0.002,
@@ -56,7 +56,15 @@ export const useSettingsStore = defineStore('settings', {
     craftSlingRequiredWolfPelt: 12,
 
     // Tier 1
-    craftCopperSwordRequiredCopper: 25,
+    craftCedarCopperAxeRequiredCopperOre: 20,
+    craftCedarCopperAxeRequiredCedarLog: 30,
+    craftCedarCopperAxeRequiredWolfPelt: 2,
+
+    craftCedarCopperPickaxeRequiredCopperOre: 30,
+    craftCedarCopperPickaxeRequiredCedarLog: 20,
+    craftCedarCopperPickaxeRequiredWolfPelt: 2,
+
+    craftCopperSwordRequiredCopperOre: 25,
     craftCopperSwordRequiredWolfPelt: 8,
     craftCopperSwordRequiredPlantFiber: 12,
   }),
@@ -98,11 +106,6 @@ export interface SettingsStore {
   copperOreGainedPerAction: number;
   chanceFindPineTarPerAction: number;
   chanceEagleAttackPerAction: number;
-  // Cedar Forest Item Requirements
-  craftCedarCopperAxeRequiredCopper: number;
-  craftCedarCopperAxeRequiredCedar: number;
-  craftCedarCopperPickaxeRequiredCopper: number;
-  craftCedarCopperPickaxeRequiredCedar: number;
 
   // Copper
   chanceFindRubyPerAction: number;
@@ -114,7 +117,15 @@ export interface SettingsStore {
   craftSlingRequiredWolfPelt: number;
 
   // Tier 1
-  craftCopperSwordRequiredCopper: number;
+  craftCedarCopperAxeRequiredCopperOre: number;
+  craftCedarCopperAxeRequiredCedarLog: number;
+  craftCedarCopperAxeRequiredWolfPelt: number;
+
+  craftCedarCopperPickaxeRequiredCopperOre: number;
+  craftCedarCopperPickaxeRequiredCedarLog: number;
+  craftCedarCopperPickaxeRequiredWolfPelt: number;
+
+  craftCopperSwordRequiredCopperOre: number;
   craftCopperSwordRequiredWolfPelt: number;
   craftCopperSwordRequiredPlantFiber: number;
 }

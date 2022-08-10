@@ -58,7 +58,7 @@ const craftableItemCosts: {
   copperSword: [
     {
       resourceKey: 'copperOre',
-      settingQuantityKey: 'craftCopperSwordRequiredCopper',
+      settingQuantityKey: 'craftCopperSwordRequiredCopperOre',
     },
     {
       resourceKey: 'wolfPelt',
@@ -69,17 +69,37 @@ const craftableItemCosts: {
       settingQuantityKey: 'craftCopperSwordRequiredPlantFiber',
     },
   ],
+  cedarCopperAxe: [
+    {
+      resourceKey: 'copperOre',
+      settingQuantityKey: 'craftCedarCopperAxeRequiredCopperOre',
+    },
+    {
+      resourceKey: 'cedarLog',
+      settingQuantityKey: 'craftCedarCopperAxeRequiredCedarLog',
+    },
+    {
+      resourceKey: 'wolfPelt',
+      settingQuantityKey: 'craftCedarCopperAxeRequiredWolfPelt',
+    },
+  ],
+  cedarCopperPickaxe: [
+    {
+      resourceKey: 'copperOre',
+      settingQuantityKey: 'craftCedarCopperPickaxeRequiredCopperOre',
+    },
+    {
+      resourceKey: 'cedarLog',
+      settingQuantityKey: 'craftCedarCopperPickaxeRequiredCedarLog',
+    },
+    {
+      resourceKey: 'wolfPelt', // TODO maybe just convert wolfPelt to leather? and simplify resources..
+      settingQuantityKey: 'craftCedarCopperPickaxeRequiredWolfPelt',
+    },
+  ],
 };
 
 export default craftableItemCosts;
 
-// case 'cedarCopperAxe':
-//   // craftCedarCopperAxeRequiredCopper
-//   // craftCedarCopperAxeRequiredCedar
-//   break;
-// case 'cedarCopperPickaxe':
-//   // craftCedarCopperPickaxeRequiredCopper
-//   // craftCedarCopperPickaxeRequiredCedar
-//   break;
 // case 'wheelBarrow':
 //   break;

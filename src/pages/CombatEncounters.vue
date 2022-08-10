@@ -18,6 +18,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import combatService from '../services/combat.service';
+import _ from 'underscore';
+import Utils from 'src/services/utils';
 
 export default defineComponent({
   name: 'CombatEncounters',
@@ -38,8 +40,23 @@ export default defineComponent({
     ];
   },
   methods: {
+    displayResults: function (results: string[]) {
+      _.each(results, (notification) => {
+        if (notification.startsWith('ALERT::')) {
+          Utils.error(notification.substring(7));
+        } else {
+          Utils.notify(notification);
+        }
+      });
+    },
+
     raidGoblinEncampment: function () {
-      combatService.findAndRaidGoblinEncampment();
+      try {
+        const results = combatService.findAndRaidGoblinEncampment();
+        this.displayResults(results);
+      } catch (err) {
+        Utils.error(err as string);
+      }
     },
     raidCemetary: function () {
       null;

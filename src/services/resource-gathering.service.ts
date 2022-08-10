@@ -49,6 +49,7 @@ class ResourceGatheringService {
     let carrying = 0;
     let i;
     let results = [] as string[];
+    let atCapacity = false;
     for (i = 0; i < options.minutes; i++) {
       // random encounters
       if (resourceGatheringLocations[options.locationKey].randomEncounters) {
@@ -82,22 +83,26 @@ class ResourceGatheringService {
         options.item.durability--;
       }
       // gather resources
-      _.each(
-        resourceGatheringLocations[options.locationKey].rewards,
-        (reward) => {
-          if (
-            carrying + this.settingsStore[reward.quantityStoreKey] >=
-            avatarService.calculateCarryingCapacity()
-          ) {
-            results.push('Carrying Capacity Reached');
-            return;
-          } else {
-            rewards[reward.resourceKey] +=
-              this.settingsStore[reward.quantityStoreKey];
-            carrying += this.settingsStore[reward.quantityStoreKey];
-          }
+      for (
+        let j = 0;
+        j < resourceGatheringLocations[options.locationKey].rewards.length;
+        j++
+      ) {
+        const reward =
+          resourceGatheringLocations[options.locationKey].rewards[j];
+        if (
+          carrying + this.settingsStore[reward.quantityStoreKey] >=
+          avatarService.calculateCarryingCapacity()
+        ) {
+          results.push('Carrying Capacity Reached');
+          atCapacity = true;
+          break;
+        } else {
+          rewards[reward.resourceKey] +=
+            this.settingsStore[reward.quantityStoreKey];
+          carrying += this.settingsStore[reward.quantityStoreKey];
         }
-      );
+      }
       // special/random resources
       if (
         resourceGatheringLocations[options.locationKey].randomResourceRewards
@@ -114,6 +119,10 @@ class ResourceGatheringService {
             }
           }
         );
+      }
+
+      if (atCapacity) {
+        break;
       }
     }
     // collect
@@ -229,11 +238,6 @@ class ResourceGatheringService {
       results: string[]
     ): [Rewards, string[]] => {
       if (this.settingsStore.chanceKoboldAttackPerAction > Math.random()) {
-        // if (avatarService.hasItem('sword')) {
-        //   results.push('Kobold Attack! You gained 1 <TBD>'); // TODO what gain
-        //   // TODO gain combat exp for killing kobold
-        // }
-
         const sword = _.find(this.inventoryStore.items, (item) =>
           item.type.includes('sword')
         );

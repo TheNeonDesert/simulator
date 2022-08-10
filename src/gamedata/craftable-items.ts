@@ -122,6 +122,7 @@ class CedarCopperPickaxe extends CItem {
       durabilityUsed: 1,
     },
   };
+  // TODO make it somehow have more production than the StonePickaxe
 }
 
 // Melee Weapons
@@ -160,6 +161,25 @@ class CopperSword extends CItem {
     },
   };
   baseDamage = 8;
+}
+
+class GoblinSpear extends CItem {
+  key = 'goblinSpear';
+  name = 'Goblin Spear';
+  durability = 120;
+  startingDurability = 120;
+  actionKeys = ['swing'];
+  type = ['spear', 'weapon', 'melee'];
+  actions = {
+    swing: {
+      type: 'meleeAttack',
+      skill: 'swordsmanship', // TODO refactor goblin spear...
+      name: 'Swing',
+      actionPointDuration: 2, // TODO need to implement
+      durabilityUsed: 2,
+    },
+  };
+  baseDamage = 20;
 }
 
 // Ranged Weapons
@@ -207,6 +227,9 @@ const craftItem: {
   },
   copperSword: (attributes) => {
     return ItemFactory.create(attributes, CopperSword);
+  },
+  goblinSpear: (attributes) => {
+    return ItemFactory.create(attributes, GoblinSpear);
   },
 };
 
