@@ -4,25 +4,25 @@
     <q-btn label="heal avatar" @click="healAvatar" color="primary" />
     <ul>
       <li>total actions this game: {{ simulationStore.totalActions }}</li>
-      <li>total neon spent this game: -</li>
+      <!-- <li>total neon spent this game: -</li> -->
     </ul>
     <ul>
       <li>health: {{ avatarStore.health }}</li>
-      <li>initiative: !!</li>
+      <!-- <li>initiative: !!</li> -->
       <li>carrying capacity: {{ getCarryingCapacity() }}</li>
     </ul>
-    <ul>
+    <!-- <ul>
       <li>strength: -</li>
       <li>dexterity: -</li>
       <li>intelligence: -</li>
-    </ul>
-    <ul>
+    </ul> -->
+    <!-- <ul>
       <li>exploration: - / 100</li>
       <li>woodcutting: - / 100</li>
       <li>mining: - / 100</li>
       <li>swordsmanship: - / 100</li>
       <li>archery: - / 100</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
