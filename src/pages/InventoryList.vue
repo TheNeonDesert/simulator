@@ -1,14 +1,46 @@
 <template>
-  <div>
+  <div class="q-ma-md">
     <h6>Inventory</h6>
+
+    <q-list
+      bordered
+      separator
+      v-if="inventoryStore.items && inventoryStore.items.length > 0"
+    >
+      <q-item v-for="item in inventoryStore.items" v-bind:key="item.name">
+        <q-item-section>
+          <q-item-label>{{ item.name }}</q-item-label>
+          <q-item-label caption
+            >{{
+              (item.durability / item.startingDurability) * 100
+            }}%</q-item-label
+          >
+          <q-icon @click="equipItem(item)" name="login" /> </q-item-section
+      ></q-item>
+    </q-list>
+    <q-list bordered separator v-else>
+      <q-item
+        ><q-item-section
+          ><q-item-label
+            >Inventory empty, trying crafting...</q-item-label
+          ></q-item-section
+        ></q-item
+      >
+    </q-list>
+
     <!-- TODO group by type -->
-    <ul v-if="inventoryStore.items && inventoryStore.items.length > 0">
+    <!-- <ul v-if="inventoryStore.items && inventoryStore.items.length > 0">
       <li v-for="(item, idx) in inventoryStore.items" v-bind:key="item.name">
-        {{ item.name }}
         <i v-if="item.durability - item.startingDurability"
           >[{{ (item.durability / item.startingDurability) * 100 }}%]</i
-        >
-        <q-icon
+        > -->
+
+    <!-- TODO maybe get rid of this weird thing and instead allow for "slots" -->
+    <!-- so a melee weapon slot, axe slot, etc.. just check it as the active item for that slot -->
+
+    <!-- TODO move the repair durability function here, and add a toggle to auto-repair after excursions -->
+
+    <!-- <q-icon
           v-if="idx < inventoryStore.items.length - 1"
           class="cursor-pointer"
           name="keyboard_double_arrow_down"
@@ -29,7 +61,7 @@
     </ul>
     <ul v-else>
       none yet... try crafting
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -49,6 +81,15 @@ export default defineComponent({
     this.inventoryStore = useInventoryStore();
   },
   methods: {
+    equipItem: function (item: Item) {
+      console.log('equipItem:', item);
+      // check item type
+      console.log(
+        'this.inventoryStore.equippedItemIds:',
+        this.inventoryStore.equippedItemIds
+      );
+      this.inventoryStore.equippedItemIds.axe = item.id;
+    },
     moveItemUp: async function (item: Item) {
       for (let i = 0; i < this.inventoryStore.items.length; i++) {
         if (this.inventoryStore.items[i].id === item.id) {
@@ -87,4 +128,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.q-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+</style>

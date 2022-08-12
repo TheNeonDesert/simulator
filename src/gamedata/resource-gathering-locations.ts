@@ -1,5 +1,9 @@
 import { ResourceGatheringLocation } from 'src/models/ResourceGatheringLocation';
 
+// TODO add a `explanation` param and maybe a graphic, ex...
+// Forage at the wilderness to gain sticks, stones, apples and plant fibers.
+// You don't need any special tools but you might want to craft a dagger to fend off any wolves you cross!
+
 class Wilderness implements ResourceGatheringLocation {
   name = 'Wilderness';
   activityName = 'Forage';

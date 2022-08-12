@@ -10,6 +10,7 @@ export default class Utils {
   }
 
   // TODO add a settings flag so on runFullSimulation (auto runs) it produces report instead of onscreen notificactions
+
   static notify(text: string) {
     Notify.create({
       message: text,
@@ -18,6 +19,8 @@ export default class Utils {
       classes: 'simulator-q-notify',
     });
   }
+
+  // TODO add all notifications to like a notification log and expose it from the main layout
 
   static error(text: string) {
     Notify.create({

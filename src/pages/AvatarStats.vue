@@ -1,6 +1,7 @@
 <template>
   <div>
     <h6>Avatar Stats</h6>
+    <!-- TODO add checkbox to auto heal after excursion -->
     <q-btn label="heal avatar" @click="healAvatar" color="primary" />
     <ul>
       <li>total actions this game: {{ simulationStore.totalActions }}</li>

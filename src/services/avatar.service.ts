@@ -7,6 +7,10 @@ import {
 import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
 import _ from 'underscore';
 
+// TODO apples for avatar stamina
+// send avatars on expeditions and bring X apples along...
+//
+
 class AvatarService {
   private settingsStore: SettingsStore;
   private simulationStore: SimulationStore;

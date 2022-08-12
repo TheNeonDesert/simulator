@@ -1,5 +1,13 @@
 import { Item } from 'src/models/Item';
 
+// TODO item ideas...
+
+// pineTar: add pineTar to items to increase its durability? TODO or maybe replace pine tar?
+// eagleFeather: feathers + cedar + copper for copperCedarArrows
+// ruby: insert into weapons or items for increased productivity/damage?
+
+// goblinSpear TODO make this work
+
 let itemIdIndex = 0;
 
 type ctor<T> = {
@@ -16,6 +24,9 @@ abstract class ItemFactory {
 
 // TODO maybe maybe... create a master ItemFactory which adds all the settings
 //  resources costs info etc from a json object and generates all the file additions we need?
+
+// TODO add a `explanation` param and maybe a graphic, ex...
+// The Stone Axe is used to chop wood at any forest. Forage at the Wilderness for the required resources.
 
 abstract class CItem implements Item {
   id;

@@ -17,36 +17,48 @@
             @click="editSettings = true"
             color="primary"
           >
-            <q-tooltip> This will also reset the simulation </q-tooltip></q-btn
+            <q-tooltip v-if="simulationStore.showTooltips">
+              This will also reset the simulation
+            </q-tooltip></q-btn
           >
         </div>
         <div class="col-12 col-sm-2 q-mr-sm q-mb-sm">
           <q-btn label="reset simulation" @click="reset" color="primary" />
         </div>
+        <div>
+          <q-checkbox
+            @update:model-value="showTooltipsUpdated"
+            :model-value="simulationStore.showTooltips"
+            label="Show Tooltips"
+          />
+        </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6 col-md-4 col-12">
+        <div class="col-sm-6 col-md-3 col-12">
           <avatar-stats />
         </div>
-        <div class="col-sm-6 col-md-4 col-12">
+        <div class="col-sm-6 col-md-3 col-12">
           <resource-list />
         </div>
-        <div class="col-sm-6 col-md-4 col-12">
+        <div class="col-sm-6 col-md-3 col-12">
+          <equipped-items />
+        </div>
+        <div class="col-sm-6 col-md-3 col-12">
           <inventory-list />
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6 col-md-4 col-12">
+        <div class="col-sm-6 col-md-3 col-12">
           <crafting-station />
         </div>
 
-        <div class="col-sm-6 col-md-4 col-12">
+        <div class="col-sm-6 col-md-3 col-12">
           <gather-resources />
         </div>
 
-        <div class="col-sm-6 col-md-4 col-12">
+        <div class="col-sm-6 col-md-3 col-12">
           <combat-encounters />
         </div>
       </div>
@@ -64,6 +76,11 @@ import AvatarStats from './AvatarStats.vue';
 import CraftingStation from './CraftingStation.vue';
 import GatherResources from './GatherResources.vue';
 import CombatEncounters from './CombatEncounters.vue';
+import EquippedItems from './EquippedItems.vue';
+import {
+  SimulationStore,
+  useSimulationStore,
+} from 'src/stores/simulation.store';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -75,12 +92,17 @@ export default defineComponent({
     CraftingStation,
     GatherResources,
     CombatEncounters,
+    EquippedItems,
   },
   setup() {
     return {
+      simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
       started: ref<boolean>(true),
       editSettings: ref<boolean>(false),
     };
+  },
+  created: async function () {
+    this.simulationStore = useSimulationStore();
   },
   methods: {
     reset: function () {
@@ -89,6 +111,9 @@ export default defineComponent({
     saveSettings: function () {
       this.reset();
       this.editSettings = false;
+    },
+    showTooltipsUpdated: function (newVal: boolean) {
+      this.simulationStore.showTooltips = newVal;
     },
   },
 });

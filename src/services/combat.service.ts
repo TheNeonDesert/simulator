@@ -83,7 +83,7 @@ class CombatService {
           if (rewardString === '') {
             rewardString = 'nothing';
           }
-          results.push(`Killed ${enemy.enemyKey}, ${rewardString} gained`);
+          results.push(`Killed ${enemy.enemyKey}, ${rewardString} gained`); // TODO show what was gained
           // TODO roll enemy loot table
         }
       }

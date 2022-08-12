@@ -10,6 +10,8 @@
             class="cursor-pointer"
             style="font-size: 24px"
         /></q-toolbar-title>
+        0.0.2
+        <!-- TODO add quick version history? -->
       </q-toolbar>
     </q-header>
 
@@ -55,6 +57,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'MainLayout',
   setup() {
+    // TODO add site analytics
     return {
       showInfoDialog: ref<boolean>(false),
     };

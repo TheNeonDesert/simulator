@@ -1,6 +1,16 @@
 <template>
   <div>
     <h6>Resources</h6>
+    <q-list bordered separator>
+      <q-item>
+        <q-item-section>
+          <q-item-label> label</q-item-label>
+          <q-item-label caption>caption</q-item-label>
+          <div>0</div>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
     <ul>
       <li>stone: {{ toTwoDecimal(walletStore.stone) }}</li>
       <li>stick: {{ toTwoDecimal(walletStore.stick) }}</li>

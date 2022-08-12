@@ -2,6 +2,9 @@ import { defineStore } from 'pinia';
 
 export const useSimulationStore = defineStore('simulation', {
   state: () => ({
+    // misc site settings
+    showTooltips: true,
+
     results: '',
     totalActions: 0,
   }),
@@ -17,6 +20,7 @@ export const useSimulationStore = defineStore('simulation', {
 });
 
 export interface SimulationStore {
+  showTooltips: boolean;
   newline: (line?: string) => void;
   results: string;
   totalActions: number;

@@ -139,7 +139,7 @@ class ResourceGatheringService {
     results.push(
       `${
         resourceGatheringLocations[options.locationKey].activityName
-      } complete, resources gained`
+      } complete, resources gained` // TODO show what was gained
     );
     return results;
   }

@@ -3,6 +3,10 @@ import { defineStore } from 'pinia';
 export const useSettingsStore = defineStore('settings', {
   state: (): SettingsStore => ({
     // TODO re-org how this is all setup
+    // TODO can I make it programatic?
+    // on app start, read a json file (masterdata.json)
+    // iterate thru settings and items, which generate their own settings, and the cost for stuff, etc etc
+    // then it'll be wicked easy to add and manipulate the settings themselves
 
     // General
     carryingCapacity: 50,

@@ -1,0 +1,17 @@
+{
+  "settings": [
+    {
+      "key": "carryingCapacity",
+      "display": "Default Carrying Capacity",
+      "group": "general",
+      "tags": ["general", "avatar"]
+    },
+    {
+      "key": "chanceKoboldAttackAtCopperMinePerAction",
+      "display": "Chance of a Kobold Attack at the Copper Mine, per action",
+      "group": "combat",
+      "tags": ["combat"]
+    }
+  ],
+  "items": []
+}
