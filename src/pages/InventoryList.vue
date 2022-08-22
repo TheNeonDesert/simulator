@@ -15,8 +15,14 @@
               (item.durability / item.startingDurability) * 100
             }}%</q-item-label
           >
-          <q-icon @click="equipItem(item)" name="login" /> </q-item-section
-      ></q-item>
+        </q-item-section>
+        <q-btn
+          class="equip-button"
+          @click="equipItem(item)"
+          icon="playlist_add_checkmark"
+          v-if="!isItemEquipped(item.id)"
+        />
+      </q-item>
     </q-list>
     <q-list bordered separator v-else>
       <q-item
@@ -90,32 +96,39 @@ export default defineComponent({
       );
       this.inventoryStore.equippedItemIds.axe = item.id;
     },
-    moveItemUp: async function (item: Item) {
-      for (let i = 0; i < this.inventoryStore.items.length; i++) {
-        if (this.inventoryStore.items[i].id === item.id) {
-          if (i > 0) {
-            const itemToMove = this.inventoryStore.items[i];
-            const itemBeingReplaced = this.inventoryStore.items[i - 1];
-            this.inventoryStore.items[i - 1] = itemToMove;
-            this.inventoryStore.items[i] = itemBeingReplaced;
-          }
-          return;
-        }
+    isItemEquipped: function (itemIdToCheck: number): boolean {
+      if (this.inventoryStore.isItemEquipped) {
+        return this.inventoryStore.isItemEquipped(itemIdToCheck);
+      } else {
+        return false;
       }
     },
-    moveItemDown: async function (item: Item) {
-      for (let i = 0; i < this.inventoryStore.items.length; i++) {
-        if (this.inventoryStore.items[i].id === item.id) {
-          if (i < this.inventoryStore.items.length - 1) {
-            const itemToMove = this.inventoryStore.items[i];
-            const itemBeingReplaced = this.inventoryStore.items[i + 1];
-            this.inventoryStore.items[i + 1] = itemToMove;
-            this.inventoryStore.items[i] = itemBeingReplaced;
-          }
-          return;
-        }
-      }
-    },
+    // moveItemUp: async function (item: Item) {
+    //   for (let i = 0; i < this.inventoryStore.items.length; i++) {
+    //     if (this.inventoryStore.items[i].id === item.id) {
+    //       if (i > 0) {
+    //         const itemToMove = this.inventoryStore.items[i];
+    //         const itemBeingReplaced = this.inventoryStore.items[i - 1];
+    //         this.inventoryStore.items[i - 1] = itemToMove;
+    //         this.inventoryStore.items[i] = itemBeingReplaced;
+    //       }
+    //       return;
+    //     }
+    //   }
+    // },
+    // moveItemDown: async function (item: Item) {
+    //   for (let i = 0; i < this.inventoryStore.items.length; i++) {
+    //     if (this.inventoryStore.items[i].id === item.id) {
+    //       if (i < this.inventoryStore.items.length - 1) {
+    //         const itemToMove = this.inventoryStore.items[i];
+    //         const itemBeingReplaced = this.inventoryStore.items[i + 1];
+    //         this.inventoryStore.items[i + 1] = itemToMove;
+    //         this.inventoryStore.items[i] = itemBeingReplaced;
+    //       }
+    //       return;
+    //     }
+    //   }
+    // },
     tossItem: async function (item: Item) {
       for (let i = 0; i < this.inventoryStore.items.length; i++) {
         if (this.inventoryStore.items[i].id === item.id) {
@@ -129,9 +142,20 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.q-icon {
+// .q-icon {
+//   position: absolute;
+//   right: 10px;
+//   cursor: pointer;
+// }
+
+.equip-button {
+  // margin-top: 8px;
   position: absolute;
   right: 10px;
-  cursor: pointer;
+  // top: 8px;
+
+  ::v-deep i {
+    left: 50px;
+  }
 }
 </style>

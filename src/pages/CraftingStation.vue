@@ -21,18 +21,20 @@
         </div>
       </q-card-section>
       <q-card-section style="padding-top: 0">
-        <q-btn
-          v-for="item in itemGroup"
-          v-bind:key="item.itemKey"
-          @click="item.onclick(item.itemKey)"
-          class="row q-my-sm"
-          color="secondary"
-          :loading="loading[item.itemKey]"
-          :label="item.label"
-          ><q-tooltip v-if="item.tooltip && simulationStore.showTooltips">
-            {{ item.tooltip }}
-          </q-tooltip></q-btn
-        >
+        <div v-for="item in itemGroup" v-bind:key="item.itemKey">
+          <q-separator class="q-mt-lg" />
+          <p class="row">
+            <i>{{ item.description }}</i>
+          </p>
+          <q-btn
+            style="margin-top: -15px"
+            class="row"
+            @click="item.onclick(item.itemKey)"
+            color="secondary"
+            :loading="loading[item.itemKey]"
+            :label="item.label"
+          />
+        </div>
       </q-card-section>
     </q-card>
   </div>
@@ -56,7 +58,7 @@ export default defineComponent({
         [key: string]: {
           label: string;
           itemKey: string;
-          tooltip?: string;
+          description: string;
           onclick: (itemKey: string) => void;
         }[];
       }>(),
@@ -71,7 +73,7 @@ export default defineComponent({
         {
           label: 'leather sack',
           itemKey: 'leatherSack',
-          tooltip: 'Increase carrying capacity',
+          description: 'Increase carrying capacity',
           onclick: this.craft,
         },
       ],
@@ -79,11 +81,13 @@ export default defineComponent({
         {
           label: 'stone axe',
           itemKey: 'stoneAxe',
+          description: 'Basic axe, needed for chopping wood',
           onclick: this.craft,
         },
         {
           label: 'cedar copper axe',
           itemKey: 'cedarCopperAxe',
+          description: 'Improved axe',
           onclick: this.craft,
         },
       ],
@@ -91,11 +95,13 @@ export default defineComponent({
         {
           label: 'stone pickaxe',
           itemKey: 'stonePickaxe',
+          description: 'Basic pickaxe, needed to mine for ore',
           onclick: this.craft,
         },
         {
           label: 'cedar copper pickaxe',
           itemKey: 'cedarCopperPickaxe',
+          description: 'Improved pickaxe',
           onclick: this.craft,
         },
       ],
@@ -103,11 +109,13 @@ export default defineComponent({
         {
           label: 'stone dagger',
           itemKey: 'stoneDagger',
+          description: 'Basic melee weapon',
           onclick: this.craft,
         },
         {
           label: 'copper sword',
           itemKey: 'copperSword',
+          description: 'Dispatch your enemies even more effectively',
           onclick: this.craft,
         },
       ],
@@ -115,6 +123,7 @@ export default defineComponent({
         {
           label: 'sling',
           itemKey: 'sling',
+          description: 'Basic ranged weapon, uses stones for ammo',
           onclick: this.craft,
         },
       ],

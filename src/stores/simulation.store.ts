@@ -4,6 +4,8 @@ export const useSimulationStore = defineStore('simulation', {
   state: () => ({
     // misc site settings
     showTooltips: true,
+    autoHealAvatar: true,
+    autoRepairItems: true,
 
     results: '',
     totalActions: 0,
@@ -20,8 +22,11 @@ export const useSimulationStore = defineStore('simulation', {
 });
 
 export interface SimulationStore {
-  showTooltips: boolean;
   newline: (line?: string) => void;
+
+  showTooltips: boolean;
+  autoHealAvatar: boolean;
+  autoRepairItems: boolean;
   results: string;
   totalActions: number;
 }

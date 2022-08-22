@@ -1,16 +1,14 @@
 <template>
   <q-page class="q-pa-lg">
     <div v-if="editSettings">
-      <div class="row q-mt-md">
-        <div class="col-2">
-          <q-btn label="save settings" @click="saveSettings" color="primary" />
-        </div>
+      <div class="row q-ma-md">
+        <q-btn label="save settings" @click="saveSettings" color="primary" />
       </div>
       <edit-settings />
     </div>
 
     <div v-if="!editSettings">
-      <div class="row q-mt-md">
+      <div class="row q-ma-md">
         <div class="col-12 col-sm-2 q-mr-sm q-mb-sm">
           <q-btn
             label="edit settings"
@@ -31,35 +29,47 @@
             :model-value="simulationStore.showTooltips"
             label="Show Tooltips"
           />
+          <!-- TODO implement autoHealAvatar -->
+          <q-checkbox
+            @update:model-value="autoHealAvatarUpdated"
+            :model-value="simulationStore.autoHealAvatar"
+            label="Auto Heal Avatar"
+          />
+          <!-- TODO implement autoRepairItems -->
+          <q-checkbox
+            @update:model-value="autoRepairItemsUpdated"
+            :model-value="simulationStore.autoRepairItems"
+            label="Auto Repair Items"
+          />
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-6 col-md-3 col-12">
-          <avatar-stats />
+          <avatar-stats class="q-ma-md" />
         </div>
         <div class="col-sm-6 col-md-3 col-12">
-          <resource-list />
+          <resource-list class="q-ma-md" />
         </div>
         <div class="col-sm-6 col-md-3 col-12">
-          <equipped-items />
+          <equipped-items class="q-ma-md" />
         </div>
         <div class="col-sm-6 col-md-3 col-12">
-          <inventory-list />
+          <inventory-list class="q-ma-md" />
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-6 col-md-3 col-12">
-          <crafting-station />
+          <crafting-station class="q-ma-md" />
         </div>
 
         <div class="col-sm-6 col-md-3 col-12">
-          <gather-resources />
+          <gather-resources class="q-ma-md" />
         </div>
 
         <div class="col-sm-6 col-md-3 col-12">
-          <combat-encounters />
+          <combat-encounters class="q-ma-md" />
         </div>
       </div>
     </div>
@@ -114,6 +124,12 @@ export default defineComponent({
     },
     showTooltipsUpdated: function (newVal: boolean) {
       this.simulationStore.showTooltips = newVal;
+    },
+    autoHealAvatarUpdated: function (newVal: boolean) {
+      this.simulationStore.autoHealAvatar = newVal;
+    },
+    autoRepairItemsUpdated: function (newVal: boolean) {
+      this.simulationStore.autoRepairItems = newVal;
     },
   },
 });

@@ -2,26 +2,34 @@
   <div>
     <h6>Gather Resources</h6>
 
-    <div
+    <q-card
       v-for="resource in gatherableResources"
       v-bind:key="resource.model"
-      class="row q-mt-md"
+      class="row q-my-md"
     >
-      <q-input
-        v-model.number="durationModels[resource.model]"
-        label="Duration"
-        type="number"
-        outlined
-        dense
-        class="q-mr-md"
-        style="width: 100px"
-      />
-      <q-btn :label="resource.label" @click="resource.onclick" color="primary"
-        ><q-tooltip v-if="resource.tooltip && simulationStore.showTooltips">
-          {{ resource.tooltip }}
-        </q-tooltip></q-btn
-      >
-    </div>
+      <div class="q-ma-md">
+        <div class="row">
+          <p v-html="resource.description" />
+        </div>
+        <div class="row">
+          <q-input
+            v-model.number="durationModels[resource.model]"
+            label="Duration"
+            type="number"
+            outlined
+            dense
+            class="col-3"
+          />
+          <div class="col-1"></div>
+          <q-btn
+            :label="resource.label"
+            @click="resource.onclick"
+            color="primary"
+            class="col-8"
+          ></q-btn>
+        </div>
+      </div>
+    </q-card>
   </div>
 </template>
 
@@ -40,43 +48,44 @@ export default defineComponent({
   setup() {
     return {
       durationModels: ref<{ [key: string]: number }>({
-        forageAtWildernessDuration: 10,
-        chopAtCedarForestDuration: 10,
-        digAtCopperMineDuration: 10,
+        forageAtWildernessDuration: 20,
+        chopAtCedarForestDuration: 60,
+        digAtCopperMineDuration: 60,
       }),
       gatherableResources: ref<
         {
           model: string;
           label: string;
-          tooltip?: string;
+          description: string;
           onclick: () => void;
         }[]
       >(),
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
     };
   },
+  // TODO instead of hover tooltip for locations, add like a little icon and what you can gather there...
   created: async function () {
     this.simulationStore = useSimulationStore();
     this.gatherableResources = [
       {
         model: 'forageAtWildernessDuration',
         label: 'forage at wilderness',
-        tooltip:
-          'Forage for sticks, stones, plant fibers, and apples. Watch out for wolves though! You might want to bring a dagger...',
+        description:
+          'Forage for <u>sticks</u>, <u>stones</u>, <u>plant fibers</u>, and <u>apples</u>. Watch out for <b>wolves</b> though! You might want to bring a <i>dagger</i>...',
         onclick: this.forageAtWilderness,
       },
       {
         model: 'chopAtCedarForestDuration',
         label: 'chop at cedar forest',
-        tooltip:
-          'Chop wood and collect cedar logs and pick up the occasional pine tar. Don\t forget to bring a ranged weapon to fend off the eagles',
+        description:
+          'Chop wood to collect <u>cedar logs</u> and pick up the occasional <u>pine tar</u>. Don\t forget to bring a ranged weapon like a <i>sling</i> to fend off the <b>eagles</b>',
         onclick: this.chopAtCedarForest,
       },
       {
         model: 'digAtCopperMineDuration',
         label: 'dig at copper mine',
-        tooltip:
-          'Dig for copper ore but keep an eye out for anything that sparkles, and any creates that may want to steal them!',
+        description:
+          'Dig for <u>copper ore</u> but keep an eye out for anything that sparkles.. and any creatures that may want to steal them!',
         onclick: this.digAtCopperMine,
       },
     ];

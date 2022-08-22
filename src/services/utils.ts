@@ -29,4 +29,13 @@ export default class Utils {
       classes: 'simulator-q-notify-error',
     });
   }
+
+  static camelCaseToTitleCase(text: string | null): string {
+    if (text) {
+      const result = text.replace(/([A-Z])/g, ' $1');
+      return result.charAt(0).toUpperCase() + result.slice(1);
+    } else {
+      return '';
+    }
+  }
 }

@@ -1,17 +1,25 @@
 <template>
   <div>
     <h6>Combat Encounters</h6>
-    <div
+
+    <q-card
       v-for="encounter in combatEncounters"
       v-bind:key="encounter.label"
-      class="row q-mt-md"
+      class="row q-my-md"
     >
-      <q-btn
-        :label="encounter.label"
-        @click="encounter.onclick()"
-        color="primary"
-      />
-    </div>
+      <div class="q-ma-md">
+        <div class="row">
+          <p v-html="encounter.description" />
+        </div>
+        <div class="row">
+          <q-btn
+            :label="encounter.label"
+            @click="encounter.onclick()"
+            color="primary"
+          />
+        </div>
+      </div>
+    </q-card>
   </div>
 </template>
 
@@ -28,6 +36,7 @@ export default defineComponent({
       combatEncounters: ref<
         {
           label: string;
+          description: string;
           onclick: () => void;
         }[]
       >(),
@@ -35,7 +44,12 @@ export default defineComponent({
   },
   created: async function () {
     this.combatEncounters = [
-      { label: 'goblin encampment', onclick: this.raidGoblinEncampment },
+      {
+        label: 'goblin encampment',
+        description:
+          'Raid the Goblin Encampment. Make sure you have a strong weapon!',
+        onclick: this.raidGoblinEncampment,
+      },
       // { label: 'cemetary', onclick: this.raidCemetary },
     ];
   },

@@ -3,27 +3,44 @@
     <h6>Avatar Stats</h6>
     <!-- TODO add checkbox to auto heal after excursion -->
     <q-btn label="heal avatar" @click="healAvatar" color="primary" />
-    <ul>
-      <li>total actions this game: {{ simulationStore.totalActions }}</li>
+
+    <q-list bordered separator class="q-mt-md">
+      <q-item
+        ><q-item-section>
+          <q-item-label class="text-capitalize"
+            >total actions this game</q-item-label
+          >
+          <div>{{ simulationStore.totalActions }}</div></q-item-section
+        ></q-item
+      >
       <!-- <li>total neon spent this game: -</li> -->
-    </ul>
-    <ul>
-      <li>health: {{ avatarStore.health }}</li>
+
+      <q-item
+        ><q-item-section>
+          <q-item-label class="text-capitalize">health</q-item-label>
+          <div>{{ avatarStore.health }}</div></q-item-section
+        ></q-item
+      >
       <!-- <li>initiative: !!</li> -->
-      <li>carrying capacity: {{ getCarryingCapacity() }}</li>
-    </ul>
-    <!-- <ul>
+      <q-item
+        ><q-item-section>
+          <q-item-label class="text-capitalize">carrying capacity</q-item-label>
+          <div>{{ getCarryingCapacity() }}</div></q-item-section
+        ></q-item
+      >
+
+      <!-- <ul>
       <li>strength: -</li>
       <li>dexterity: -</li>
       <li>intelligence: -</li>
     </ul> -->
-    <!-- <ul>
+      <!-- <ul>
       <li>exploration: - / 100</li>
       <li>woodcutting: - / 100</li>
       <li>mining: - / 100</li>
       <li>swordsmanship: - / 100</li>
-      <li>archery: - / 100</li>
-    </ul> -->
+      <li>archery: - / 100</li> -->
+    </q-list>
   </div>
 </template>
 
@@ -59,4 +76,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.q-item__label {
+  color: gray;
+}
+</style>

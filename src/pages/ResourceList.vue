@@ -1,30 +1,20 @@
 <template>
   <div>
     <h6>Resources</h6>
-    <q-list bordered separator>
-      <q-item>
-        <q-item-section>
-          <q-item-label> label</q-item-label>
-          <q-item-label caption>caption</q-item-label>
-          <div>0</div>
-        </q-item-section>
-      </q-item>
-    </q-list>
-
-    <ul>
-      <li>stone: {{ toTwoDecimal(walletStore.stone) }}</li>
-      <li>stick: {{ toTwoDecimal(walletStore.stick) }}</li>
-      <li>plant fiber: {{ toTwoDecimal(walletStore.plantFiber) }}</li>
-      <li>apple: {{ toTwoDecimal(walletStore.apple) }}</li>
-      <li>wolf pelt: {{ walletStore.wolfPelt }}</li>
-    </ul>
-    <ul>
-      <li>cedar log: {{ toTwoDecimal(walletStore.cedarLog) }}</li>
-      <li>pine tar: {{ toTwoDecimal(walletStore.pineTar) }}</li>
-      <li>eagle feather: {{ toTwoDecimal(walletStore.eagleFeather) }}</li>
-      <li>copper ore: {{ toTwoDecimal(walletStore.copperOre) }}</li>
-      <li>ruby: {{ walletStore.ruby }}</li>
-    </ul>
+    <div class="row">
+      <div class="col-6" v-for="(value, key) in resources" v-bind:key="key">
+        <q-list bordered separator dense>
+          <q-item v-for="resource in value" v-bind:key="resource.key">
+            <q-item-section>
+              <q-item-label class="text-capitalize">{{
+                resource.label
+              }}</q-item-label>
+              <div>{{ toTwoDecimal(walletStore[resource.key]) }}</div>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,10 +28,27 @@ export default defineComponent({
   setup() {
     return {
       walletStore: ref<WalletStore>(null as unknown as WalletStore),
+      resources: ref<{ [key: string]: { label: string; key: string }[] }>(),
     };
   },
   created: async function () {
     this.walletStore = useWalletStore();
+    this.resources = {
+      t1: [
+        { label: 'stone', key: 'stone' },
+        { label: 'stick', key: 'stick' },
+        { label: 'plant fiber', key: 'plantFiber' },
+        { label: 'apple', key: 'apple' },
+        { label: 'wolf pelt', key: 'wolfPelt' },
+      ],
+      t2: [
+        { label: 'cedar log', key: 'cedarLog' },
+        { label: 'pine tar', key: 'pineTar' },
+        { label: 'eagle feather', key: 'eagleFeather' },
+        { label: 'copper ore', key: 'copperOre' },
+        { label: 'ruby', key: 'ruby' },
+      ],
+    };
   },
   methods: {
     toTwoDecimal: function (number: number) {
@@ -51,4 +58,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.q-item__label {
+  color: gray;
+}
+</style>
