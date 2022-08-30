@@ -8,6 +8,8 @@ export const useSettingsStore = defineStore('settings', {
     // iterate thru settings and items, which generate their own settings, and the cost for stuff, etc etc
     // then it'll be wicked easy to add and manipulate the settings themselves
 
+    // TODO bake in all settings, how to? just search all services I suppose...
+
     // General
     carryingCapacity: 50,
 

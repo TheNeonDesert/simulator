@@ -3,8 +3,6 @@ import { Item } from 'src/models/Item';
 import _ from 'underscore';
 
 export const useInventoryStore = defineStore('inventory', {
-  // maybe instead of this, just move the actual objects around...
-  // TODO have equipped and unequipped items
   state: (): InventoryStore => ({
     items: [],
     equippedItemIds: {
@@ -48,6 +46,3 @@ export interface InventoryStore {
 }
 
 // TODO okay for equipped items, move from here to Avatar store
-// then do the layout work/feel differently than inventory, so easy for user to see what's up
-// boxes for each slot, empty or whatever it is...
-// on UI show icon label "equipped *" if it's equipped

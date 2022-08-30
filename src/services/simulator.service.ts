@@ -34,6 +34,14 @@ class SimulatorService {
     this.simulationStore.totalActions = 0;
 
     this.inventoryStore.items = [];
+
+    // TODO make this easier too
+    this.inventoryStore.equippedItemIds = {
+      axe: null,
+      pickaxe: null,
+      meleeWeapon: null,
+      rangedWeapon: null,
+    };
   }
 
   repairAllItems() {

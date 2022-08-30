@@ -1,7 +1,7 @@
 <template>
   <div>
     <h6>Avatar Stats</h6>
-    <!-- TODO add checkbox to auto heal after excursion -->
+
     <q-btn label="heal avatar" @click="healAvatar" color="primary" />
 
     <q-list bordered separator class="q-mt-md">
@@ -10,8 +10,9 @@
           <q-item-label class="text-capitalize"
             >total actions this game</q-item-label
           >
-          <div>{{ simulationStore.totalActions }}</div></q-item-section
-        ></q-item
+          <div>{{ simulationStore.totalActions }}</div>
+          <!-- TODO add total time per mining/foraging/etc as an expandable breakdown -->
+        </q-item-section></q-item
       >
       <!-- <li>total neon spent this game: -</li> -->
 

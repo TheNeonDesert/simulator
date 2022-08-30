@@ -14,23 +14,18 @@
               getItemById(itemId)?.name
             }}</q-item-label>
             <q-item-label v-else>None Equipped</q-item-label>
+            <div style="height: 10px"></div>
             <q-item-label caption
               >{{ camelCaseToTitleCase(itemName)
               }}<span v-if="itemId !== null">
-                -
-
-                {{ getItemDurability(itemId) }}
-
-                <!-- {{
-                  (getItemById(itemId)?.durability /
-                    getItemById(itemId)?.startingDurability) *
-                  100
-                }} -->
+                - {{ getItemDurability(itemId) }}
               </span></q-item-label
             >
+            <!-- icon="playlist_remove" -->
             <q-btn
               class="unequip-button"
-              icon="playlist_remove"
+              label="unequip"
+              size="sm"
               @click="unequipItem(itemName)"
               v-if="itemId !== null"
             />
@@ -89,7 +84,7 @@ export default defineComponent({
 }
 
 .unequip-button {
-  margin-top: 8px;
+  margin-top: 29px;
   position: absolute;
   right: 10px;
   top: 8px;

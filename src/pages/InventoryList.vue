@@ -16,12 +16,15 @@
             }}%</q-item-label
           >
         </q-item-section>
+        <!-- icon="playlist_add_checkmark" -->
         <q-btn
           class="equip-button"
           @click="equipItem(item)"
-          icon="playlist_add_checkmark"
+          label="equip"
+          size="sm"
           v-if="!isItemEquipped(item.id)"
         />
+        <i class="equip-button q-mt-xs" style="color: gray" v-else>equipped</i>
       </q-item>
     </q-list>
     <q-list bordered separator v-else>
@@ -88,13 +91,10 @@ export default defineComponent({
   },
   methods: {
     equipItem: function (item: Item) {
-      console.log('equipItem:', item);
-      // check item type
-      console.log(
-        'this.inventoryStore.equippedItemIds:',
-        this.inventoryStore.equippedItemIds
-      );
-      this.inventoryStore.equippedItemIds.axe = item.id;
+      const validItemTypes = ['axe', 'pickaxe', 'meleeWeapon', 'rangedWeapon'];
+      if (item && item.type[0] && validItemTypes.includes(item.type[0])) {
+        this.inventoryStore.equippedItemIds[item.type[0]] = item.id;
+      }
     },
     isItemEquipped: function (itemIdToCheck: number): boolean {
       if (this.inventoryStore.isItemEquipped) {
@@ -149,7 +149,7 @@ export default defineComponent({
 // }
 
 .equip-button {
-  // margin-top: 8px;
+  margin-top: 4px;
   position: absolute;
   right: 10px;
   // top: 8px;

@@ -144,7 +144,7 @@ class StoneDagger extends CItem {
   durability = 4;
   startingDurability = 4;
   actionKeys = ['stab'];
-  type = ['dagger', 'weapon', 'melee'];
+  type = ['meleeWeapon', 'dagger', 'weapon'];
   actions = {
     stab: {
       type: 'meleeAttack',
@@ -161,7 +161,7 @@ class CopperSword extends CItem {
   durability = 80;
   startingDurability = 80;
   actionKeys = ['swing'];
-  type = ['sword', 'weapon', 'melee'];
+  type = ['meleeWeapon', 'sword', 'weapon'];
   actions = {
     swing: {
       type: 'meleeAttack',
@@ -180,7 +180,7 @@ class GoblinSpear extends CItem {
   durability = 120;
   startingDurability = 120;
   actionKeys = ['swing'];
-  type = ['spear', 'weapon', 'melee'];
+  type = ['meleeWeapon', 'spear', 'weapon'];
   actions = {
     swing: {
       type: 'meleeAttack',
@@ -201,7 +201,7 @@ class Sling extends CItem {
   durability = 200;
   startingDurability = 200;
   actionKeys = ['sling'];
-  type = ['sling', 'weapon', 'ranged'];
+  type = ['rangedWeapon', 'sling', 'weapon'];
   actions = {
     sling: {
       type: 'rangedAttack',

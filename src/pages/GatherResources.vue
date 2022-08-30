@@ -63,7 +63,6 @@ export default defineComponent({
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
     };
   },
-  // TODO instead of hover tooltip for locations, add like a little icon and what you can gather there...
   created: async function () {
     this.simulationStore = useSimulationStore();
     this.gatherableResources = [
@@ -100,6 +99,11 @@ export default defineComponent({
         }
       });
     },
+    gatherResources(location: string) {
+      switch (location) {
+
+      }
+    }
     // TODO maybe abstract this all out into a generic runAction() method
     // TODO add a 1000ms wait to encounters, with a loading spinner, to make it feel weighty
     forageAtWilderness: function () {

@@ -40,7 +40,7 @@ export default defineComponent({
   created: async function () {
     this.settingsStore = useSettingsStore();
 
-    // this.settingsFields = _.groupBy(
+    // TODO actually add in all fields
     this.settingsFields = {
       General: [
         {
