@@ -3,7 +3,7 @@
     <h6>Resources</h6>
     <div class="row">
       <div class="col-6" v-for="(value, key) in resources" v-bind:key="key">
-        <q-list bordered separator dense>
+        <q-list dense class="bordered">
           <q-item v-for="resource in value" v-bind:key="resource.key">
             <q-item-section>
               <q-item-label class="text-capitalize">{{

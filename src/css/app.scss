@@ -1,5 +1,36 @@
 // app global css in SCSS form
 
+// TEXT
+
+@font-face {
+  font-family: Montserrat, sans-serif;
+  src: url(../fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+h6 {
+  margin: 20px auto;
+  font-weight: 500;
+  color: $teal;
+}
+
+.default-text {
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  color: $off-white;
+}
+
+.caption-text {
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: $teal;
+
+  &.white {
+    color: $white;
+  }
+}
+
+// NOTIFIACTIONS
 .simulator-q-notify .q-notification__icon {
   color: $positive;
 }
@@ -9,6 +40,10 @@
   color: $negative;
 }
 
-h6 {
-  margin: 20px auto;
+// LIST
+
+.q-list.bordered {
+  & > .q-item {
+    border: 0.5px dashed $off-white;
+  }
 }

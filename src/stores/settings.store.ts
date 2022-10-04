@@ -12,6 +12,7 @@ export const useSettingsStore = defineStore('settings', {
 
     // General
     carryingCapacity: 50,
+    avatarBaseHealth: 100,
 
     // Wilderness Resources
     startingStone: 0,
@@ -80,6 +81,7 @@ export interface SettingsStore {
   [key: string]: number;
   // General
   carryingCapacity: number;
+  avatarBaseHealth: number;
   // Wilderness Starting Resources
   startingStone: number;
   startingStick: number;

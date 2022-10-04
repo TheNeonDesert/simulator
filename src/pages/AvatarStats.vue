@@ -4,7 +4,8 @@
 
     <q-btn label="heal avatar" @click="healAvatar" color="primary" />
 
-    <q-list bordered separator class="q-mt-md">
+    <!-- <q-list bordered separator class="q-mt-md"> -->
+    <q-list class="q-mt-md bordered">
       <q-item
         ><q-item-section>
           <q-item-label class="text-capitalize"
@@ -79,6 +80,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .q-item__label {
-  color: gray;
+  color: $teal;
 }
 </style>

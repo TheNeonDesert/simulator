@@ -45,32 +45,16 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-6 col-md-3 col-12">
-          <avatar-stats class="q-ma-md" />
-        </div>
-        <div class="col-sm-6 col-md-3 col-12">
-          <resource-list class="q-ma-md" />
-        </div>
-        <div class="col-sm-6 col-md-3 col-12">
-          <equipped-items class="q-ma-md" />
-        </div>
-        <div class="col-sm-6 col-md-3 col-12">
-          <inventory-list class="q-ma-md" />
-        </div>
+        <index-page-card><avatar-stats /></index-page-card>
+        <index-page-card><resource-list /></index-page-card>
+        <index-page-card><equipped-items /></index-page-card>
+        <index-page-card><inventory-list /></index-page-card>
       </div>
 
       <div class="row">
-        <div class="col-sm-6 col-md-3 col-12">
-          <crafting-station class="q-ma-md" />
-        </div>
-
-        <div class="col-sm-6 col-md-3 col-12">
-          <gather-resources class="q-ma-md" />
-        </div>
-
-        <div class="col-sm-6 col-md-3 col-12">
-          <combat-encounters class="q-ma-md" />
-        </div>
+        <index-page-card><crafting-station /></index-page-card>
+        <index-page-card><gather-resources /></index-page-card>
+        <index-page-card><combat-encounters /></index-page-card>
       </div>
     </div>
   </q-page>
@@ -91,6 +75,7 @@ import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import IndexPageCard from './IndexPageCard.vue';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -103,6 +88,7 @@ export default defineComponent({
     GatherResources,
     CombatEncounters,
     EquippedItems,
+    IndexPageCard,
   },
   setup() {
     return {
@@ -135,4 +121,11 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.q-page {
+  background-color: $page-backround;
+}
+index-page-card > * {
+  margin: 20px;
+}
+</style>

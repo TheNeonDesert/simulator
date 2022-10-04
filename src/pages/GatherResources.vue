@@ -23,9 +23,10 @@
           <div class="col-1"></div>
           <q-btn
             :label="resource.label"
-            @click="resource.onclick"
+            @click="resource.onclick(resource.location)"
             color="primary"
             class="col-8"
+            :loading="actionLoading[resource.location]"
           ></q-btn>
         </div>
       </div>
@@ -57,10 +58,12 @@ export default defineComponent({
           model: string;
           label: string;
           description: string;
-          onclick: () => void;
+          onclick: (location: string) => void;
+          location: string;
         }[]
       >(),
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
+      actionLoading: ref<{ [location: string]: boolean }>({}),
     };
   },
   created: async function () {
@@ -71,21 +74,24 @@ export default defineComponent({
         label: 'forage at wilderness',
         description:
           'Forage for <u>sticks</u>, <u>stones</u>, <u>plant fibers</u>, and <u>apples</u>. Watch out for <b>wolves</b> though! You might want to bring a <i>dagger</i>...',
-        onclick: this.forageAtWilderness,
+        onclick: this.gatherResources,
+        location: 'wilderness',
       },
       {
         model: 'chopAtCedarForestDuration',
         label: 'chop at cedar forest',
         description:
           'Chop wood to collect <u>cedar logs</u> and pick up the occasional <u>pine tar</u>. Don\t forget to bring a ranged weapon like a <i>sling</i> to fend off the <b>eagles</b>',
-        onclick: this.chopAtCedarForest,
+        onclick: this.gatherResources,
+        location: 'cedarForest',
       },
       {
         model: 'digAtCopperMineDuration',
         label: 'dig at copper mine',
         description:
           'Dig for <u>copper ore</u> but keep an eye out for anything that sparkles.. and any creatures that may want to steal them!',
-        onclick: this.digAtCopperMine,
+        onclick: this.gatherResources,
+        location: 'copperMine',
       },
     ];
   },
@@ -99,41 +105,34 @@ export default defineComponent({
         }
       });
     },
-    gatherResources(location: string) {
-      switch (location) {
-
-      }
-    }
-    // TODO maybe abstract this all out into a generic runAction() method
-    // TODO add a 1000ms wait to encounters, with a loading spinner, to make it feel weighty
-    forageAtWilderness: function () {
+    async gatherResources(location: string) {
       try {
-        const results = resourceGatheringService.forageAtWilderness(
-          this.durationModels.forageAtWildernessDuration
-        );
-        this.displayResults(results);
+        let results;
+        switch (location) {
+          case 'wilderness':
+            results = resourceGatheringService.forageAtWilderness(
+              this.durationModels.forageAtWildernessDuration
+            );
+            break;
+          case 'cedarForest':
+            results = resourceGatheringService.chopAtCedarForest(
+              this.durationModels.chopAtCedarForestDuration
+            );
+            break;
+          case 'copperMine':
+            results = resourceGatheringService.digAtCopperMine(
+              this.durationModels.digAtCopperMineDuration
+            );
+            break;
+        }
+        this.actionLoading[location] = true;
+        await Utils.wait(1000);
+        if (results) this.displayResults(results);
+        // TODO check for auto repair, and then repair..
+        this.actionLoading[location] = false;
       } catch (err) {
         Utils.error(err as string);
-      }
-    },
-    chopAtCedarForest: function () {
-      try {
-        const results = resourceGatheringService.chopAtCedarForest(
-          this.durationModels.chopAtCedarForestDuration
-        );
-        this.displayResults(results);
-      } catch (err) {
-        Utils.error(err as string);
-      }
-    },
-    digAtCopperMine: function () {
-      try {
-        const results = resourceGatheringService.digAtCopperMine(
-          this.durationModels.digAtCopperMineDuration
-        );
-        this.displayResults(results);
-      } catch (err) {
-        Utils.error(err as string);
+        this.actionLoading[location] = false;
       }
     },
   },

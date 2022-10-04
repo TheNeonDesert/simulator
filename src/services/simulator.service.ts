@@ -6,18 +6,21 @@ import {
 } from 'src/stores/simulation.store';
 import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
 import _ from 'underscore';
+import { AvatarStore, useAvatarStore } from 'src/stores/avatar.store';
 
 class SimulatorService {
   private settingsStore: SettingsStore;
   private simulationStore: SimulationStore;
   private walletStore: WalletStore;
   private inventoryStore: InventoryStore;
+  private avatarStore: AvatarStore;
 
   constructor() {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
     this.walletStore = useWalletStore();
     this.inventoryStore = useInventoryStore();
+    this.avatarStore = useAvatarStore();
   }
 
   reset() {
@@ -34,6 +37,8 @@ class SimulatorService {
     this.simulationStore.totalActions = 0;
 
     this.inventoryStore.items = [];
+
+    this.avatarStore.health = this.settingsStore.avatarBaseHealth;
 
     // TODO make this easier too
     this.inventoryStore.equippedItemIds = {

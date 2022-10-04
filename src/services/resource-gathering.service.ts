@@ -149,6 +149,7 @@ class ResourceGatheringService {
       rewards: Rewards,
       results: string[]
     ): [Rewards, string[]] => {
+      // TODO convert to equipped melee weapon
       const dagger = _.find(this.inventoryStore.items, (item) =>
         item.type.includes('dagger')
       );
@@ -180,6 +181,7 @@ class ResourceGatheringService {
   }
 
   chopAtCedarForest(minutes: number): string[] {
+    // TODO switch to equipped axe
     const axe = _.find(this.inventoryStore.items, (item) =>
       item.type.includes('axe')
     );
@@ -192,6 +194,7 @@ class ResourceGatheringService {
       results: string[]
     ): [Rewards, string[]] => {
       const sling = _.find(this.inventoryStore.items, (item) =>
+        // TODO switch to equipped ranged weapon
         item.type.includes('sling')
       );
       if (sling && sling.durability >= sling.actions['sling'].durabilityUsed) {
@@ -226,6 +229,7 @@ class ResourceGatheringService {
   }
 
   digAtCopperMine(minutes: number) {
+    // TODO switch to equipped pickaxe
     const pickaxe = _.find(this.inventoryStore.items, (item) =>
       item.type.includes('pickaxe')
     );
@@ -238,6 +242,7 @@ class ResourceGatheringService {
       results: string[]
     ): [Rewards, string[]] => {
       if (this.settingsStore.chanceKoboldAttackPerAction > Math.random()) {
+        // TODO switch to equipped melee weapon
         const sword = _.find(this.inventoryStore.items, (item) =>
           item.type.includes('sword')
         );

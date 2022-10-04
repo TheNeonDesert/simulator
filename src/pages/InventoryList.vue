@@ -3,8 +3,7 @@
     <h6>Inventory</h6>
 
     <q-list
-      bordered
-      separator
+      class="bordered"
       v-if="inventoryStore.items && inventoryStore.items.length > 0"
     >
       <q-item v-for="item in inventoryStore.items" v-bind:key="item.name">
@@ -27,7 +26,7 @@
         <i class="equip-button q-mt-xs" style="color: gray" v-else>equipped</i>
       </q-item>
     </q-list>
-    <q-list bordered separator v-else>
+    <q-list class="bordered" v-else>
       <q-item
         ><q-item-section
           ><q-item-label
