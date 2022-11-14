@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="default-text">
+  <q-layout view="hHh LpR fFf" class="default-text">
     <q-header elevated>
       <q-toolbar class="caption-text white">
         <q-toolbar-title>
@@ -21,78 +21,94 @@
       </q-toolbar>
     </q-header>
 
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      elevated
+      mini
+      behavior="desktop"
+      persistent
+      no-swipe-backdrop
+      no-swipe-open
+      no-swipe-close
+      class="bg-black side-menu"
+      v-if="$q.screen.gt.sm"
+    >
+      <div class="side-menu">
+        <div>
+          <q-icon name="person"></q-icon>
+          <span style="margin-top: -6px">Avatar</span>
+        </div>
+        <div>
+          <q-icon name="img:icons/hammer-anvil-icon.png"></q-icon>
+          <span>Crafting</span>
+        </div>
+        <div>
+          <q-icon name="img:icons/pickaxe-icon.png"></q-icon>
+          <span>Gather</span>
+        </div>
+        <div>
+          <q-icon name="img:icons/sword-icon.png"></q-icon>
+          <span>Combat</span>
+        </div>
+      </div>
+    </q-drawer>
+
+    <q-footer elevated class="bg-black" v-if="$q.screen.lt.md">
+      <!-- <q-toolbar> -->
+      <!-- <q-toolbar-title>Footer</q-toolbar-title> -->
+      <div class="footer-menu">
+        <div>
+          <q-icon name="person"></q-icon>
+          <span>Avatar</span>
+        </div>
+        <div>
+          <q-icon name="img:icons/hammer-anvil-icon.png"></q-icon>
+          <span>Crafting</span>
+        </div>
+        <div>
+          <q-icon name="img:icons/pickaxe-icon.png"></q-icon>
+          <span>Gather</span>
+        </div>
+        <div>
+          <q-icon name="img:icons/sword-icon.png"></q-icon>
+          <span>Combat</span>
+        </div>
+      </div>
+      <!-- </q-toolbar> -->
+    </q-footer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
-  <q-dialog v-model="showInfoDialog">
-    <q-card>
-      <q-card-section class="q-pt-none">
-        <h6>This simulator is awesome</h6>
-        <p>To be built next</p>
-        <ul>
-          <li>Stats, str dex int</li>
-          <li>Skills, woodcutting mining etc</li>
-          <li>Avatar recompile</li>
-          <li>Neon cost</li>
-        </ul>
-        <p>Current limitations or issues</p>
-        <ul>
-          <li>
-            Only supports one avatar and all stats/items/etc are for that one
-            avatar
-          </li>
-          <li>Unlimited bags lead to unlimited carrying capacity</li>
-        </ul>
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-  <q-dialog v-model="showVersionHistory">
-    <q-card>
-      <q-card-section>
-        <h6>0.0.2</h6>
-        <ul>
-          <li>new styling and layout</li>
-          <li>more info for user on what's going on and what to do</li>
-          <li>equip items by slot</li>
-          <li>auto heal and auto repair</li>
-        </ul>
-        <h6>0.0.1</h6>
-        <ul>
-          <li>initial release</li>
-          <li>basic resources, items, crafting, durability</li>
-          <li>wilderness, cedar forest, copper ore, goblin encampment</li>
-        </ul>
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+  <info-dialog-modal
+    :showInfoDialog="showInfoDialog"
+    @update="showInfoDialog = $event"
+  />
+  <version-history-modal
+    :showVersionHistory="showVersionHistory"
+    @update="showVersionHistory = $event"
+  />
 </template>
-
-<style lang="scss" scoped>
-.q-header {
-  background-color: $black;
-  box-shadow: 0 2px 37px 0 rgba(87, 152, 181, 0.6);
-  border: solid 1px var(--teal-500);
-}
-</style>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import InfoDialogModal from '../modals/InfoDialogModal.vue';
+import VersionHistoryModal from '../modals/VersionHistoryModal.vue';
 
 export default defineComponent({
   name: 'MainLayout',
+  components: {
+    InfoDialogModal,
+    VersionHistoryModal,
+  },
   setup() {
     // TODO add site analytics
     return {
       showInfoDialog: ref<boolean>(false),
       showVersionHistory: ref<boolean>(false),
+      leftDrawerOpen: ref<boolean>(true),
     };
     // TODO modal check for
     // save a cookie or whatever
@@ -123,3 +139,46 @@ export default defineComponent({
   // },
 });
 </script>
+
+<style lang="scss" scoped>
+.q-header {
+  background-color: $black;
+  box-shadow: 0 2px 37px 0 rgba(87, 152, 181, 0.6);
+  border: solid 1px var(--teal-500);
+}
+
+.side-menu {
+  .q-icon {
+    margin-top: 20px;
+    margin-left: 8px;
+    font-size: 40px;
+    cursor: pointer;
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+.footer-menu {
+  display: flex;
+  height: 70px;
+  justify-content: space-evenly;
+  align-items: center;
+
+  > div {
+    .q-icon {
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    span {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+}
+</style>

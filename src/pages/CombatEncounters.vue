@@ -5,7 +5,7 @@
     <q-card
       v-for="encounter in combatEncounters"
       v-bind:key="encounter.label"
-      class="row q-my-md"
+      class="row q-my-md combat-encounter"
     >
       <div class="q-ma-md">
         <div class="row">
@@ -79,4 +79,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.combat-encounter {
+  background-color: $page-backround;
+  box-shadow: 0 1px 5px rgb(255 255 255 / 20%), 0 2px 2px rgb(255 255 255 / 14%),
+    0 3px 1px -2px rgb(255 255 255 / 12%);
+}
+</style>

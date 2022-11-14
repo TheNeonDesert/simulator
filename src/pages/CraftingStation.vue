@@ -11,7 +11,7 @@
     </div>
 
     <q-card
-      class="q-my-md q-mr-md"
+      class="q-my-md q-mr-md crafting-section"
       v-for="(itemGroup, key) in craftableItems"
       v-bind:key="key"
     >
@@ -30,7 +30,7 @@
             style="margin-top: -15px"
             class="row"
             @click="item.onclick(item.itemKey)"
-            color="secondary"
+            color="primary"
             :loading="loading[item.itemKey]"
             :label="item.label"
           />
@@ -151,4 +151,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.crafting-section {
+  background-color: $page-backround;
+  box-shadow: 0 1px 5px rgb(255 255 255 / 20%), 0 2px 2px rgb(255 255 255 / 14%),
+    0 3px 1px -2px rgb(255 255 255 / 12%);
+}
+</style>

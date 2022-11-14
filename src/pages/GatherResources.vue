@@ -5,7 +5,7 @@
     <q-card
       v-for="resource in gatherableResources"
       v-bind:key="resource.model"
-      class="row q-my-md"
+      class="row q-my-md gatherable-resource"
     >
       <div class="q-ma-md">
         <div class="row">
@@ -19,6 +19,7 @@
             outlined
             dense
             class="col-3"
+            label-color="white"
           />
           <div class="col-1"></div>
           <q-btn
@@ -139,4 +140,15 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.gatherable-resource {
+  background-color: $page-backround;
+  box-shadow: 0 1px 5px rgb(255 255 255 / 20%), 0 2px 2px rgb(255 255 255 / 14%),
+    0 3px 1px -2px rgb(255 255 255 / 12%);
+
+  // .q-item__label--caption {
+  // .q-field {
+  //   color: gray;
+  // }
+}
+</style>

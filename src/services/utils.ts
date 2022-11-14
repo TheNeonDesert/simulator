@@ -26,6 +26,7 @@ export default class Utils {
     Notify.create({
       message: text,
       icon: 'error',
+      position: 'top-right',
       classes: 'simulator-q-notify-error',
     });
   }

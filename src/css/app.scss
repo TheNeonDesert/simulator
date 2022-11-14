@@ -30,6 +30,11 @@ h6 {
   }
 }
 
+.q-input,
+.q-field__native {
+  color: $white;
+}
+
 // NOTIFIACTIONS
 .simulator-q-notify .q-notification__icon {
   color: $positive;

@@ -8,7 +8,7 @@
         v-for="(itemId, itemName, idx) in inventoryStore.equippedItemIds"
         v-bind:key="idx"
       >
-        <q-card bordered class="q-my-sm">
+        <q-card bordered class="q-my-sm equipped-item">
           <q-card-section>
             <q-item-label v-if="itemId !== null">{{
               getItemById(itemId)?.name
@@ -88,5 +88,15 @@ export default defineComponent({
   position: absolute;
   right: 10px;
   top: 8px;
+}
+
+.equipped-item {
+  background-color: $page-backround;
+  box-shadow: 0 1px 5px rgb(255 255 255 / 20%), 0 2px 2px rgb(255 255 255 / 14%),
+    0 3px 1px -2px rgb(255 255 255 / 12%);
+
+  .q-item__label--caption {
+    color: gray;
+  }
 }
 </style>
