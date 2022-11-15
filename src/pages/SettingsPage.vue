@@ -25,7 +25,7 @@ import { defineComponent, ref } from 'vue';
 import { SettingsStore, useSettingsStore } from 'src/stores/settings.store';
 
 export default defineComponent({
-  name: 'EditSettings',
+  name: 'SettingsPage',
   setup() {
     return {
       settingsStore: ref<SettingsStore>(null as unknown as SettingsStore),

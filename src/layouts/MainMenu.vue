@@ -34,10 +34,10 @@
         </q-item>
 
         <q-separator dark />
-        <q-item clickable v-close-popup>
+        <q-item clickable v-close-popup @click="$router.push('/settings')">
           <q-item-section>Settings</q-item-section>
         </q-item>
-        <q-item clickable v-close-popup>
+        <q-item clickable v-close-popup @click="reset">
           <q-item-section>Reset</q-item-section>
         </q-item>
         <q-separator dark />
@@ -68,6 +68,7 @@ import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import simulatorService from '../services/simulator.service';
 
 export default defineComponent({
   name: 'MainMenu',
@@ -100,6 +101,9 @@ export default defineComponent({
     },
     autoRepairItemsUpdated: function (newVal: boolean) {
       this.simulationStore.autoRepairItems = newVal;
+    },
+    reset: function () {
+      simulatorService.reset();
     },
   },
 });

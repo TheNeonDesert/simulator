@@ -30,6 +30,10 @@ const routes: RouteRecordRaw[] = [
             path: 'log',
             component: () => import('pages/LogPage.vue'),
           },
+          {
+            path: 'settings',
+            component: () => import('pages/SettingsPage.vue'),
+          },
         ],
       },
     ],
