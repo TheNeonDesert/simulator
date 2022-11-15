@@ -44,6 +44,7 @@ import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import { ActionLogCategory } from 'src/models/ActionLog';
 
 export default defineComponent({
   name: 'GatherResources',
@@ -100,9 +101,9 @@ export default defineComponent({
     displayResults: function (results: string[]) {
       _.each(results, (notification) => {
         if (notification.startsWith('ALERT::')) {
-          Utils.error(notification.substring(7));
+          Utils.error(notification.substring(7), ActionLogCategory.actions);
         } else {
-          Utils.notify(notification);
+          Utils.info(notification, ActionLogCategory.actions);
         }
       });
     },
@@ -132,7 +133,7 @@ export default defineComponent({
         // TODO check for auto repair, and then repair..
         this.actionLoading[location] = false;
       } catch (err) {
-        Utils.error(err as string);
+        Utils.error(err as string, ActionLogCategory.actions);
         this.actionLoading[location] = false;
       }
     },

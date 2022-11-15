@@ -49,6 +49,7 @@ import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
+import { ActionLogCategory } from 'src/models/ActionLog';
 
 export default defineComponent({
   name: 'CraftingStation',
@@ -139,9 +140,9 @@ export default defineComponent({
       try {
         craftingService.craft(itemKey);
         this.wait(itemKey);
-        Utils.notify(`${itemKey} crafted`);
+        Utils.info(`${itemKey} crafted`, ActionLogCategory.actions);
       } catch (err) {
-        Utils.error(err as string);
+        Utils.error(err as string, ActionLogCategory.actions);
       }
     },
     repairAllItems: function () {

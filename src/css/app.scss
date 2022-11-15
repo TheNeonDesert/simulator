@@ -36,13 +36,16 @@ h6 {
 }
 
 // NOTIFIACTIONS
-.simulator-q-notify .q-notification__icon {
+.simulator-q-notify-info .q-notification__icon {
   color: $positive;
 }
 
-.negative,
 .simulator-q-notify-error .q-notification__icon {
   color: $negative;
+}
+
+.simulator-q-notify-warning .q-notification__icon {
+  color: $warning;
 }
 
 // LIST

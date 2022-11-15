@@ -28,6 +28,7 @@ import { defineComponent, ref } from 'vue';
 import combatService from 'src/services/combat.service';
 import _ from 'underscore';
 import Utils from 'src/services/utils';
+import { ActionLogCategory } from 'src/models/ActionLog';
 
 export default defineComponent({
   name: 'CombatEncounters',
@@ -57,9 +58,9 @@ export default defineComponent({
     displayResults: function (results: string[]) {
       _.each(results, (notification) => {
         if (notification.startsWith('ALERT::')) {
-          Utils.error(notification.substring(7));
+          Utils.error(notification.substring(7), ActionLogCategory.combat);
         } else {
-          Utils.notify(notification);
+          Utils.info(notification, ActionLogCategory.combat);
         }
       });
     },
@@ -69,7 +70,7 @@ export default defineComponent({
         const results = combatService.findAndRaidGoblinEncampment();
         this.displayResults(results);
       } catch (err) {
-        Utils.error(err as string);
+        Utils.error(err as string, ActionLogCategory.combat);
       }
     },
     raidCemetary: function () {

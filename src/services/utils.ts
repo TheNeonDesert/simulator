@@ -1,4 +1,8 @@
 import { Notify } from 'quasar';
+import { ActionLogCategory, ActionLogLevel } from 'src/models/ActionLog';
+import { useSimulationStore } from 'src/stores/simulation.store';
+
+const simulationStore = useSimulationStore();
 
 export default class Utils {
   static wait(ms: number) {
@@ -11,20 +15,35 @@ export default class Utils {
 
   // TODO add a settings flag so on runFullSimulation (auto runs) it produces report instead of onscreen notificactions
 
-  static notify(text: string) {
+  static info(message: string, category: ActionLogCategory) {
+    simulationStore.addLog(message, category, ActionLogLevel.info, new Date());
     Notify.create({
-      message: text,
+      message: message,
       icon: 'check_circle',
       position: 'top-right',
-      classes: 'simulator-q-notify',
+      classes: 'simulator-q-notify-info',
     });
   }
 
-  // TODO add all notifications to like a notification log and expose it from the main layout
-
-  static error(text: string) {
+  static warning(message: string, category: ActionLogCategory) {
+    simulationStore.addLog(
+      message,
+      category,
+      ActionLogLevel.warning,
+      new Date()
+    );
     Notify.create({
-      message: text,
+      message: message,
+      icon: 'check_circle',
+      position: 'top-right',
+      classes: 'simulator-q-notify-warning',
+    });
+  }
+
+  static error(message: string, category: ActionLogCategory) {
+    simulationStore.addLog(message, category, ActionLogLevel.error, new Date());
+    Notify.create({
+      message: message,
       icon: 'error',
       position: 'top-right',
       classes: 'simulator-q-notify-error',
