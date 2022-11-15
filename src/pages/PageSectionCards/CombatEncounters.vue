@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import combatService from '../services/combat.service';
+import combatService from 'src/services/combat.service';
 import _ from 'underscore';
 import Utils from 'src/services/utils';
 

@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import avatarService from '../services/avatar.service';
+import avatarService from 'src/services/avatar.service';
 import {
   SimulationStore,
   useSimulationStore,

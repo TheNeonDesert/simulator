@@ -4,9 +4,17 @@
     :update:model-value="update"
     @hide="update(false)"
   >
-    <q-card>
+    <q-card class="bg-black text-white">
       <q-card-section class="q-pt-none">
         <h6>This simulator is awesome</h6>
+        <p>
+          <em
+            >Unlike the real game, this simulator runs without any real crypto,
+            and actions happen instantly instead of the specified duration. The
+            plan is for this simulator to help inform the design and creation of
+            the real game, but who knows where it'll take us...</em
+          >
+        </p>
         <p>To be built next</p>
         <ul>
           <li>Stats, str dex int</li>

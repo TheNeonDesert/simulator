@@ -4,8 +4,12 @@
     :update:model-value="update"
     @hide="update(false)"
   >
-    <q-card>
+    <q-card class="bg-black text-white">
       <q-card-section>
+        <h6>0.0.3</h6>
+        <ul>
+          <li>usability redux and complete app re-org</li>
+        </ul>
         <h6>0.0.2</h6>
         <ul>
           <li>new styling and layout</li>

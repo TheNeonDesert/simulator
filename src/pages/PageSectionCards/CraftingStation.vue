@@ -42,8 +42,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import simulatorService from '../services/simulator.service';
-import craftingService from '../services/crafting.service';
+import simulatorService from '../../services/simulator.service';
+import craftingService from '../../services/crafting.service';
 import Utils from 'src/services/utils';
 import {
   SimulationStore,

@@ -1,4 +1,5 @@
 <template>
+  <!-- refactor these into the owner/caller, so it can be different amount of columns for each page -->
   <div class="col-sm-6 col-md-3 col-12">
     <div class="index-card q-ma-md">
       <slot></slot>

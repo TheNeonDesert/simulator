@@ -5,6 +5,7 @@ import VueMatomo from 'vue-matomo';
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 
 export default boot(async ({ app, router }) => {
+  // TODO remove me?
   app.use(VueMatomo, {
     // Configure your matomo server and site by providing
     host: 'http://ec2-54-162-66-86.compute-1.amazonaws.com/m',
