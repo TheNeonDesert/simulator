@@ -20,7 +20,7 @@ export default class Utils {
     Notify.create({
       message: message,
       icon: 'check_circle',
-      position: 'top-right',
+      // position: 'top-right',
       classes: 'simulator-q-notify-info',
     });
   }
@@ -35,7 +35,7 @@ export default class Utils {
     Notify.create({
       message: message,
       icon: 'check_circle',
-      position: 'top-right',
+      // position: 'top-right',
       classes: 'simulator-q-notify-warning',
     });
   }
@@ -45,7 +45,7 @@ export default class Utils {
     Notify.create({
       message: message,
       icon: 'error',
-      position: 'top-right',
+      // position: 'top-right',
       classes: 'simulator-q-notify-error',
     });
   }

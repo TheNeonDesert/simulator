@@ -54,4 +54,8 @@ h6 {
   & > .q-item {
     border: 0.5px dashed $off-white;
   }
+
+  .q-item__label--caption {
+    color: $gray;
+  }
 }

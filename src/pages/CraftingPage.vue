@@ -2,6 +2,7 @@
   <div class="row">
     <index-page-card><crafting-station /></index-page-card>
     <index-page-card><resource-list /></index-page-card>
+    <index-page-card><equipped-items /></index-page-card>
     <index-page-card><inventory-list /></index-page-card>
   </div>
 </template>
@@ -12,6 +13,7 @@ import InventoryList from './PageSectionCards/InventoryList.vue';
 import ResourceList from './PageSectionCards/ResourceList.vue';
 import CraftingStation from './PageSectionCards/CraftingStation.vue';
 import IndexPageCard from './PageSectionCards/IndexPageCard.vue';
+import EquippedItems from './PageSectionCards/EquippedItems.vue';
 
 export default defineComponent({
   name: 'CraftingPage',
@@ -20,6 +22,7 @@ export default defineComponent({
     InventoryList,
     ResourceList,
     CraftingStation,
+    EquippedItems,
   },
 });
 </script>

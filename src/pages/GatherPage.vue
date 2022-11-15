@@ -3,6 +3,7 @@
     <index-page-card><gather-resources /></index-page-card>
     <index-page-card><resource-list /></index-page-card>
     <index-page-card><equipped-items /></index-page-card>
+    <index-page-card><inventory-list /></index-page-card>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import EquippedItems from './PageSectionCards/EquippedItems.vue';
 import IndexPageCard from './PageSectionCards/IndexPageCard.vue';
 import GatherResources from './PageSectionCards/GatherResources.vue';
 import ResourceList from './PageSectionCards/ResourceList.vue';
+import InventoryList from './PageSectionCards/InventoryList.vue';
 
 export default defineComponent({
   name: 'GatherPage',
@@ -20,6 +22,7 @@ export default defineComponent({
     IndexPageCard,
     GatherResources,
     ResourceList,
+    InventoryList,
   },
 });
 </script>

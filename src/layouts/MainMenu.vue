@@ -24,7 +24,6 @@
               label="Auto Heal Avatar"
           /></q-item-section>
         </q-item>
-        <!-- TODO implement autoRepairItems -->
         <q-item clickable>
           <q-item-section
             ><q-checkbox

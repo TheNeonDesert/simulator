@@ -1,9 +1,9 @@
 <template>
   <div class="row">
+    <index-page-card><combat-encounters /></index-page-card>
     <index-page-card><avatar-stats /></index-page-card>
     <index-page-card><equipped-items /></index-page-card>
     <index-page-card><inventory-list /></index-page-card>
-    <index-page-card><combat-encounters /></index-page-card>
   </div>
 </template>
 

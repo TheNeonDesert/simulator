@@ -45,6 +45,7 @@ import {
   useSimulationStore,
 } from 'src/stores/simulation.store';
 import { ActionLogCategory } from 'src/models/ActionLog';
+import simulatorService from '../../services/simulator.service';
 
 export default defineComponent({
   name: 'GatherResources',
@@ -131,6 +132,9 @@ export default defineComponent({
         await Utils.wait(1000);
         if (results) this.displayResults(results);
         // TODO check for auto repair, and then repair..
+        if (this.simulationStore.autoRepairItems) {
+          simulatorService.repairAllItems();
+        }
         this.actionLoading[location] = false;
       } catch (err) {
         Utils.error(err as string, ActionLogCategory.actions);
