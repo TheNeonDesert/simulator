@@ -27,7 +27,11 @@
 
   <q-footer elevated class="bg-black" v-if="$q.screen.lt.md">
     <div class="footer-menu">
-      <div v-for="(item, idx) in menuItems" v-bind:key="idx">
+      <div
+        v-for="(item, idx) in menuItems"
+        v-bind:key="idx"
+        @click="$router.push(item.route)"
+      >
         <q-icon :name="item.icon"></q-icon>
         <span>{{ item.name }}</span>
       </div>

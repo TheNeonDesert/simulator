@@ -2,6 +2,19 @@
   <div class="q-ma-md">
     <h6>Inventory</h6>
 
+    <div class="row q-my-md">
+      <q-btn
+        :label="
+          simulationStore.autoRepairItems
+            ? 'repair all items (auto)'
+            : 'repair all items'
+        "
+        @click="repairAllItems()"
+        color="primary"
+        :disabled="simulationStore.autoRepairItems"
+      />
+    </div>
+
     <q-list
       class="bordered"
       v-if="inventoryStore.items && inventoryStore.items.length > 0"
@@ -15,7 +28,6 @@
             }}%</q-item-label
           >
         </q-item-section>
-        <!-- icon="playlist_add_checkmark" -->
         <q-btn
           class="equip-button"
           @click="equipItem(item)"
@@ -35,41 +47,6 @@
         ></q-item
       >
     </q-list>
-
-    <!-- TODO group by type -->
-    <!-- <ul v-if="inventoryStore.items && inventoryStore.items.length > 0">
-      <li v-for="(item, idx) in inventoryStore.items" v-bind:key="item.name">
-        <i v-if="item.durability - item.startingDurability"
-          >[{{ (item.durability / item.startingDurability) * 100 }}%]</i
-        > -->
-
-    <!-- TODO maybe get rid of this weird thing and instead allow for "slots" -->
-    <!-- so a melee weapon slot, axe slot, etc.. just check it as the active item for that slot -->
-
-    <!-- TODO move the repair durability function here, and add a toggle to auto-repair after excursions -->
-
-    <!-- <q-icon
-          v-if="idx < inventoryStore.items.length - 1"
-          class="cursor-pointer"
-          name="keyboard_double_arrow_down"
-          @click="moveItemDown(item)"
-        ></q-icon>
-        <q-icon
-          v-if="idx > 0"
-          class="cursor-pointer"
-          name="keyboard_double_arrow_up"
-          @click="moveItemUp(item)"
-        ></q-icon>
-        <q-icon
-          class="cursor-pointer"
-          name="delete"
-          @click="tossItem(item)"
-        ></q-icon>
-      </li>
-    </ul>
-    <ul v-else>
-      none yet... try crafting
-    </ul> -->
   </div>
 </template>
 
@@ -77,16 +54,23 @@
 import { defineComponent, ref } from 'vue';
 import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
 import { Item } from 'src/models/Item';
+import simulatorService from '../../services/simulator.service';
+import {
+  SimulationStore,
+  useSimulationStore,
+} from 'src/stores/simulation.store';
 
 export default defineComponent({
   name: 'InventoryList',
   setup() {
     return {
       inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
+      simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
     };
   },
   created: async function () {
     this.inventoryStore = useInventoryStore();
+    this.simulationStore = useSimulationStore();
   },
   methods: {
     equipItem: function (item: Item) {
@@ -102,32 +86,6 @@ export default defineComponent({
         return false;
       }
     },
-    // moveItemUp: async function (item: Item) {
-    //   for (let i = 0; i < this.inventoryStore.items.length; i++) {
-    //     if (this.inventoryStore.items[i].id === item.id) {
-    //       if (i > 0) {
-    //         const itemToMove = this.inventoryStore.items[i];
-    //         const itemBeingReplaced = this.inventoryStore.items[i - 1];
-    //         this.inventoryStore.items[i - 1] = itemToMove;
-    //         this.inventoryStore.items[i] = itemBeingReplaced;
-    //       }
-    //       return;
-    //     }
-    //   }
-    // },
-    // moveItemDown: async function (item: Item) {
-    //   for (let i = 0; i < this.inventoryStore.items.length; i++) {
-    //     if (this.inventoryStore.items[i].id === item.id) {
-    //       if (i < this.inventoryStore.items.length - 1) {
-    //         const itemToMove = this.inventoryStore.items[i];
-    //         const itemBeingReplaced = this.inventoryStore.items[i + 1];
-    //         this.inventoryStore.items[i + 1] = itemToMove;
-    //         this.inventoryStore.items[i] = itemBeingReplaced;
-    //       }
-    //       return;
-    //     }
-    //   }
-    // },
     tossItem: async function (item: Item) {
       for (let i = 0; i < this.inventoryStore.items.length; i++) {
         if (this.inventoryStore.items[i].id === item.id) {
@@ -136,22 +94,18 @@ export default defineComponent({
         }
       }
     },
+    repairAllItems: function () {
+      simulatorService.repairAllItems();
+    },
   },
 });
 </script>
 
 <style scoped lang="scss">
-// .q-icon {
-//   position: absolute;
-//   right: 10px;
-//   cursor: pointer;
-// }
-
 .equip-button {
   margin-top: 4px;
   position: absolute;
   right: 10px;
-  // top: 8px;
 
   ::v-deep i {
     left: 50px;

@@ -131,7 +131,6 @@ export default defineComponent({
         this.actionLoading[location] = true;
         await Utils.wait(1000);
         if (results) this.displayResults(results);
-        // TODO check for auto repair, and then repair..
         if (this.simulationStore.autoRepairItems) {
           simulatorService.repairAllItems();
         }

@@ -1,14 +1,6 @@
 <template>
   <div>
     <h6>Crafting Station</h6>
-    <div class="row q-mt-md">
-      <!-- TODO move this over towards inventory -->
-      <q-btn
-        label="repair all items"
-        @click="repairAllItems()"
-        color="primary"
-      />
-    </div>
 
     <q-card
       class="q-my-md q-mr-md crafting-section"
@@ -42,7 +34,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import simulatorService from '../../services/simulator.service';
 import craftingService from '../../services/crafting.service';
 import Utils from 'src/services/utils';
 import {
@@ -144,9 +135,6 @@ export default defineComponent({
       } catch (err) {
         Utils.error(err as string, ActionLogCategory.actions);
       }
-    },
-    repairAllItems: function () {
-      simulatorService.repairAllItems();
     },
   },
 });
