@@ -1,38 +1,36 @@
 <template>
   <div>
-    <h6>Equipped Items</h6>
+    <!-- v-for="(itemId, itemName, idx) in inventoryStore.equippedItemIds" -->
 
-    <div class="row">
-      <div
-        class="col-6"
-        v-for="(itemId, itemName, idx) in inventoryStore.equippedItemIds"
-        v-bind:key="idx"
-      >
-        <q-card bordered class="q-my-sm equipped-item">
-          <q-card-section>
-            <q-item-label v-if="itemId !== null">{{
-              getItemById(itemId)?.name
-            }}</q-item-label>
-            <q-item-label v-else>None Equipped</q-item-label>
-            <div style="height: 10px"></div>
-            <q-item-label caption
-              >{{ camelCaseToTitleCase(itemName)
-              }}<span v-if="itemId !== null">
-                - {{ getItemDurability(itemId) }}
-              </span></q-item-label
-            >
-            <!-- icon="playlist_remove" -->
-            <q-btn
-              class="unequip-button"
-              label="unequip"
-              size="sm"
-              @click="unequipItem(itemName)"
-              v-if="itemId !== null"
-            />
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+    <q-card bordered class="q-my-sm equipped-item">
+      <q-card-section>
+        <q-item-label
+          v-if="inventoryStore.equippedItemIds[equipmentKey] !== null"
+          >{{
+            getItemById(inventoryStore.equippedItemIds[equipmentKey])?.name
+          }}</q-item-label
+        >
+        <q-item-label v-else>None Equipped</q-item-label>
+        <div style="height: 10px"></div>
+        <q-item-label caption
+          >{{ camelCaseToTitleCase(equipmentKey)
+          }}<span v-if="inventoryStore.equippedItemIds[equipmentKey] !== null">
+            -
+            {{
+              getItemDurability(inventoryStore.equippedItemIds[equipmentKey])
+            }}
+          </span></q-item-label
+        >
+        <!-- icon="playlist_remove" -->
+        <q-btn
+          class="unequip-button"
+          label="unequip"
+          size="sm"
+          @click="unequipItem(equipmentKey)"
+          v-if="inventoryStore.equippedItemIds[equipmentKey] !== null"
+        />
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -43,16 +41,16 @@ import { Item } from 'src/models/Item';
 import Utils from 'src/services/utils';
 
 export default defineComponent({
-  name: 'EquippedItems',
+  name: 'EquippableItemSlot',
   setup() {
     return {
       inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
     };
   },
   props: {
-    availableSlots: {
-      required: false,
-      type: Array,
+    equipmentKey: {
+      required: true,
+      type: String,
     },
   },
   created: async function () {
@@ -62,15 +60,16 @@ export default defineComponent({
     unequipItem: function (itemName: string | number) {
       this.inventoryStore.equippedItemIds[itemName] = null;
     },
-    getItemById: function (itemId: number): Item | void {
-      if (this.inventoryStore.getItemById) {
+    getItemById: function (itemId: number | null): Item | void {
+      if (this.inventoryStore.getItemById && itemId) {
         return this.inventoryStore.getItemById(itemId);
       }
     },
     camelCaseToTitleCase: function (text: string | number): string {
       return Utils.camelCaseToTitleCase(text as string);
     },
-    getItemDurability: function (itemId: number): string {
+    getItemDurability: function (itemId: number | null): string {
+      if (!itemId) return '';
       const item = this.getItemById(itemId);
       if (item) {
         return (item.durability / item.startingDurability) * 100 + '%';

@@ -34,9 +34,7 @@ class CombatService {
     if (!sword) {
       throw 'Missing item, sword';
     }
-    if (this.avatarStore.health <= 0) {
-      throw 'Out of health';
-    }
+    let avatarHealth = this.avatarStore.health;
 
     _.each(
       _.sortBy(combatLocations['goblinEncampment'].enemies, 'order'),
@@ -63,8 +61,8 @@ class CombatService {
             }
             // defend
             // TODO if armor/shield/dodge/etc
-            this.avatarStore.health -= enemies[enemy.enemyKey].damage;
-            if (this.avatarStore.health <= 0) {
+            avatarHealth -= enemies[enemy.enemyKey].damage;
+            if (avatarHealth <= 0) {
               throw 'Out of health';
             }
           }

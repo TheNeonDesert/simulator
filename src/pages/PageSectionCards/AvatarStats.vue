@@ -2,9 +2,6 @@
   <div>
     <h6>Avatar Stats</h6>
 
-    <q-btn label="heal avatar" @click="healAvatar" color="primary" />
-
-    <!-- <q-list bordered separator class="q-mt-md"> -->
     <q-list class="q-mt-md bordered">
       <q-item
         ><q-item-section>
@@ -12,37 +9,28 @@
             >total actions this game</q-item-label
           >
           <div>{{ simulationStore.totalActions }}</div>
-          <!-- TODO add total time per mining/foraging/etc as an expandable breakdown -->
         </q-item-section></q-item
       >
-      <!-- <li>total neon spent this game: -</li> -->
 
       <q-item
         ><q-item-section>
-          <q-item-label class="text-capitalize">health</q-item-label>
+          <q-item-label class="text-capitalize">max health</q-item-label>
           <div>{{ avatarStore.health }}</div></q-item-section
         ></q-item
       >
-      <!-- <li>initiative: !!</li> -->
       <q-item
         ><q-item-section>
-          <q-item-label class="text-capitalize">carrying capacity</q-item-label>
+          <q-item-label class="text-capitalize"
+            >max carrying capacity</q-item-label
+          >
           <div>{{ getCarryingCapacity() }}</div></q-item-section
         ></q-item
       >
-
-      <!-- <ul>
-      <li>strength: -</li>
-      <li>dexterity: -</li>
-      <li>intelligence: -</li>
-    </ul> -->
-      <!-- <ul>
-      <li>exploration: - / 100</li>
-      <li>woodcutting: - / 100</li>
-      <li>mining: - / 100</li>
-      <li>swordsmanship: - / 100</li>
-      <li>archery: - / 100</li> -->
     </q-list>
+
+    <!-- TODO total NEON spent this game -->
+    <!-- TODO initiative -->
+    <!-- TODO add total time per skill (mining/foraging/etc) as an expandable breakdown -->
   </div>
 </template>
 
@@ -71,15 +59,8 @@ export default defineComponent({
     getCarryingCapacity: function () {
       return avatarService.calculateCarryingCapacity();
     },
-    healAvatar: function () {
-      this.avatarStore.health = 100;
-    },
   },
 });
 </script>
 
-<style scoped lang="scss">
-.q-item__label {
-  color: $teal;
-}
-</style>
+<style scoped lang="scss"></style>

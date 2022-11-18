@@ -52,10 +52,20 @@ h6 {
 
 .q-list.bordered {
   & > .q-item {
-    border: 0.5px dashed $off-white;
+    border: 1px solid $grey-7;
   }
 
   .q-item__label--caption {
     color: $gray;
   }
+}
+
+.q-list {
+  .q-item__label {
+    color: $teal;
+  }
+}
+
+.q-separator {
+  background-color: $grey-7;
 }

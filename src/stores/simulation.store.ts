@@ -9,8 +9,6 @@ import _ from 'underscore';
 export const useSimulationStore = defineStore('simulation', {
   state: () => ({
     // misc site settings
-    showTooltips: true,
-    autoHealAvatar: true,
     autoRepairItems: true,
 
     results: '',
@@ -51,8 +49,6 @@ export interface SimulationStore {
   newline: (line?: string) => void;
   getLogs: ActionLog[];
 
-  showTooltips: boolean;
-  autoHealAvatar: boolean;
   autoRepairItems: boolean;
   results: string;
   totalActions: number;

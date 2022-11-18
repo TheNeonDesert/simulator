@@ -17,13 +17,6 @@ class AvatarService {
   private walletStore: WalletStore;
   private inventoryStore: InventoryStore;
 
-  private skills: { [skill: string]: number } = {
-    woodcutting: 1,
-    mining: 1,
-    swordsmanship: 1,
-    exploration: 1,
-  };
-
   constructor() {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();

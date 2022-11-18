@@ -12,7 +12,7 @@
           <p v-html="resource.description" />
         </div>
         <div class="row">
-          <q-input
+          <!-- <q-input
             v-model.number="durationModels[resource.model]"
             label="Duration"
             type="number"
@@ -20,19 +20,24 @@
             dense
             class="col-3"
             label-color="white"
-          />
-          <div class="col-1"></div>
+          /> -->
+          <!-- <div class="col-1"></div> -->
           <q-btn
             :label="resource.label"
             @click="resource.onclick(resource.location)"
             color="primary"
-            class="col-8"
+            class="col-12"
             :loading="actionLoading[resource.location]"
           ></q-btn>
         </div>
       </div>
     </q-card>
   </div>
+
+  <loadout-screen
+    :showLoadoutScreen="showLoadoutScreen"
+    @update="showLoadoutScreen = $event"
+  />
 </template>
 
 <script lang="ts">
@@ -46,9 +51,11 @@ import {
 } from 'src/stores/simulation.store';
 import { ActionLogCategory } from 'src/models/ActionLog';
 import simulatorService from '../../services/simulator.service';
+import LoadoutScreen from '../Loadout/LoadoutScreen.vue';
 
 export default defineComponent({
   name: 'GatherResources',
+  components: { LoadoutScreen },
   setup() {
     return {
       durationModels: ref<{ [key: string]: number }>({
@@ -67,6 +74,7 @@ export default defineComponent({
       >(),
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
       actionLoading: ref<{ [location: string]: boolean }>({}),
+      showLoadoutScreen: ref<boolean>(false),
     };
   },
   created: async function () {
@@ -109,6 +117,9 @@ export default defineComponent({
       });
     },
     async gatherResources(location: string) {
+      this.showLoadoutScreen = true;
+      return;
+
       try {
         let results;
         switch (location) {

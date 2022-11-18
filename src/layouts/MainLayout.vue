@@ -17,6 +17,12 @@ export default defineComponent({
   name: 'MainLayout',
   components: { HeaderSection, NavigationLinks },
   setup() {
+    // TODO setup site-wide resizer capturer and set screen size to xs, sm, md, lg, etc... and also set height
+    // then can customize UI all around based on that
+    window.addEventListener('resize', () => {
+      // console.log('resized'); -> // update store
+    });
+
     // TODO add site analytics
     // TODO modal check for
     // save a cookie or whatever
@@ -25,26 +31,6 @@ export default defineComponent({
     // in the real game for ex all transactions take time and crypto gas or other real tokens
     // here you can do a 12 hour job in 1 second and nothing is tied to any crypto in any way
   },
-  // created: function () {
-  //   console.log('MainLayout created:');
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   var _paq = ((window as any)._paq = (window as any)._paq || []);
-  //   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  //   _paq.push(['trackPageView']);
-  //   _paq.push(['enableLinkTracking']);
-  //   (function () {
-  //     var u = 'http://ec2-54-162-66-86.compute-1.amazonaws.com/matomo/';
-  //     _paq.push(['setTrackerUrl', u + 'matomo.php']);
-  //     _paq.push(['setSiteId', '1']);
-  //     var d = document,
-  //       g = d.createElement('script'),
-  //       s = d.getElementsByTagName('script')[0];
-  //     g.async = true;
-  //     g.src = u + 'matomo.js';
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //     (s.parentNode as any).insertBefore(g, s);
-  //   })();
-  // },
 });
 </script>
 

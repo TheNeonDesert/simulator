@@ -8,23 +8,6 @@
     >
       <q-list>
         <q-item clickable>
-          <q-item-section>
-            <q-checkbox
-              @update:model-value="showTooltipsUpdated"
-              :model-value="simulationStore.showTooltips"
-              label="Show Tooltips"
-          /></q-item-section>
-        </q-item>
-        <!-- TODO implement autoHealAvatar -->
-        <q-item clickable>
-          <q-item-section
-            ><q-checkbox
-              @update:model-value="autoHealAvatarUpdated"
-              :model-value="simulationStore.autoHealAvatar"
-              label="Auto Heal Avatar"
-          /></q-item-section>
-        </q-item>
-        <q-item clickable>
           <q-item-section
             ><q-checkbox
               @update:model-value="autoRepairItemsUpdated"
@@ -93,12 +76,6 @@ export default defineComponent({
     this.simulationStore = useSimulationStore();
   },
   methods: {
-    showTooltipsUpdated: function (newVal: boolean) {
-      this.simulationStore.showTooltips = newVal;
-    },
-    autoHealAvatarUpdated: function (newVal: boolean) {
-      this.simulationStore.autoHealAvatar = newVal;
-    },
     autoRepairItemsUpdated: function (newVal: boolean) {
       this.simulationStore.autoRepairItems = newVal;
     },

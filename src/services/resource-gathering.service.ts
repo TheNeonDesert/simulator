@@ -10,18 +10,21 @@ import avatarService from './avatar.service';
 import _ from 'underscore';
 import { Rewards } from 'src/models/Rewards';
 import resourceGatheringLocations from 'src/gamedata/resource-gathering-locations';
+import { AvatarStore, useAvatarStore } from 'src/stores/avatar.store';
 
 class ResourceGatheringService {
   private settingsStore: SettingsStore;
   private simulationStore: SimulationStore;
   private walletStore: WalletStore;
   private inventoryStore: InventoryStore;
+  private avatarStore: AvatarStore;
 
   constructor() {
     this.settingsStore = useSettingsStore();
     this.simulationStore = useSimulationStore();
     this.walletStore = useWalletStore();
     this.inventoryStore = useInventoryStore();
+    this.avatarStore = useAvatarStore();
   }
 
   genericResourceGathering(options: {
@@ -30,6 +33,7 @@ class ResourceGatheringService {
     actionKey?: string;
     useItemAction?: boolean;
     minutes: number;
+    skillKey?: string;
     randomEncounterCallback: (
       rewards: Rewards,
       results: string[]
@@ -50,6 +54,9 @@ class ResourceGatheringService {
     let i;
     let results = [] as string[];
     let atCapacity = false;
+    const resourceGainMultiplier = options.skillKey
+      ? this.avatarStore.skills[options.skillKey]
+      : 1;
     for (i = 0; i < options.minutes; i++) {
       // random encounters
       if (resourceGatheringLocations[options.locationKey].randomEncounters) {
@@ -99,7 +106,8 @@ class ResourceGatheringService {
           break;
         } else {
           rewards[reward.resourceKey] +=
-            this.settingsStore[reward.quantityStoreKey];
+            this.settingsStore[reward.quantityStoreKey] *
+            resourceGainMultiplier;
           carrying += this.settingsStore[reward.quantityStoreKey];
         }
       }
@@ -125,7 +133,7 @@ class ResourceGatheringService {
         break;
       }
     }
-    // collect
+    // collect rewards
     _.each(
       resourceGatheringLocations[options.locationKey].rewards,
       (reward) => {
@@ -134,7 +142,14 @@ class ResourceGatheringService {
           rewards[reward.resourceKey];
       }
     );
+    // collect skill gain
+
+    // skill gain
+    // add whatever skill gain there is...
+
     this.simulationStore.totalActions += i;
+
+    // TODO increment avatar's skill points
 
     results.push(
       `${
@@ -217,6 +232,7 @@ class ResourceGatheringService {
       locationKey: 'cedarForest',
       item: axe,
       actionKey: 'chop',
+      skillKey: 'woodcutting',
       useItemAction: true,
       minutes: minutes,
       randomEncounterCallback: randomEncounterCallback,
@@ -270,6 +286,7 @@ class ResourceGatheringService {
       actionKey: 'dig',
       useItemAction: true,
       minutes: minutes,
+      skillKey: 'mining',
       randomEncounterCallback: randomEncounterCallback,
     });
 
