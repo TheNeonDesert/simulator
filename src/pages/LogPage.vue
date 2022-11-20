@@ -1,6 +1,14 @@
 <template>
   <div class="text-white">
     <q-list dark bordered separator>
+      <q-list
+        v-if="!simulationStore.getLogs || simulationStore.getLogs.length <= 0"
+      >
+        <q-item-section>
+          <q-item-label>No log entries yet...</q-item-label>
+        </q-item-section></q-list
+      >
+
       <q-item
         clickable
         v-ripple

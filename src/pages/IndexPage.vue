@@ -15,5 +15,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .q-page {
   background-color: $page-backround;
+  padding: 24px;
+
+  @media (max-width: $breakpoint-sm-max) {
+    padding: 4px;
+  }
 }
 </style>

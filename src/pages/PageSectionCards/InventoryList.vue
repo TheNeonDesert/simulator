@@ -53,6 +53,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { AvatarStore, useAvatarStore } from 'src/stores/avatar.store';
 import { Item } from 'src/models/Item';
 import simulatorService from '../../services/simulator.service';
 import {
@@ -65,23 +66,25 @@ export default defineComponent({
   setup() {
     return {
       inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
+      avatarStore: ref<AvatarStore>(null as unknown as AvatarStore),
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
     };
   },
   created: async function () {
     this.inventoryStore = useInventoryStore();
+    this.avatarStore = useAvatarStore();
     this.simulationStore = useSimulationStore();
   },
   methods: {
     equipItem: function (item: Item) {
       const validItemTypes = ['axe', 'pickaxe', 'meleeWeapon', 'rangedWeapon'];
       if (item && item.type[0] && validItemTypes.includes(item.type[0])) {
-        this.inventoryStore.equippedItemIds[item.type[0]] = item.id;
+        this.avatarStore.equippedItemIds[item.type[0]] = item.id;
       }
     },
     isItemEquipped: function (itemIdToCheck: number): boolean {
-      if (this.inventoryStore.isItemEquipped) {
-        return this.inventoryStore.isItemEquipped(itemIdToCheck);
+      if (this.avatarStore.isItemEquipped) {
+        return this.avatarStore.isItemEquipped(itemIdToCheck);
       } else {
         return false;
       }

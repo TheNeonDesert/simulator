@@ -30,12 +30,14 @@ h6 {
   }
 }
 
+// INPUT
+
 .q-input,
 .q-field__native {
   color: $white;
 }
 
-// NOTIFIACTIONS
+// NOTIFIACTION
 .simulator-q-notify-info .q-notification__icon {
   color: $positive;
 }
@@ -68,4 +70,15 @@ h6 {
 
 .q-separator {
   background-color: $grey-7;
+}
+
+// MODAL
+
+.q-dialog__inner {
+  .q-card {
+    background: #000000;
+    border: 0.5px solid #28607c;
+    box-shadow: 0 0 20px 0 rgba(34, 115, 143, 0.6);
+    border-radius: 8px;
+  }
 }

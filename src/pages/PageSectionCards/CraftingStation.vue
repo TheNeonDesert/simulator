@@ -1,9 +1,11 @@
 <template>
   <div>
     <h6>Crafting Station</h6>
-
+    <div class="q-pa-xs bg-white">
+      <q-img src="images/locations/crafting-table-wide.jpg" />
+    </div>
     <q-card
-      class="q-my-md q-mr-md crafting-section"
+      class="q-my-md crafting-section"
       v-for="(itemGroup, key) in craftableItems"
       v-bind:key="key"
     >

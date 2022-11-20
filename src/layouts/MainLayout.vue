@@ -16,21 +16,17 @@ import NavigationLinks from './NavigationLinks.vue';
 export default defineComponent({
   name: 'MainLayout',
   components: { HeaderSection, NavigationLinks },
-  setup() {
-    // TODO setup site-wide resizer capturer and set screen size to xs, sm, md, lg, etc... and also set height
-    // then can customize UI all around based on that
-    window.addEventListener('resize', () => {
-      // console.log('resized'); -> // update store
-    });
+  // setup() {
+  // TODO setup site-wide resizer capturer and set screen size to xs, sm, md, lg, etc... and also set height
+  // then can customize UI all around based on that
+  // window.addEventListener('resize', () => {
+  // console.log('resized'); -> // update store
+  // screen width:     mobile, tablet, laptop, huge, and short versions for each
+  // just save it to a store, and make it easy to consume
+  // });
 
-    // TODO add site analytics
-    // TODO modal check for
-    // save a cookie or whatever
-    // Want a quick tour? You can always view the tutorial again from help page - Yes or Nah
-    // not real crypto, simulation for a game I'm building
-    // in the real game for ex all transactions take time and crypto gas or other real tokens
-    // here you can do a 12 hour job in 1 second and nothing is tied to any crypto in any way
-  },
+  // TODO add site analytics
+  // },
 });
 </script>
 

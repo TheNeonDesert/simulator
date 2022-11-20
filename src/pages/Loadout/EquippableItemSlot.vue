@@ -1,24 +1,21 @@
 <template>
   <div>
-    <!-- v-for="(itemId, itemName, idx) in inventoryStore.equippedItemIds" -->
-
-    <q-card bordered class="q-my-sm equipped-item">
+    <q-card bordered class="q-my-sm equipped-item cursor-pointer">
+      <q-menu>pick your item</q-menu>
       <q-card-section>
         <q-item-label
-          v-if="inventoryStore.equippedItemIds[equipmentKey] !== null"
+          v-if="avatarStore.equippedItemIds[equipmentKey] !== null"
           >{{
-            getItemById(inventoryStore.equippedItemIds[equipmentKey])?.name
+            getItemById(avatarStore.equippedItemIds[equipmentKey])?.name
           }}</q-item-label
         >
         <q-item-label v-else>None Equipped</q-item-label>
         <div style="height: 10px"></div>
         <q-item-label caption
           >{{ camelCaseToTitleCase(equipmentKey)
-          }}<span v-if="inventoryStore.equippedItemIds[equipmentKey] !== null">
+          }}<span v-if="avatarStore.equippedItemIds[equipmentKey] !== null">
             -
-            {{
-              getItemDurability(inventoryStore.equippedItemIds[equipmentKey])
-            }}
+            {{ getItemDurability(avatarStore.equippedItemIds[equipmentKey]) }}
           </span></q-item-label
         >
         <!-- icon="playlist_remove" -->
@@ -27,7 +24,7 @@
           label="unequip"
           size="sm"
           @click="unequipItem(equipmentKey)"
-          v-if="inventoryStore.equippedItemIds[equipmentKey] !== null"
+          v-if="avatarStore.equippedItemIds[equipmentKey] !== null"
         />
       </q-card-section>
     </q-card>
@@ -37,6 +34,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
+import { AvatarStore, useAvatarStore } from 'src/stores/avatar.store';
 import { Item } from 'src/models/Item';
 import Utils from 'src/services/utils';
 
@@ -45,6 +43,7 @@ export default defineComponent({
   setup() {
     return {
       inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
+      avatarStore: ref<AvatarStore>(null as unknown as AvatarStore),
     };
   },
   props: {
@@ -55,10 +54,11 @@ export default defineComponent({
   },
   created: async function () {
     this.inventoryStore = useInventoryStore();
+    this.avatarStore = useAvatarStore();
   },
   methods: {
     unequipItem: function (itemName: string | number) {
-      this.inventoryStore.equippedItemIds[itemName] = null;
+      this.avatarStore.equippedItemIds[itemName] = null;
     },
     getItemById: function (itemId: number | null): Item | void {
       if (this.inventoryStore.getItemById && itemId) {

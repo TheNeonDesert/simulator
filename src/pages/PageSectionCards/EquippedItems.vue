@@ -2,7 +2,9 @@
   <div>
     <h6>Equipped Items</h6>
 
-    <div class="row">
+    <equippable-item-slot equipmentKey="meleeWeapon" />
+
+    <!-- <div class="row">
       <div
         class="col-6"
         v-for="(itemId, itemName, idx) in inventoryStore.equippedItemIds"
@@ -21,7 +23,6 @@
                 - {{ getItemDurability(itemId) }}
               </span></q-item-label
             >
-            <!-- icon="playlist_remove" -->
             <q-btn
               class="unequip-button"
               label="unequip"
@@ -32,7 +33,7 @@
           </q-card-section>
         </q-card>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,8 +43,11 @@ import { InventoryStore, useInventoryStore } from 'src/stores/inventory.store';
 import { Item } from 'src/models/Item';
 import Utils from 'src/services/utils';
 
+import EquippableItemSlot from '../Loadout/EquippableItemSlot.vue';
+
 export default defineComponent({
   name: 'EquippedItems',
+  components: { EquippableItemSlot },
   setup() {
     return {
       inventoryStore: ref<InventoryStore>(null as unknown as InventoryStore),
@@ -59,9 +63,9 @@ export default defineComponent({
     this.inventoryStore = useInventoryStore();
   },
   methods: {
-    unequipItem: function (itemName: string | number) {
-      this.inventoryStore.equippedItemIds[itemName] = null;
-    },
+    // unequipItem: function (itemName: string | number) {
+    //   this.avatarStore.equippedItemIds[itemName] = null;
+    // },
     getItemById: function (itemId: number): Item | void {
       if (this.inventoryStore.getItemById) {
         return this.inventoryStore.getItemById(itemId);

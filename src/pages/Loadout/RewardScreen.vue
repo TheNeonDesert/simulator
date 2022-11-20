@@ -1,19 +1,15 @@
 <template>
   <q-dialog
-    :model-value="showInfoDialog"
+    :model-value="showRewardScreen"
     :update:model-value="update"
     @hide="update(false)"
   >
-    load screen here wilderness pick your avatar want to bring a dagger? ->
-    rewards screen this many wolf attacks, losing this many resources and
-    whatever wolf pelts and this much stuff gained
-
     <q-card class="bg-black text-white">
       <q-card-section class="q-pt-none">
-        <h6>simulator</h6>
-        <ul>
-          <li>Neon</li>
-        </ul>
+        <h6>Rewards</h6>
+        <div class="q-pa-xs bg-white">
+          <q-img src="images/reward-chest.jpg" />
+        </div>
       </q-card-section>
 
       <q-card-actions align="right">
@@ -27,9 +23,9 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'LoadoutScreen',
+  name: 'RewardScreen',
   props: {
-    showInfoDialog: {
+    showRewardScreen: {
       required: true,
       type: Boolean,
     },

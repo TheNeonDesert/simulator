@@ -41,7 +41,7 @@ class SimulatorService {
     this.avatarStore.health = this.settingsStore.avatarBaseHealth;
 
     // TODO make this easier too
-    this.inventoryStore.equippedItemIds = {
+    this.avatarStore.equippedItemIds = {
       axe: null,
       pickaxe: null,
       meleeWeapon: null,
