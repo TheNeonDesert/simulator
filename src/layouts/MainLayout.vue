@@ -6,16 +6,33 @@
       <router-view />
     </q-page-container>
   </q-layout>
+  <welcome-modal
+    :showWelcomeModal="showWelcomeModal"
+    @update="showWelcomeModal = $event"
+  />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import HeaderSection from './HeaderSection.vue';
 import NavigationLinks from './NavigationLinks.vue';
+import WelcomeModal from '../modals/WelcomeModal.vue';
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { HeaderSection, NavigationLinks },
+  components: { HeaderSection, NavigationLinks, WelcomeModal },
+  setup() {
+    return {
+      showWelcomeModal: ref<boolean>(false),
+    };
+  },
+  created: async function () {
+    const seen = localStorage.getItem('seenWelcome');
+    if (!seen || seen !== 'v003') {
+      this.showWelcomeModal = true;
+      localStorage.setItem('seenWelcome', 'v003');
+    }
+  },
   // setup() {
   // TODO setup site-wide resizer capturer and set screen size to xs, sm, md, lg, etc... and also set height
   // then can customize UI all around based on that

@@ -8,7 +8,7 @@
 }
 
 h6 {
-  margin: 20px auto;
+  margin: 0 auto 20px auto;
   font-weight: 500;
   color: $teal;
 }
@@ -76,9 +76,43 @@ h6 {
 
 .q-dialog__inner {
   .q-card {
+    display: flex;
+    flex-direction: column;
     background: #000000;
     border: 0.5px solid #28607c;
     box-shadow: 0 0 20px 0 rgba(34, 115, 143, 0.6);
     border-radius: 8px;
+
+    .q-card__actions {
+      margin-top: auto;
+    }
+
+    .close-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 40px;
+      margin: 10px;
+      z-index: 3;
+      cursor: pointer;
+    }
+
+    // size & responsiveness
+
+    min-width: 560px;
+    min-height: calc(100vh - 48px);
+    @media (max-width: $breakpoint-md-max) {
+      min-width: 400px;
+    }
+    @media (max-width: $breakpoint-sm-max) {
+      min-width: 90vw;
+    }
+
+    @media (max-width: $breakpoint-sm-max) {
+      h6:first-of-type {
+        margin-top: 15px;
+        padding-right: 30px;
+      }
+    }
   }
 }

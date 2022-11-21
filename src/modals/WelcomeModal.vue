@@ -1,6 +1,6 @@
 <template>
   <q-dialog
-    :model-value="showTutorialModal"
+    :model-value="showWelcomeModal"
     :update:model-value="update"
     @hide="update(false)"
   >
@@ -70,7 +70,7 @@ export default defineComponent({
   name: 'WelcomeModal',
   components: { VersionHistoryModal },
   props: {
-    showTutorialModal: {
+    showWelcomeModal: {
       required: true,
       type: Boolean,
     },
@@ -89,20 +89,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-.close-icon {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 40px;
-  margin: 10px;
-  z-index: 3;
-  cursor: pointer;
-}
-
-.q-card {
-  @media (max-width: $breakpoint-sm-max) {
-    padding-top: 25px;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

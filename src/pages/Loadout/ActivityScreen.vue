@@ -41,10 +41,10 @@ export default defineComponent({
   },
   watch: {
     showActivityScreen: function () {
-      setTimeout(() => {
-        this.$emit('update', false);
-        this.showRewardScreen = true;
-      }, 4000);
+      // setTimeout(() => {
+      //   this.$emit('update', false);
+      //   this.showRewardScreen = true;
+      // }, 4000);
     },
   },
   emits: ['update'],

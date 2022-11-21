@@ -1,6 +1,9 @@
 <template>
   <div>
     <h6>Skills</h6>
+    <div class="q-pa-xs bg-white">
+      <q-img src="images/neon-avatar-boulder.jpg" />
+    </div>
     <q-list class="q-mt-md bordered">
       <q-item v-for="skill in skillKeys" :key="skill">
         <q-item-section>

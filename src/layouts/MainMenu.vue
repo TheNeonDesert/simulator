@@ -20,46 +20,40 @@
         <!-- <q-item clickable v-close-popup @click="$router.push('/settings')">
           <q-item-section>Settings</q-item-section>
         </q-item> -->
-        <q-item clickable v-close-popup @click="reset">
+        <q-item clickable v-close-popup @click="confirmResetModal = true">
           <q-item-section>Reset</q-item-section>
         </q-item>
         <q-separator dark />
-        <q-item clickable v-close-popup @click="showTutorialModal = true">
+        <q-item clickable v-close-popup @click="showWelcomeModal = true">
           <q-item-section>Welcome</q-item-section>
         </q-item>
-        <!-- <q-item clickable v-close-popup @click="showVersionHistory = true">
-          <q-item-section>v0.0.3</q-item-section>
-        </q-item> -->
       </q-list>
     </q-menu>
   </div>
   <welcome-modal
-    :showTutorialModal="showTutorialModal"
-    @update="showTutorialModal = $event"
+    :showWelcomeModal="showWelcomeModal"
+    @update="showWelcomeModal = $event"
   />
-  <!-- <version-history-modal
-    :showVersionHistory="showVersionHistory"
-    @update="showVersionHistory = $event"
-  /> -->
+  <confirm-reset-modal
+    :confirmResetModal="confirmResetModal"
+    @update="confirmResetModal = $event"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-// import VersionHistoryModal from '../modals/VersionHistoryModal.vue';
 import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
-import simulatorService from '../services/simulator.service';
-import Utils from 'src/services/utils';
-import { ActionLogCategory } from 'src/models/ActionLog';
 import WelcomeModal from '../modals/WelcomeModal.vue';
+import ConfirmResetModal from '../modals/ConfirmResetModal.vue';
 
 export default defineComponent({
   name: 'MainMenu',
   components: {
-    // VersionHistoryModal,
     WelcomeModal,
+    ConfirmResetModal,
   },
   props: {
     mobile: {
@@ -70,26 +64,16 @@ export default defineComponent({
   setup() {
     return {
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
-      // showVersionHistory: ref<boolean>(false),
-      showTutorialModal: ref<boolean>(false),
+      showWelcomeModal: ref<boolean>(false),
+      confirmResetModal: ref<boolean>(false),
     };
   },
   created: async function () {
     this.simulationStore = useSimulationStore();
-    const seen = localStorage.getItem('seenWelcomeV003');
-    if (!seen) {
-      this.showTutorialModal = true;
-    }
   },
   methods: {
     autoRepairItemsUpdated: function (newVal: boolean) {
       this.simulationStore.autoRepairItems = newVal;
-    },
-    reset: function () {
-      // TODO do a double check modal, are you sure?
-      this.$router.push('/');
-      Utils.info('Simulation reset', ActionLogCategory.world);
-      simulatorService.reset();
     },
   },
 });

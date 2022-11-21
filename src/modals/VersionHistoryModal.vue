@@ -5,16 +5,19 @@
     @hide="update(false)"
   >
     <q-card class="bg-black text-white">
+      <span class="close-icon" v-close-popup>
+        <q-img src="icons/close-icon.png" />
+      </span>
       <q-card-section>
         <h6>0.0.3</h6>
         <ul>
-          <li>usability redux and complete app re-org</li>
+          <li>new styling and layout</li>
+          <li>equip items by slot</li>
         </ul>
         <h6>0.0.2</h6>
         <ul>
-          <li>new styling and layout</li>
           <li>more info for user on what's going on and what to do</li>
-          <li>equip items by slot</li>
+          <li>inventory management</li>
           <li>auto heal and auto repair</li>
         </ul>
         <h6>0.0.1</h6>
@@ -25,7 +28,14 @@
         </ul>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn
+          class="q-mr-md q-mb-md"
+          outline
+          label="OK"
+          color="white"
+          v-close-popup
+          style="margin-top: auto"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>

@@ -1,7 +1,9 @@
 <template>
   <div>
     <h6>Avatar Stats</h6>
-
+    <div class="q-pa-xs bg-white">
+      <q-img src="images/neon-light-bulbs.jpg" />
+    </div>
     <q-list class="q-mt-md bordered">
       <q-item
         ><q-item-section>
