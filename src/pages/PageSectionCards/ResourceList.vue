@@ -5,11 +5,29 @@
       <div class="col-6" v-for="(value, key) in resources" v-bind:key="key">
         <q-list dense class="bordered">
           <q-item v-for="resource in value" v-bind:key="resource.key">
-            <q-item-section>
-              <q-item-label class="text-capitalize">{{
-                resource.label
-              }}</q-item-label>
-              <div>{{ toTwoDecimal(walletStore[resource.key]) }}</div>
+            <!-- <q-item-section avatar> -->
+            <!-- <div class="q-pa-sm"> -->
+            <!-- <q-img :src="`icons/${resource.key}.jpg`" /> -->
+            <!-- </div> -->
+            <!-- </q-item-section> -->
+            <q-item-section
+              ><div class="row">
+                <div class="col-8">
+                  <q-item-label class="text-capitalize">{{
+                    resource.label
+                  }}</q-item-label>
+                  <div>{{ toTwoDecimal(walletStore[resource.key]) }}</div>
+                </div>
+                <div class="col-4 flex flex-center">
+                  <!-- <div class="q-ma-sm"> -->
+                  <!-- <div class="q-pa-xs bg-white"> -->
+                  <q-img
+                    :src="`icons/${resource.key}.png`"
+                    class="resource-icon"
+                  />
+                  <!-- </div> -->
+                </div>
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -61,5 +79,11 @@ export default defineComponent({
 <style scoped lang="scss">
 .q-item__label {
   color: gray;
+}
+
+.resource-icon :deep(img) {
+  padding: 5px;
+  background-color: #000;
+  margin: auto;
 }
 </style>

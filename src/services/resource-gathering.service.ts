@@ -11,6 +11,7 @@ import _ from 'underscore';
 import { Rewards } from 'src/models/Rewards';
 import resourceGatheringLocations from 'src/gamedata/resource-gathering-locations';
 import { AvatarStore, useAvatarStore } from 'src/stores/avatar.store';
+import Utils from './utils';
 
 class ResourceGatheringService {
   private settingsStore: SettingsStore;
@@ -36,8 +37,9 @@ class ResourceGatheringService {
     skillKey?: string;
     randomEncounterCallback: (
       rewards: Rewards,
-      results: string[]
-    ) => [Rewards, string[]];
+      results: string[],
+      carrying: number
+    ) => [Rewards, string[], number];
   }): string[] {
     if (!resourceGatheringLocations[options.locationKey]) {
       throw `Unknown location: ${options.locationKey}`;
@@ -69,9 +71,10 @@ class ResourceGatheringService {
             if (
               this.settingsStore[encounter.encounterChanceKey] > Math.random()
             ) {
-              [rewards, results] = options.randomEncounterCallback(
+              [rewards, results, carrying] = options.randomEncounterCallback(
                 rewards,
-                results
+                results,
+                carrying
               );
             }
           }
@@ -101,7 +104,11 @@ class ResourceGatheringService {
           carrying + this.settingsStore[reward.quantityStoreKey] >=
           avatarService.calculateCarryingCapacity()
         ) {
-          results.push('Carrying Capacity Reached');
+          results.push(
+            `Carrying capacity reached, max ${Utils.toTwoDecimal(
+              avatarService.calculateCarryingCapacity()
+            )}`
+          );
           atCapacity = true;
           break;
         } else {
@@ -133,15 +140,40 @@ class ResourceGatheringService {
         break;
       }
     }
+
+    results.push(
+      `${
+        resourceGatheringLocations[options.locationKey].activityName
+      } complete, used ${i} of ${options.minutes} actions (${
+        options.minutes
+      } minutes)`
+    );
+
     // collect rewards
+    let resourcesGained = '';
     _.each(
       resourceGatheringLocations[options.locationKey].rewards,
       (reward) => {
         this.walletStore[reward.resourceKey] =
           (this.walletStore[reward.resourceKey] as number) +
           rewards[reward.resourceKey];
+
+        resourcesGained += `${Utils.toTwoDecimal(
+          rewards[reward.resourceKey]
+        )} ${reward.resourceKey}, `;
       }
     );
+    if (
+      resourcesGained.substring(
+        resourcesGained.length - 2,
+        resourcesGained.length
+      ) === ', '
+    )
+      resourcesGained = resourcesGained.substring(
+        0,
+        resourcesGained.length - 2
+      );
+    results.push('Gained ' + resourcesGained);
     // collect skill gain
 
     // skill gain
@@ -150,20 +182,15 @@ class ResourceGatheringService {
     this.simulationStore.totalActions += i;
 
     // TODO increment avatar's skill points
-
-    results.push(
-      `${
-        resourceGatheringLocations[options.locationKey].activityName
-      } complete, resources gained` // TODO show what was gained
-    );
     return results;
   }
 
   forageAtWilderness(minutes: number) {
     const randomEncounterCallback = (
       rewards: Rewards,
-      results: string[]
-    ): [Rewards, string[]] => {
+      results: string[],
+      carrying: number
+    ): [Rewards, string[], number] => {
       // TODO convert to equipped melee weapon
       const dagger = _.find(this.inventoryStore.items, (item) =>
         item.type.includes('dagger')
@@ -175,17 +202,23 @@ class ResourceGatheringService {
         // TODO gain combat exp for killing wolf
         dagger.durability -= dagger.actions['stab'].durabilityUsed;
         this.walletStore.wolfPelt += 1;
+        carrying++;
         results.push('Wolf Attack! You gained 1 Wolf Pelt');
       } else {
+        // lose resouces and gain back carrying capacity
+        carrying -= rewards.stone / 2;
         rewards.stone = rewards.stone / 2;
+        carrying -= rewards.stick / 2;
         rewards.stick = rewards.stick / 2;
+        carrying -= rewards.plantFiber / 2;
         rewards.plantFiber = rewards.plantFiber / 2;
+        carrying -= rewards.apple / 2;
         rewards.apple = rewards.apple / 2;
         results.push(
-          'ALERT::Wolf Attack! You lost half of all carried resources... try crafting a dagger'
+          'Wolf Attack! You lost half of all carried resources... try crafting a dagger'
         );
       }
-      return [rewards, results];
+      return [rewards, results, carrying];
     };
 
     return this.genericResourceGathering({
@@ -206,8 +239,9 @@ class ResourceGatheringService {
 
     const randomEncounterCallback = (
       rewards: Rewards,
-      results: string[]
-    ): [Rewards, string[]] => {
+      results: string[],
+      carrying: number
+    ): [Rewards, string[], number] => {
       const sling = _.find(this.inventoryStore.items, (item) =>
         // TODO switch to equipped ranged weapon
         item.type.includes('sling')
@@ -218,6 +252,7 @@ class ResourceGatheringService {
         this.walletStore.stone--;
         this.walletStore.eagleFeather++;
         results.push('Eagle Attack! You gained 1 Eagle Feather');
+        // TODO update carrying, both gain and loss
       } else {
         rewards.pineTar = 0;
         rewards.cedarLog = rewards.cedarLog * 0.9;
@@ -225,7 +260,7 @@ class ResourceGatheringService {
           'ALERT::Eagle Attack! You lost all carried Pine Tar and 10% of your carried Cedar Logs... try crafting a sling'
         );
       }
-      return [rewards, results];
+      return [rewards, results, carrying];
     };
 
     return this.genericResourceGathering({
@@ -255,8 +290,9 @@ class ResourceGatheringService {
 
     const randomEncounterCallback = (
       rewards: Rewards,
-      results: string[]
-    ): [Rewards, string[]] => {
+      results: string[],
+      carrying: number
+    ): [Rewards, string[], number] => {
       if (this.settingsStore.chanceKoboldAttackPerAction > Math.random()) {
         // TODO switch to equipped melee weapon
         const sword = _.find(this.inventoryStore.items, (item) =>
@@ -270,6 +306,7 @@ class ResourceGatheringService {
           // TODO gain combat exp for killing kobold
           this.walletStore.ruby++;
           results.push('Kobold Attack! You gained 1 Ruby');
+          // TODO update carrying, both gain and loss
         } else {
           rewards.ruby = 0;
           results.push(
@@ -277,7 +314,7 @@ class ResourceGatheringService {
           );
         }
       }
-      return [rewards, results];
+      return [rewards, results, carrying];
     };
 
     return this.genericResourceGathering({

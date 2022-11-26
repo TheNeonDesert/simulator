@@ -4,7 +4,11 @@
     :update:model-value="update"
     @hide="update(false)"
   >
-    <q-card class="bg-black text-white">
+    <q-card class="bg-black text-white position-relative">
+      <span class="close-icon" v-close-popup>
+        <q-img src="icons/close-icon.png" />
+      </span>
+
       <q-card-section class="q-pt-none">
         <h6>Rewards</h6>
         <div class="q-pa-xs bg-white">
@@ -12,8 +16,20 @@
         </div>
       </q-card-section>
 
+      <q-list
+        ><q-item v-for="(result, idx) in results" :key="idx">{{
+          result
+        }}</q-item></q-list
+      >
+
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn
+          class="q-mr-md q-mb-md"
+          outline
+          label="OK"
+          color="white"
+          v-close-popup
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -28,6 +44,10 @@ export default defineComponent({
     showRewardScreen: {
       required: true,
       type: Boolean,
+    },
+    results: {
+      required: true,
+      type: Array,
     },
   },
   emits: ['update'],

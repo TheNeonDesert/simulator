@@ -29,13 +29,24 @@
             enjoy.
           </li>
           <li>
-            No Waiting: Normal activities in TND have have varying amount of
-            wait times.
+            No Waiting: Normal activities in TND have varying wait times,
+            sometimes many days.
           </li>
           <li>
             No Persistence: Reload or close the game and everything resets.
           </li>
+          <li>
+            Single Avatar: The simulation only represents one Avatar's journey,
+            your full expression in the desert will span a great many avatars.
+          </li>
         </ul>
+        <p
+          class="cursor-pointer text-italic"
+          style="text-decoration: underline"
+          @click="restartTutorial"
+        >
+          Restart Tutorial
+        </p>
         <p
           class="cursor-pointer text-italic"
           style="text-decoration: underline"
@@ -65,6 +76,10 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import VersionHistoryModal from '../modals/VersionHistoryModal.vue';
+import {
+  SimulationStore,
+  useSimulationStore,
+} from 'src/stores/simulation.store';
 
 export default defineComponent({
   name: 'WelcomeModal',
@@ -75,15 +90,23 @@ export default defineComponent({
       type: Boolean,
     },
   },
+  created: async function () {
+    this.simulationStore = useSimulationStore();
+  },
   setup() {
     return {
       showVersionHistory: ref<boolean>(false),
+      simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
     };
   },
   emits: ['update'],
   methods: {
     update: function (show: boolean) {
       this.$emit('update', show);
+    },
+    restartTutorial: function () {
+      this.simulationStore.showTutorial = 1;
+      this.$emit('update', false);
     },
   },
 });

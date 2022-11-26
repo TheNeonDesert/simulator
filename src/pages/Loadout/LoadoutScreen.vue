@@ -39,12 +39,14 @@
           color="white"
           v-close-popup
           @click="forage"
+          :class="{ 'highlight-animation': showTutorial }"
         />
       </q-card-actions>
     </q-card>
   </q-dialog>
 
   <activity-screen
+    :duration="duration"
     :showActivityScreen="showActivityScreen"
     @update="showActivityScreen = $event"
   />
@@ -54,6 +56,10 @@
 import { defineComponent, ref } from 'vue';
 import EquippableItemSlot from './EquippableItemSlot.vue';
 import ActivityScreen from './ActivityScreen.vue';
+import {
+  SimulationStore,
+  useSimulationStore,
+} from 'src/stores/simulation.store';
 
 export default defineComponent({
   name: 'LoadoutScreen',
@@ -68,7 +74,16 @@ export default defineComponent({
     return {
       duration: ref<number>(60),
       showActivityScreen: ref<boolean>(false),
+      simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
+      showTutorial: ref<boolean>(false),
     };
+  },
+  created: async function () {
+    this.simulationStore = useSimulationStore();
+
+    if (this.simulationStore.showTutorial === 3) {
+      this.showTutorial = true;
+    }
   },
   emits: ['update'],
   methods: {
@@ -76,6 +91,10 @@ export default defineComponent({
       this.$emit('update', show);
     },
     forage: function () {
+      if (this.simulationStore.showTutorial === 3) {
+        this.showTutorial = false;
+        this.simulationStore.showTutorial = 4; // TODO set tutorial 4 to crafting tab
+      }
       // check to make sure you can go to location and all the settings are good
       // show spinner on a timeout, "this.duration" minutes later...
       // <q-spinner-hourglass />

@@ -5,18 +5,20 @@
     <q-card
       v-for="encounter in combatEncounters"
       v-bind:key="encounter.label"
-      class="row q-my-md combat-encounter"
+      class="row q-my-md combat-encounter cursor-pointer"
+      @click="encounter.onclick()"
     >
-      <div class="q-ma-md">
-        <div class="row">
+      <div class="q-pa-md full-width">
+        <!-- <div class="row">
           <p v-html="encounter.description" />
+        </div> -->
+
+        <div class="q-pa-xs q-mb-md bg-white">
+          <q-img src="images/locations/goblin-encampment-wide.jpg" />
         </div>
+
         <div class="row">
-          <q-btn
-            :label="encounter.label"
-            @click="encounter.onclick()"
-            color="primary"
-          />
+          <q-btn class="col-12" :label="encounter.label" color="primary" />
         </div>
       </div>
     </q-card>

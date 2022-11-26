@@ -18,6 +18,10 @@
             color="primary"
             class="col-12"
             :loading="actionLoading[resource.location]"
+            :class="{
+              'highlight-animation':
+                showTutorial && resource.location === 'wilderness',
+            }"
           ></q-btn>
         </div>
       </div>
@@ -34,13 +38,13 @@
 import { defineComponent, ref } from 'vue';
 import _ from 'underscore';
 import Utils from 'src/services/utils';
-import resourceGatheringService from 'src/services/resource-gathering.service';
+// import resourceGatheringService from 'src/services/resource-gathering.service';
 import {
   SimulationStore,
   useSimulationStore,
 } from 'src/stores/simulation.store';
 import { ActionLogCategory } from 'src/models/ActionLog';
-import simulatorService from '../../services/simulator.service';
+// import simulatorService from '../../services/simulator.service';
 import LoadoutScreen from '../Loadout/LoadoutScreen.vue';
 
 export default defineComponent({
@@ -66,6 +70,7 @@ export default defineComponent({
       simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
       actionLoading: ref<{ [location: string]: boolean }>({}),
       showLoadoutScreen: ref<boolean>(false),
+      showTutorial: ref<boolean>(false),
     };
   },
   created: async function () {
@@ -85,7 +90,7 @@ export default defineComponent({
         label: 'chop at cedar forest',
         bannerImage: 'images/locations/cedar-forest-wide.jpg',
         description:
-          'Chop wood to collect <u>cedar logs</u> and pick up the occasional <u>pine tar</u>. Don\t forget to bring a ranged weapon like a <i>sling</i> to fend off the <b>eagles</b>',
+          "Chop wood to collect <u>cedar logs</u> and pick up the occasional <u>pine tar</u>. Don't forget to bring a ranged weapon like a <i>sling</i> to fend off the <b>eagles</b>",
         onclick: this.gatherResources,
         location: 'cedarForest',
       },
@@ -99,6 +104,9 @@ export default defineComponent({
         location: 'copperMine',
       },
     ];
+    if (this.simulationStore.showTutorial === 2) {
+      this.showTutorial = true;
+    }
   },
   methods: {
     displayResults: function (results: string[]) {
@@ -111,39 +119,47 @@ export default defineComponent({
       });
     },
     async gatherResources(location: string) {
+      if (
+        location === 'wilderness' &&
+        this.simulationStore.showTutorial === 2
+      ) {
+        this.showTutorial = false;
+        this.simulationStore.showTutorial = 3;
+      }
+
       this.showLoadoutScreen = true;
       return;
 
-      try {
-        let results;
-        switch (location) {
-          case 'wilderness':
-            results = resourceGatheringService.forageAtWilderness(
-              this.durationModels.forageAtWildernessDuration
-            );
-            break;
-          case 'cedarForest':
-            results = resourceGatheringService.chopAtCedarForest(
-              this.durationModels.chopAtCedarForestDuration
-            );
-            break;
-          case 'copperMine':
-            results = resourceGatheringService.digAtCopperMine(
-              this.durationModels.digAtCopperMineDuration
-            );
-            break;
-        }
-        this.actionLoading[location] = true;
-        await Utils.wait(1000);
-        if (results) this.displayResults(results);
-        if (this.simulationStore.autoRepairItems) {
-          simulatorService.repairAllItems();
-        }
-        this.actionLoading[location] = false;
-      } catch (err) {
-        Utils.error(err as string, ActionLogCategory.actions);
-        this.actionLoading[location] = false;
-      }
+      // try {
+      //   let results;
+      //   switch (location) {
+      //     case 'wilderness':
+      //       results = resourceGatheringService.forageAtWilderness(
+      //         this.durationModels.forageAtWildernessDuration
+      //       );
+      //       break;
+      //     case 'cedarForest':
+      //       results = resourceGatheringService.chopAtCedarForest(
+      //         this.durationModels.chopAtCedarForestDuration
+      //       );
+      //       break;
+      //     case 'copperMine':
+      //       results = resourceGatheringService.digAtCopperMine(
+      //         this.durationModels.digAtCopperMineDuration
+      //       );
+      //       break;
+      //   }
+      //   this.actionLoading[location] = true;
+      //   await Utils.wait(1000);
+      //   if (results) this.displayResults(results);
+      //   if (this.simulationStore.autoRepairItems) {
+      //     simulatorService.repairAllItems();
+      //   }
+      //   this.actionLoading[location] = false;
+      // } catch (err) {
+      //   Utils.error(err as string, ActionLogCategory.actions);
+      //   this.actionLoading[location] = false;
+      // }
     },
   },
 });

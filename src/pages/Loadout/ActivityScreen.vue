@@ -10,12 +10,16 @@
         <div class="q-pa-xs bg-white">
           <q-img src="images/foraging.jpg" />
         </div>
-        <q-spinner-hourglass color="white" size="100px" />
+        <div class="full-width text-center">
+          <q-spinner class="q-my-lg" color="white" size="50px" />
+        </div>
       </q-card-section>
     </q-card>
   </q-dialog>
 
   <reward-screen
+    v-if="results"
+    :results="results"
     :showRewardScreen="showRewardScreen"
     @update="showRewardScreen = $event"
   />
@@ -24,6 +28,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import RewardScreen from './RewardScreen.vue';
+import resourceGatheringService from 'src/services/resource-gathering.service';
 
 export default defineComponent({
   name: 'ActivityScreen',
@@ -33,18 +38,28 @@ export default defineComponent({
       required: true,
       type: Boolean,
     },
+    duration: {
+      required: true,
+      type: Number,
+    },
   },
   setup() {
     return {
       showRewardScreen: ref<boolean>(false),
+      results: ref<string[]>(),
     };
   },
   watch: {
     showActivityScreen: function () {
-      // setTimeout(() => {
-      //   this.$emit('update', false);
-      //   this.showRewardScreen = true;
-      // }, 4000);
+      if (this.showActivityScreen) {
+        this.results = resourceGatheringService.forageAtWilderness(
+          this.duration
+        );
+        setTimeout(() => {
+          this.$emit('update', false);
+          this.showRewardScreen = true;
+        }, 3000);
+      }
     },
   },
   emits: ['update'],

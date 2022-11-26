@@ -10,6 +10,7 @@ export const useSimulationStore = defineStore('simulation', {
   state: () => ({
     // misc site settings
     autoRepairItems: true,
+    showTutorial: 0,
 
     results: '',
     totalActions: 0,
@@ -50,6 +51,7 @@ export interface SimulationStore {
   getLogs: ActionLog[];
 
   autoRepairItems: boolean;
+  showTutorial: number;
   results: string;
   totalActions: number;
   actionLogs: ActionLog[];

@@ -17,6 +17,10 @@ import { defineComponent, ref } from 'vue';
 import HeaderSection from './HeaderSection.vue';
 import NavigationLinks from './NavigationLinks.vue';
 import WelcomeModal from '../modals/WelcomeModal.vue';
+import {
+  SimulationStore,
+  useSimulationStore,
+} from 'src/stores/simulation.store';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -24,13 +28,16 @@ export default defineComponent({
   setup() {
     return {
       showWelcomeModal: ref<boolean>(false),
+      simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
     };
   },
   created: async function () {
-    const seen = localStorage.getItem('seenWelcome');
+    this.simulationStore = useSimulationStore();
+    const seen = localStorage.getItem('seenTutorial');
     if (!seen || seen !== 'v003') {
       this.showWelcomeModal = true;
-      localStorage.setItem('seenWelcome', 'v003');
+      localStorage.setItem('seenTutorial', 'v003');
+      this.simulationStore.showTutorial = 1;
     }
   },
   // setup() {

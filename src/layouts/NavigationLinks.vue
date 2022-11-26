@@ -17,7 +17,10 @@
       <div
         v-for="(item, idx) in menuItems"
         v-bind:key="idx"
-        @click="$router.push(item.route)"
+        @click="routeTo(item)"
+        :class="{
+          'highlight-animation': showTutorial && item.name === 'Gather',
+        }"
       >
         <q-icon :name="item.icon"></q-icon>
         <span>{{ item.name }}</span>
@@ -27,10 +30,14 @@
 
   <q-footer elevated class="bg-black" v-if="$q.screen.lt.md">
     <div class="footer-menu">
+      <!-- TODO this div and the v-for div inside the side-menu are identical, abstract them out -->
       <div
         v-for="(item, idx) in menuItems"
         v-bind:key="idx"
-        @click="$router.push(item.route)"
+        @click="routeTo(item)"
+        :class="{
+          'highlight-animation': showTutorial && item.name === 'Gather',
+        }"
       >
         <q-icon :name="item.icon"></q-icon>
         <span>{{ item.name }}</span>
@@ -42,14 +49,21 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import MainMenu from './MainMenu.vue';
+import {
+  SimulationStore,
+  useSimulationStore,
+} from 'src/stores/simulation.store';
 
 export default defineComponent({
   name: 'NavigationLinks',
+  // Rename this NavigationLinks and MainMenu, it's not clear which is the actual primary
   components: { MainMenu },
   setup() {
     return {
       leftDrawerOpen: ref<boolean>(true),
-      menuItems: ref<{ icon: string; name: string; route: string }[]>([
+      showTutorial: ref<boolean>(false),
+      simulationStore: ref<SimulationStore>(null as unknown as SimulationStore),
+      menuItems: ref<MenuItem[]>([
         {
           icon: 'img:icons/avatar-icon.png',
           name: 'Avatar',
@@ -78,7 +92,34 @@ export default defineComponent({
       ]),
     };
   },
+  created: async function () {
+    this.simulationStore = useSimulationStore();
+    // const seen = localStorage.getItem('seenTutorial');
+    // if (!seen || seen !== 'v003') {
+    //   this.showWelcomeModal = true;
+    //   localStorage.setItem('seenTutorial', 'v003');
+    // }
+    if (this.simulationStore.showTutorial === 1) {
+      this.showTutorial = true;
+    }
+    // setTimeout(() => { this.showTutorial = false}, )
+  },
+  methods: {
+    routeTo: function (item: MenuItem) {
+      if (item.name === 'Gather' && this.simulationStore.showTutorial === 1) {
+        this.showTutorial = false;
+        this.simulationStore.showTutorial = 2;
+      }
+      this.$router.push(item.route);
+    },
+  },
 });
+
+interface MenuItem {
+  icon: string;
+  name: string;
+  route: string;
+}
 </script>
 
 <style lang="scss" scoped>
